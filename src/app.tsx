@@ -3,14 +3,13 @@ import { Component } from 'solid-js';
 const App: Component = () => {
   return (
     <div>
-      <nav className="bg-white/90 backdrop-blur shadow-lg h-20">
+      <nav className="bg-white/90 backdrop-blur shadow-lg h-16">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 h-full">
           <img 
             src="/OmenifyLogo.png" 
             alt="OMENIFY" 
-            className="h-16 w-auto py-3" 
+            className="h-14 w-auto -my-1 object-contain"
           />
-          {/* Nav Items pushed to right */}
           <ul className="flex items-center space-x-8">
             <li>
               <a href="/" className="text-navy-900 font-semibold hover:text-blue-600 font-mono">
@@ -30,15 +29,13 @@ const App: Component = () => {
           </ul>
         </div>
       </nav>
-
       {/* Main Content */}
       <main class="max-w-7xl mx-auto px-6 py-8">
         {/* Header Section */}
         <div class="text-white mb-12 text-center">
-          <h1 class="text-5xl font-bold mb-3 font-helvetica">Predictive Markets Dashboard</h1>
-          <p class="text-xl text-blue-100 font-helvetica">Track today to capture tomorrow.</p>
+          <h1 class="text-5xl font-bold mb-3 text-navy-900 font-helvetica">Predictive Markets Dashboard</h1>
+          <p class="text-xl text-blue-400 font-helvetica">Track today to capture tomorrow.</p>
         </div>
-
         {/* Single Column for Predictions */}
         <div class="space-y-6 max-w-3xl mx-auto">
           {/* S&P 500 Card */}
@@ -52,7 +49,6 @@ const App: Component = () => {
               </div>
             </div>
           </div>
-
           {/* NASDAQ Card */}
           <div class="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
             <h2 class="text-xl font-semibold text-navy-900 mb-4 font-helvetica">NASDAQ Predictions</h2>
