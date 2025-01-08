@@ -2,15 +2,13 @@ import { Component } from 'solid-js';
 
 const App: Component = () => {
   return (
-    <div className="min-h-screen bg-[url('https://images.unsplash.com/photo-1564193379835-65b35cd78131')] bg-cover bg-center">
-      {/* Navigation */}
-      <nav className="bg-white/90 backdrop-blur shadow-lg h-20"> {/* Set the fixed height */}
+    <div>
+      <nav className="bg-white/90 backdrop-blur shadow-lg h-20">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 h-full">
-          {/* Logo */}
           <img 
             src="/OmenifyLogo.png" 
             alt="OMENIFY" 
-            className="h-16 w-auto py-3"  {/* Adjust logo height */}
+            className="h-16 w-auto py-3" 
           />
           {/* Nav Items pushed to right */}
           <ul className="flex items-center space-x-8">
@@ -32,11 +30,6 @@ const App: Component = () => {
           </ul>
         </div>
       </nav>
-    </div>
-  );
-};
-
-
 
       {/* Main Content */}
       <main class="max-w-7xl mx-auto px-6 py-8">
