@@ -8,7 +8,7 @@ const App: Component = () => {
           <img 
             src="/OmenifyLogo.png" 
             alt="OMENIFY" 
-            className="h-14 w-auto -my-1 object-contain"
+            className="h-20 w-auto -mt-2 -mb-2 object-contain" // Made logo bigger with negative margins
           />
           <ul className="flex items-center space-x-8">
             <li>
@@ -33,7 +33,7 @@ const App: Component = () => {
       <main class="max-w-7xl mx-auto px-6 py-8">
         {/* Header Section */}
         <div class="text-white mb-12 text-center">
-          <h1 class="text-5xl font-bold mb-3 text-navy-900 font-helvetica">Predictive Markets Dashboard</h1>
+          <h1 class="text-5xl font-bold mb-3 text-black font-helvetica">Predictive Markets Dashboard</h1>
           <p class="text-xl text-blue-400 font-helvetica">Track today to capture tomorrow.</p>
         </div>
         {/* Single Column for Predictions */}
