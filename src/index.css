@@ -7,3 +7,8 @@
         @apply font-sans bg-slate-50;
     }
 }
+
+/* Custom cursor */
+a, button, [role="button"] {
+    cursor: url('/whale.png'), pointer;
+}
