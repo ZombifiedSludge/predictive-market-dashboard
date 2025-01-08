@@ -7,11 +7,12 @@ const App: Component = () => {
       <nav class="bg-white/90 backdrop-blur shadow-lg">
         <div class="flex items-center justify-between max-w-7xl mx-auto px-6">
           {/* Logo */}
-          <img 
-            src="/src/OmenifyLogo.png" 
-            alt="OMENIFY" 
-            class="h-14 w-auto py-3"
-          />
+       <img 
+  src="/OmenifyLogo.png" 
+  alt="OMENIFY" 
+  class="h-14 w-auto py-3"
+/>
+
           {/* Nav Items pushed to right */}
           <ul class="flex items-center space-x-8">
             <li>
