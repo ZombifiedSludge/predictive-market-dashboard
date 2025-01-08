@@ -30,8 +30,8 @@ const App: Component = (props: { children: Element }) => {
       {/* Main Content */}
       <main class="max-w-7xl mx-auto px-4 py-8">
         {/* Dashboard Header */}
-        <div class="text-white mb-8">
-          <h1 class="text-4xl font-bold mb-2">Market Predictions Dashboard</h1>
+        <div class="text-blue mb-8">
+          <h1 class="text-4xl font-bold mb-2">Predictive Markets Dashboard</h1>
           <p class="text-blue-100">Real-time market sentiment and predictions</p>
         </div>
 
