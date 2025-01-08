@@ -1,3 +1,5 @@
+import { Component } from 'solid-js';
+
 const App: Component = () => {
   return (
     <div class="min-h-screen bg-[url('https://images.unsplash.com/photo-1564193379835-65b35cd78131')] bg-cover bg-center">
@@ -69,3 +71,5 @@ const App: Component = () => {
     </div>
   );
 };
+
+export default App;
