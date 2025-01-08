@@ -10,7 +10,7 @@ const App: Component = () => {
    <img 
   src="/OmenifyLogo.png" 
   alt="OMENIFY" 
-  class="h-14 w-auto py-3"
+  class="h-40 w-auto py-3"
 />
 
           {/* Nav Items pushed to right */}
