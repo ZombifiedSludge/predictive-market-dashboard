@@ -2,36 +2,40 @@ import { Component } from 'solid-js';
 
 const App: Component = () => {
   return (
-    <div class="min-h-screen bg-[url('https://images.unsplash.com/photo-1564193379835-65b35cd78131')] bg-cover bg-center">
+    <div className="min-h-screen bg-[url('https://images.unsplash.com/photo-1564193379835-65b35cd78131')] bg-cover bg-center">
       {/* Navigation */}
-      <nav class="bg-white/90 backdrop-blur shadow-lg h-20"> {/* Set the fixed height */}
-        <div class="flex items-center justify-between max-w-7xl mx-auto px-6 h-full">
+      <nav className="bg-white/90 backdrop-blur shadow-lg h-20"> {/* Set the fixed height */}
+        <div className="flex items-center justify-between max-w-7xl mx-auto px-6 h-full">
           {/* Logo */}
           <img 
             src="/OmenifyLogo.png" 
             alt="OMENIFY" 
-            class="h-16 w-auto py-3"  {/* Adjust logo height */}
+            className="h-16 w-auto py-3"  {/* Adjust logo height */}
           />
           {/* Nav Items pushed to right */}
-          <ul class="flex items-center space-x-8">
+          <ul className="flex items-center space-x-8">
             <li>
-              <a href="/" class="text-navy-900 font-semibold hover:text-blue-600 font-helvetica">
+              <a href="/" className="text-navy-900 font-semibold hover:text-blue-600 font-mono">
                 Dashboard
               </a>
             </li>
             <li>
-              <a href="/methodology" class="text-navy-900 font-semibold hover:text-blue-600 font-helvetica">
+              <a href="/methodology" className="text-navy-900 font-semibold hover:text-blue-600 font-mono">
                 Methodology
               </a>
             </li>
             <li>
-              <a href="/why-betting-markets" class="text-navy-900 font-semibold hover:text-blue-600 font-helvetica">
+              <a href="/why-betting-markets" className="text-navy-900 font-semibold hover:text-blue-600 font-mono">
                 Why Betting Markets
               </a>
             </li>
           </ul>
         </div>
       </nav>
+    </div>
+  );
+};
+
 
 
       {/* Main Content */}
