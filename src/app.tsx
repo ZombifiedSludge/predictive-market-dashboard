@@ -4,15 +4,14 @@ const App: Component = () => {
   return (
     <div class="min-h-screen bg-[url('https://images.unsplash.com/photo-1564193379835-65b35cd78131')] bg-cover bg-center">
       {/* Navigation */}
-      <nav class="bg-white/90 backdrop-blur shadow-lg">
-        <div class="flex items-center justify-between max-w-7xl mx-auto px-6">
+      <nav class="bg-white/90 backdrop-blur shadow-lg h-20"> {/* Set the fixed height */}
+        <div class="flex items-center justify-between max-w-7xl mx-auto px-6 h-full">
           {/* Logo */}
-   <img 
-  src="/OmenifyLogo.png" 
-  alt="OMENIFY" 
-  class="h-40 w-auto py-3"
-/>
-
+          <img 
+            src="/OmenifyLogo.png" 
+            alt="OMENIFY" 
+            class="h-16 w-auto py-3"  {/* Adjust logo height */}
+          />
           {/* Nav Items pushed to right */}
           <ul class="flex items-center space-x-8">
             <li>
@@ -33,6 +32,7 @@ const App: Component = () => {
           </ul>
         </div>
       </nav>
+
 
       {/* Main Content */}
       <main class="max-w-7xl mx-auto px-6 py-8">
