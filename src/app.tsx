@@ -21,24 +21,43 @@ const App = () => {
   const FRED_API_KEY = 'b12c1cced5c15f90f28f8f6aaeb331cd';
 
 const fetchFREDData = async () => {
-  // Check cache first
   const cacheKey = 'fred_data';
   const cached = localStorage.getItem(cacheKey);
   if (cached) {
     const { timestamp, data } = JSON.parse(cached);
-    if (Date.now() - timestamp < 96 * 60 * 60 * 1000) { // 4 days
+    if (Date.now() - timestamp < 96 * 60 * 60 * 1000) {
       return data;
     }
   }
 
+  const fetchOptions = {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json'
+    },
+    mode: 'cors'
+  };
+
   try {
-    const fedResponse = await fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=lin`);
+    const fedResponse = await fetch(
+      `https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=lin`,
+      fetchOptions
+    );
+    if (!fedResponse.ok) throw new Error(`Fed data HTTP error! status: ${fedResponse.status}`);
     const fedData = await fedResponse.json();
 
-    const unemploymentResponse = await fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=lin`);
+    const unemploymentResponse = await fetch(
+      `https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=lin`,
+      fetchOptions
+    );
+    if (!unemploymentResponse.ok) throw new Error(`Unemployment data HTTP error! status: ${unemploymentResponse.status}`);
     const unemploymentData = await unemploymentResponse.json();
 
-    const durablesResponse = await fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=DGORDER&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=mil`);
+    const durablesResponse = await fetch(
+      `https://api.stlouisfed.org/fred/series/observations?series_id=DGORDER&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=mil`,
+      fetchOptions
+    );
+    if (!durablesResponse.ok) throw new Error(`Durables data HTTP error! status: ${durablesResponse.status}`);
     const durablesData = await durablesResponse.json();
 
     const data = {
@@ -47,7 +66,6 @@ const fetchFREDData = async () => {
       durablesData
     };
 
-    // Cache the results
     localStorage.setItem(cacheKey, JSON.stringify({
       timestamp: Date.now(),
       data
@@ -62,8 +80,9 @@ const fetchFREDData = async () => {
 
 onMount(async () => {
   try {
+    console.log('Using FRED API Key:', FRED_API_KEY);  // Debug line
     const fredData = await fetchFREDData();
-    console.log('FRED API Response:', fredData);
+    console.log('FRED API Response:', fredData);  // Debug line
     
     if (fredData.fedData.observations) {
       const latest = fredData.fedData.observations[0];
@@ -93,7 +112,7 @@ onMount(async () => {
     setError(err.message);
   }
 });
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <header className="bg-white shadow-lg">
