@@ -1,11 +1,18 @@
 import { Component, createSignal, onMount } from 'solid-js';
 
-const API_KEY = 'YY7OC6IG2C9BX8FR';
-
 const App: Component = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
   const [marketData, setMarketData] = createSignal(null);
   const [error, setError] = createSignal(null);
+  const [isDropdownOpen, setIsDropdownOpen] = createSignal(false);
+
+  const API_KEY = 'YY7OC6IG2C9BX8FR';
+
+  // Toggle dropdown
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen());
+
+  // Close dropdown when clicking outside
+  const closeDropdown = () => setIsDropdownOpen(false);
 
   onMount(async () => {
     try {
@@ -54,7 +61,7 @@ const App: Component = () => {
   });
 
   return (
-    <div>
+    <div onClick={closeDropdown}>
       <nav className="bg-white/90 backdrop-blur shadow-lg h-16">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 h-full">
           <img 
@@ -68,10 +75,47 @@ const App: Component = () => {
                 Dashboard
               </a>
             </li>
-            <li>
-              <a href="/methodology" className="text-navy-900 font-semibold hover:text-blue-600 font-mono">
-                Methodology
-              </a>
+            <li className="relative">
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDropdown();
+                }}
+                className="text-navy-900 font-semibold hover:text-blue-600 font-mono flex items-center"
+              >
+                Bellwethers
+                <svg 
+                  className={`ml-1 h-4 w-4 transition-transform ${isDropdownOpen() ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isDropdownOpen() && (
+                <div 
+                  className="absolute top-full left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="py-1" role="menu">
+                    <a
+                      href="/bellwethers/googl"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                    >
+                      Alphabet Inc. (GOOGL)
+                    </a>
+                    <a
+                      href="/bellwethers/jbht"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      role="menuitem"
+                    >
+                      J.B. Hunt Transport (JBHT)
+                    </a>
+                  </div>
+                </div>
+              )}
             </li>
             <li>
               <a href="/why-betting-markets" className="text-navy-900 font-semibold hover:text-blue-600 font-mono">
@@ -133,21 +177,13 @@ const App: Component = () => {
                   )}
                 </div>
                 <div className="text-sm text-gray-600 mt-4">
-                  <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy.</p>
+                  <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt. </p>
                 </div>
-              </div>
-            </div>
-
-            {/* Space for future graphs */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 h-96">
-              <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Market Trends</h2>
-              <div className="h-full flex items-center justify-center text-gray-400">
-                Graph placeholder
               </div>
             </div>
           </div>
 
-          {/* Right Column - Market Movers (1 column) */}
+          {/* Right Column - Market Movers */}
           <div className="space-y-6">
             {/* Top Gainers */}
             <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
