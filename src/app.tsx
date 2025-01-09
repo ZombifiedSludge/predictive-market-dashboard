@@ -1,19 +1,46 @@
 import { Component, createSignal, onMount } from 'solid-js';
 
-const API_KEY = '40UQBGQGIB8R709O'; // Put your API key here
+const API_KEY = 'YY7OC6IG2C9BX8FR'; // Your new API key
 
 const App: Component = () => {
-  const [fedRate, setFedRate] = createSignal(null);
+  const [fedRateData, setFedRateData] = createSignal(null);
+  const [error, setError] = createSignal(null);
 
   // Fetch the Federal Funds Rate data when the component is mounted
   onMount(async () => {
     try {
-      const response = await fetch(`https://www.alphavantage.co/query?function=FEDERAL_FUNDS_RATE&interval=monthly&apikey=${API_KEY}`);
+      const response = await fetch(
+        `https://www.alphavantage.co/query?function=FEDERAL_FUNDS_RATE&interval=monthly&apikey=${API_KEY}`
+      );
       const data = await response.json();
-      setFedRate(data);  // Set the fetched data in state
-      console.log('Fed Rate Data:', data);  // Log the data to see its structure
-    } catch (error) {
-      console.error('Error fetching Fed Rate:', error);
+      
+      // Check if we got an error response
+      if (data['Error Message']) {
+        throw new Error(data['Error Message']);
+      }
+
+      // Handle different possible data formats
+      if (data['data']) {
+        const latestRate = data['data'][0];
+        setFedRateData({
+          rate: parseFloat(latestRate.value).toFixed(2),
+          date: new Date(latestRate.date).toLocaleDateString()
+        });
+      } else if (data['Time Series (Monthly)']) {
+        // Get the most recent date
+        const dates = Object.keys(data['Time Series (Monthly)']).sort().reverse();
+        const latestDate = dates[0];
+        const latestData = data['Time Series (Monthly)'][latestDate];
+        setFedRateData({
+          rate: parseFloat(latestData['value']).toFixed(2),
+          date: new Date(latestDate).toLocaleDateString()
+        });
+      } else {
+        throw new Error('Unexpected data format received');
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error('Error fetching Fed Rate:', err);
     }
   });
 
@@ -83,14 +110,16 @@ const App: Component = () => {
             <div className="space-y-4">
               <div className="border-b border-blue-100 pb-4">
                 <p className="text-sm text-blue-800">Current Rate</p>
-                <p className="text-2xl font-bold text-navy-900">
-                  {/* Display the live rate */}
-                  {fedRate() && fedRate().rate ? `${fedRate().rate}%` : "Loading..."}
-                </p>
-                <p className="text-sm text-blue-600">
-                  {/* Display the last updated date */}
-                  {fedRate() && fedRate().date ? `Last Updated: ${fedRate().date}` : "Loading..."}
-                </p>
+                {error() ? (
+                  <p className="text-red-500 text-sm">Error: {error()}</p>
+                ) : !fedRateData() ? (
+                  <p className="text-2xl font-bold text-navy-900">Loading...</p>
+                ) : (
+                  <>
+                    <p className="text-2xl font-bold text-navy-900">{fedRateData().rate}%</p>
+                    <p className="text-sm text-blue-600">Last Updated: {fedRateData().date}</p>
+                  </>
+                )}
               </div>
               <div className="text-sm text-gray-600 mt-4">
                 <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lower rates usually indicate reduced financing costs for homebuyers, businesses, loan-seeking students, and consumers with credit card debt.</p>
