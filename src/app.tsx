@@ -6,9 +6,38 @@ const App: Component = () => {
   const [error, setError] = createSignal(null);
   const [isDropdownOpen, setIsDropdownOpen] = createSignal(false);
   const [unemploymentData, setUnemploymentData] = createSignal(null);
-const [durablesData, setDurablesData] = createSignal(null);
+  const [durablesData, setDurablesData] = createSignal(null);
 
-  
+  // Add helper functions here
+  const getCachedData = (key: string, interval: 'monthly' | 'daily') => {
+    const data = localStorage.getItem(key);
+    if (!data) return null;
+    
+    const { value, timestamp } = JSON.parse(data);
+    const expiryDate = new Date();
+    
+    if (interval === 'monthly') {
+      expiryDate.setMonth(expiryDate.getMonth() - 1);
+    } else if (interval === 'daily') {
+      expiryDate.setHours(expiryDate.getHours() - 24);
+    }
+    
+    if (new Date(timestamp) < expiryDate) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    
+    return value;
+  };
+
+  const setCachedData = (key: string, value: any) => {
+    const data = {
+      value,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem(key, JSON.stringify(data));
+  };
+
   const API_KEY = 'YY7OC6IG2C9BX8FR';
 
   // Toggle dropdown
@@ -67,17 +96,24 @@ onMount(async () => {
         });
       }
 
-      // Fetch Top Gainers/Losers
-      const marketResponse = await fetch(
-        `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${API_KEY}`
-      );
-      const marketData = await marketResponse.json();
-      
-      if (marketData['Error Message']) {
-        throw new Error(marketData['Error Message']);
-      }
+      // Check cache for market data
+      const cachedMarketData = getCachedData('marketMovers', 'daily');
+      if (cachedMarketData) {
+        setMarketData(cachedMarketData);
+      } else {
+        // Only fetch if not in cache
+        const marketResponse = await fetch(
+          `https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=${API_KEY}`
+        );
+        const marketData = await marketResponse.json();
+        
+        if (marketData['Error Message']) {
+          throw new Error(marketData['Error Message']);
+        }
 
-      setMarketData(marketData);
+        setMarketData(marketData);
+        setCachedData('marketMovers', marketData);
+      }
 
     } catch (err) {
       setError(err.message);
