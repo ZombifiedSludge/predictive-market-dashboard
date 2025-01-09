@@ -6,15 +6,8 @@
     body {
         @apply font-sans bg-slate-50;
     }
-    
-    /* Apply gradient to main content area (white to light blue) */
-    .main-content {
-        background-image: linear-gradient(to top, #add8e6, white); /* Light blue at bottom, white at top */
-        background-size: 100% 100%;
-        min-height: 100vh; /* Ensure it takes up full height */
-    }
 }
-
+}
 /* Custom cursor */
 a, button, [role="button"] {
     cursor: url('/whale.png'), pointer;
