@@ -5,7 +5,10 @@ const App: Component = () => {
   const [marketData, setMarketData] = createSignal(null);
   const [error, setError] = createSignal(null);
   const [isDropdownOpen, setIsDropdownOpen] = createSignal(false);
+  const [unemploymentData, setUnemploymentData] = createSignal(null);
+const [durablesData, setDurablesData] = createSignal(null);
 
+  
   const API_KEY = 'YY7OC6IG2C9BX8FR';
 
   // Toggle dropdown
@@ -14,31 +17,36 @@ const App: Component = () => {
   // Close dropdown when clicking outside
   const closeDropdown = () => setIsDropdownOpen(false);
 
-  onMount(async () => {
+ onMount(async () => {
     try {
-      // Fetch Fed Rate
-      const fedResponse = await fetch(
-        `https://www.alphavantage.co/query?function=FEDERAL_FUNDS_RATE&interval=monthly&apikey=${API_KEY}`
-      );
-      const fedData = await fedResponse.json();
-      
-      if (fedData['Error Message']) {
-        throw new Error(fedData['Error Message']);
+      // Fetch Fed Rate, Unemployment, and Durables data
+      const [fedResponse, unemploymentResponse, durablesResponse] = await Promise.all([
+        fetch(`https://www.alphavantage.co/query?function=FEDERAL_FUNDS_RATE&interval=monthly&apikey=${API_KEY}`),
+        fetch(`https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey=${API_KEY}`),
+        fetch(`https://www.alphavantage.co/query?function=DURABLES&apikey=${API_KEY}`)
+      ]);
+
+      const [fedData, unemploymentData, durablesData] = await Promise.all([
+        fedResponse.json(),
+        unemploymentResponse.json(),
+        durablesResponse.json()
+      ]);
+
+      // Process unemployment data
+      if (unemploymentData.data) {
+        const latestUnemployment = unemploymentData.data[0];
+        setUnemploymentData({
+          rate: parseFloat(latestUnemployment.value).toFixed(1),
+          date: new Date(latestUnemployment.date).toLocaleDateString()
+        });
       }
 
-      if (fedData['data']) {
-        const latestRate = fedData['data'][0];
-        setFedRateData({
-          rate: parseFloat(latestRate.value).toFixed(2),
-          date: new Date(latestRate.date).toLocaleDateString()
-        });
-      } else if (fedData['Time Series (Monthly)']) {
-        const dates = Object.keys(fedData['Time Series (Monthly)']).sort().reverse();
-        const latestDate = dates[0];
-        const latestData = fedData['Time Series (Monthly)'][latestDate];
-        setFedRateData({
-          rate: parseFloat(latestData['value']).toFixed(2),
-          date: new Date(latestDate).toLocaleDateString()
+      // Process durables data
+      if (durablesData.data) {
+        const latestDurables = durablesData.data[0];
+        setDurablesData({
+          value: parseFloat(latestDurables.value).toFixed(1),
+          date: new Date(latestDurables.date).toLocaleDateString()
         });
       }
 
@@ -159,30 +167,78 @@ const App: Component = () => {
               </div>
             </div>
 
-            {/* Federal Funds Rate Card */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
-              <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Federal Funds Rate</h2>
-              <div className="space-y-4">
-                <div className="border-b border-blue-100 pb-4">
-                  <p className="text-sm text-blue-800">Current Rate</p>
-                  {error() ? (
-                    <p className="text-red-500 text-sm">Error: {error()}</p>
-                  ) : !fedRateData() ? (
-                    <p className="text-2xl font-bold text-navy-900">Loading...</p>
-                  ) : (
-                    <>
-                      <p className="text-2xl font-bold text-navy-900">{fedRateData().rate}%</p>
-                      <p className="text-sm text-blue-600">Last Updated: {fedRateData().date}</p>
-                    </>
-                  )}
-                </div>
-                <div className="text-sm text-gray-600 mt-4">
-                  <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt. </p>
-                </div>
-              </div>
-            </div>
-          </div>
+  {/* Economic Indicators Grid */}
+<div className="grid grid-cols-3 gap-6">
+  {/* Federal Funds Rate Card */}
+  <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
+    <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Federal Funds Rate</h2>
+    <div className="space-y-4">
+      <div className="border-b border-blue-100 pb-4">
+        <p className="text-sm text-blue-800">Current Rate</p>
+        {error() ? (
+          <p className="text-red-500 text-sm">Error: {error()}</p>
+        ) : !fedRateData() ? (
+          <p className="text-2xl font-bold text-navy-900">Loading...</p>
+        ) : (
+          <>
+            <p className="text-2xl font-bold text-navy-900">{fedRateData().rate}%</p>
+            <p className="text-sm text-blue-600">Last Updated: {fedRateData().date}</p>
+          </>
+        )}
+      </div>
+      <div className="text-xs text-gray-600 mt-4">
+        <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt.</p>
+      </div>
+    </div>
+  </div>
 
+  {/* Unemployment Rate Card */}
+  <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
+    <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Unemployment Rate</h2>
+    <div className="space-y-4">
+      <div className="border-b border-blue-100 pb-4">
+        <p className="text-sm text-blue-800">Current Rate</p>
+        {error() ? (
+          <p className="text-red-500 text-sm">Error: {error()}</p>
+        ) : !unemploymentData() ? (
+          <p className="text-2xl font-bold text-navy-900">Loading...</p>
+        ) : (
+          <>
+            <p className="text-2xl font-bold text-navy-900">{unemploymentData().rate}%</p>
+            <p className="text-sm text-blue-600">Last Updated: {unemploymentData().date}</p>
+          </>
+        )}
+      </div>
+      <div className="text-xs text-gray-600 mt-4">
+        <p>The Unemployment Rate measures the percentage of jobseekers unable to find work. Higher rates suggest issues with labor market health and declining consumer spending power.</p>
+      </div>
+    </div>
+  </div>
+
+  {/* Durable Goods Orders Card */}
+  <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
+    <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Durable Goods Orders</h2>
+    <div className="space-y-4">
+      <div className="border-b border-blue-100 pb-4">
+        <p className="text-sm text-blue-800">Latest Value (Billions)</p>
+        {error() ? (
+          <p className="text-red-500 text-sm">Error: {error()}</p>
+        ) : !durablesData() ? (
+          <p className="text-2xl font-bold text-navy-900">Loading...</p>
+        ) : (
+          <>
+            <p className="text-2xl font-bold text-navy-900">${durablesData().value}B</p>
+            <p className="text-sm text-blue-600">Last Updated: {durablesData().date}</p>
+          </>
+        )}
+      </div>
+      <div className="text-xs text-gray-600 mt-4">
+        <p>Durable Goods Orders measures the value of manufacturing orders for goods that last longer than three years, such as vehicles and equipment. Increasing orders suggest potential economy growth, strong business investment, and promising earnings in industrial sectors.</p>
+      </div>
+    </div>
+  </div>
+</div>
+            
           {/* Right Column - Market Movers */}
           <div className="space-y-6">
             {/* Top Gainers */}
