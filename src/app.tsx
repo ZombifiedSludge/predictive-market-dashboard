@@ -25,11 +25,11 @@ const App = () => {
       return JSON.parse(localStorage.getItem('fred_data')).data;
     }
 
-    const [fedResponse, unemploymentResponse, durablesResponse] = await Promise.all([
-      fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json`),
-      fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json`),
-      fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=DGORDER&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json`)
-    ]);
+   const [fedResponse, unemploymentResponse, durablesResponse] = await Promise.all([
+  fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=lin`),
+  fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=lin`),
+  fetch(`https://api.stlouisfed.org/fred/series/observations?series_id=DGORDER&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=mil`)
+]);
 
     const [fedData, unemploymentData, durablesData] = await Promise.all([
       fedResponse.json(),
@@ -46,37 +46,39 @@ const App = () => {
     return data;
   };
 
-  onMount(async () => {
-    try {
-      const fredData = await fetchFREDData();
-      
-      if (fredData.fedData.observations) {
-        const latest = fredData.fedData.observations[0];
-        setFedRateData({
-          rate: parseFloat(latest.value).toFixed(2),
-          date: new Date(latest.date).toLocaleDateString()
-        });
-      }
-
-      if (fredData.unemploymentData.observations) {
-        const latest = fredData.unemploymentData.observations[0];
-        setUnemploymentData({
-          rate: parseFloat(latest.value).toFixed(1),
-          date: new Date(latest.date).toLocaleDateString()
-        });
-      }
-
-      if (fredData.durablesData.observations) {
-        const latest = fredData.durablesData.observations[0];
-        setDurablesData({
-          value: parseFloat(latest.value).toFixed(1),
-          date: new Date(latest.date).toLocaleDateString()
-        });
-      }
-    } catch (err) {
-      setError(err.message);
+onMount(async () => {
+  try {
+    const fredData = await fetchFREDData();
+    console.log('FRED API Response:', fredData);
+    
+    if (fredData.fedData.observations) {
+      const latest = fredData.fedData.observations[0];
+      setFedRateData({
+        rate: parseFloat(latest.value).toFixed(2),
+        date: new Date(latest.date).toLocaleDateString()
+      });
     }
-  });
+
+    if (fredData.unemploymentData.observations) {
+      const latest = fredData.unemploymentData.observations[0];
+      setUnemploymentData({
+        rate: parseFloat(latest.value).toFixed(1),
+        date: new Date(latest.date).toLocaleDateString()
+      });
+    }
+
+    if (fredData.durablesData.observations) {
+      const latest = fredData.durablesData.observations[0];
+      setDurablesData({
+        value: parseFloat(latest.value).toFixed(1),
+        date: new Date(latest.date).toLocaleDateString()
+      });
+    }
+  } catch (err) {
+    console.error('Detailed error:', err);
+    setError(err.message);
+  }
+});
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
@@ -84,14 +86,14 @@ const App = () => {
         <nav className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <img src="/omenify-logo.png" alt="Omenify" className="h-8" />
+            <img src="/omenifylogo.png" alt="Omenify" className="h-8" />
             
             {/* Navigation Links */}
             <div className="flex space-x-8">
-              <a href="#dashboard" className="font-georgia font-bold text-blue-900 hover:text-blue-700">Dashboard</a>
-              <a href="#bellwether" className="font-georgia font-bold text-blue-900 hover:text-blue-700">Bellwether</a>
-              <a href="#betting" className="font-georgia font-bold text-blue-900 hover:text-blue-700">Why Betting Markets</a>
-              <a href="#sources" className="font-georgia font-bold text-blue-900 hover:text-blue-700">Sources</a>
+              <a href="#dashboard" className="font-monaco font-bold text-blue-900 hover:text-blue-700">Dashboard</a>
+              <a href="#bellwether" className="font-monaco font-bold text-blue-900 hover:text-blue-700">Bellwethers</a>
+              <a href="#betting" className="font-monaco font-bold text-blue-900 hover:text-blue-700">Why Betting Markets</a>
+              <a href="#sources" className="font-monaco font-bold text-blue-900 hover:text-blue-700">Sources</a>
             </div>
           </div>
         </nav>
