@@ -238,6 +238,7 @@ const [durablesData, setDurablesData] = createSignal(null);
     </div>
   </div>
 </div>
+</div> {/* This closes the col-span-3 div */}
             
           {/* Right Column - Market Movers */}
           <div className="space-y-6">
