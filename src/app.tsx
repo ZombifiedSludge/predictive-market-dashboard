@@ -125,11 +125,11 @@ onMount(async () => {
                 >
                   <div className="py-1" role="menu">
                     <a
-                      href="/bellwethers/googl"
+                      href="/bellwethers/meta"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
-                      Alphabet Inc. (GOOGL)
+                      Meta Platforms Inc. (META)
                     </a>
                     <a
                       href="/bellwethers/jbht"
