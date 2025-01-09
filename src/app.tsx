@@ -77,26 +77,30 @@ const App: Component = () => {
             </div>
           </div>
 
-{/* Federal Funds Rate Card */}
-<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
-  <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Federal Funds Rate</h2>
-  <div className="space-y-4">
-    <div className="border-b border-blue-100 pb-4">
-      <p className="text-sm text-blue-800">Current Rate</p>
-      <p className="text-2xl font-bold text-navy-900">
-        {/* Display the live rate */}
-        {fedRate() && fedRate().rate ? `${fedRate().rate}%` : "Loading..."}
-      </p>
-      <p className="text-sm text-blue-600">
-        {/* Display the last updated date */}
-        {fedRate() && fedRate().date ? `Last Updated: ${fedRate().date}` : "Loading..."}
-      </p>
+          {/* Federal Funds Rate Card */}
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
+            <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Federal Funds Rate</h2>
+            <div className="space-y-4">
+              <div className="border-b border-blue-100 pb-4">
+                <p className="text-sm text-blue-800">Current Rate</p>
+                <p className="text-2xl font-bold text-navy-900">
+                  {/* Display the live rate */}
+                  {fedRate() && fedRate().rate ? `${fedRate().rate}%` : "Loading..."}
+                </p>
+                <p className="text-sm text-blue-600">
+                  {/* Display the last updated date */}
+                  {fedRate() && fedRate().date ? `Last Updated: ${fedRate().date}` : "Loading..."}
+                </p>
+              </div>
+              <div className="text-sm text-gray-600 mt-4">
+                <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lower rates usually indicate reduced financing costs for homebuyers, businesses, loan-seeking students, and consumers with credit card debt.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-    <div className="text-sm text-gray-600 mt-4">
-      <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lower rates usually indicate reduced financing costs for homebuyers, businesses, loan-seeking students, and consumers with credit card debt.</p>
-    </div>
-  </div>
-</div>
-
+  );
+};
 
 export default App;
