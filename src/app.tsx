@@ -17,7 +17,7 @@ const [durablesData, setDurablesData] = createSignal(null);
   // Close dropdown when clicking outside
   const closeDropdown = () => setIsDropdownOpen(false);
 
- onMount(async () => {
+onMount(async () => {
     try {
       // Fetch Fed Rate, Unemployment, and Durables data
       const [fedResponse, unemploymentResponse, durablesResponse] = await Promise.all([
@@ -31,6 +31,23 @@ const [durablesData, setDurablesData] = createSignal(null);
         unemploymentResponse.json(),
         durablesResponse.json()
       ]);
+
+      // Process fed rate data
+      if (fedData['data']) {
+        const latestRate = fedData['data'][0];
+        setFedRateData({
+          rate: parseFloat(latestRate.value).toFixed(2),
+          date: new Date(latestRate.date).toLocaleDateString()
+        });
+      } else if (fedData['Time Series (Monthly)']) {
+        const dates = Object.keys(fedData['Time Series (Monthly)']).sort().reverse();
+        const latestDate = dates[0];
+        const latestData = fedData['Time Series (Monthly)'][latestDate];
+        setFedRateData({
+          rate: parseFloat(latestData['value']).toFixed(2),
+          date: new Date(latestDate).toLocaleDateString()
+        });
+      }
 
       // Process unemployment data
       if (unemploymentData.data) {
