@@ -7,7 +7,6 @@ const App: Component = () => {
   const [marketData, setMarketData] = createSignal(null);
   const [error, setError] = createSignal(null);
 
-  // Fetch both Federal Funds Rate and Top Gainers/Losers data
   onMount(async () => {
     try {
       // Fetch Fed Rate
@@ -89,9 +88,9 @@ const App: Component = () => {
           <p className="text-xl text-blue-400 font-mono">Track today to capture tomorrow.</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-6 max-w-6xl mx-auto">
-          {/* Left Column */}
-          <div className="space-y-6">
+        <div className="grid grid-cols-4 gap-6">
+          {/* Main Content Area (3 columns) */}
+          <div className="col-span-3 space-y-6">
             {/* S&P 500 Card */}
             <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
               <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">S&P 500 Predictions</h2>
@@ -138,79 +137,60 @@ const App: Component = () => {
                 </div>
               </div>
             </div>
+
+            {/* Space for future graphs */}
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 h-96">
+              <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Market Trends</h2>
+              <div className="h-full flex items-center justify-center text-gray-400">
+                Graph placeholder
+              </div>
+            </div>
           </div>
 
-          {/* Right Column - Market Movers */}
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
-            <h2 className="text-xl font-semibold text-navy-900 mb-4 font-helvetica">Market Movers</h2>
-            <div className="space-y-6">
-              {/* Top Gainers */}
-              <div>
-                <h3 className="text-lg font-semibold text-blue-800 mb-3">Top Gainers</h3>
-                {!marketData() ? (
-                  <p className="text-navy-900">Loading...</p>
-                ) : (
-                  <div className="space-y-2">
-                    {marketData().top_gainers?.slice(0, 3).map((stock) => (
-                      <div className="border-b border-blue-100 pb-2">
+          {/* Right Column - Market Movers (1 column) */}
+          <div className="space-y-6">
+            {/* Top Gainers */}
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+              <h2 className="text-lg font-semibold text-blue-800 mb-3">Top Gainers</h2>
+              {!marketData() ? (
+                <p className="text-navy-900">Loading...</p>
+              ) : (
+                <div className="space-y-3">
+                  {marketData().top_gainers?.slice(0, 3).map((stock) => (
+                    <div className="border-b border-blue-100 pb-2">
+                      <div className="flex flex-col">
                         <div className="flex justify-between items-center">
-                          <div>
-                            <p className="font-bold text-navy-900">{stock.ticker}</p>
-                            <p className="text-sm text-gray-600">{stock.price}</p>
-                          </div>
-                          <p className="text-green-500 font-bold">+{stock.change_percentage}</p>
+                          <span className="font-bold text-navy-900">{stock.ticker}</span>
+                          <span className="text-gray-600">${stock.price}</span>
                         </div>
+                        <span className="text-green-500 font-bold">+{stock.change_percentage}</span>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-              {/* Top Losers */}
-              <div>
-                <h3 className="text-lg font-semibold text-blue-800 mb-3">Top Losers</h3>
-                {!marketData() ? (
-                  <p className="text-navy-900">Loading...</p>
-                ) : (
-                  <div className="space-y-2">
-                    {marketData().top_losers?.slice(0, 3).map((stock) => (
-                      <div className="border-b border-blue-100 pb-2">
+            {/* Top Losers */}
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+              <h2 className="text-lg font-semibold text-blue-800 mb-3">Top Losers</h2>
+              {!marketData() ? (
+                <p className="text-navy-900">Loading...</p>
+              ) : (
+                <div className="space-y-3">
+                  {marketData().top_losers?.slice(0, 3).map((stock) => (
+                    <div className="border-b border-blue-100 pb-2">
+                      <div className="flex flex-col">
                         <div className="flex justify-between items-center">
-                          <div>
-                            <p className="font-bold text-navy-900">{stock.ticker}</p>
-                            <p className="text-sm text-gray-600">{stock.price}</p>
-                          </div>
-                          <p className="text-red-500 font-bold">{stock.change_percentage}</p>
+                          <span className="font-bold text-navy-900">{stock.ticker}</span>
+                          <span className="text-gray-600">${stock.price}</span>
                         </div>
+                        <span className="text-red-500 font-bold">{stock.change_percentage}</span>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Most Active */}
-              <div>
-                <h3 className="text-lg font-semibold text-blue-800 mb-3">Most Active</h3>
-                {!marketData() ? (
-                  <p className="text-navy-900">Loading...</p>
-                ) : (
-                  <div className="space-y-2">
-                    {marketData().most_actively_traded?.slice(0, 3).map((stock) => (
-                      <div className="border-b border-blue-100 pb-2">
-                        <div className="flex justify-between items-center">
-                          <div>
-                            <p className="font-bold text-navy-900">{stock.ticker}</p>
-                            <p className="text-sm text-gray-600">{stock.price}</p>
-                          </div>
-                          <p className={stock.change_percentage.startsWith('-') ? 'text-red-500 font-bold' : 'text-green-500 font-bold'}>
-                            {stock.change_percentage}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
