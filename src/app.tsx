@@ -95,153 +95,162 @@ const App = () => {
         </nav>
       </header>
 
-      <main className="container mx-auto px-6 py-8">
-        {/* Main content grid */}
-        <div className="grid grid-cols-4 gap-6 mb-6">
-          {/* Left side - Main content */}
-          <div className="col-span-3">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 mb-6">
-              <h2 className="text-xl font-semibold text-navy-900 mb-4">S&P 500 End of Year Prediction</h2>
-              {/* Your existing S&P prediction content */}
-            </div>
+   <main className="container mx-auto px-6 py-8">
+  {/* Main content grid */}
+  <div className="grid grid-cols-4 gap-6 mb-6">
+    {/* Left side - Main content */}
+    <div className="col-span-3">
+      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 mb-6">
+        <h2 className="text-xl font-semibold text-navy-900 mb-4">S&P 500 End of Year Prediction</h2>
+        {/* Your existing S&P prediction content */}
+      </div>
 
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
-              <h2 className="text-xl font-semibold text-navy-900 mb-4">NASDAQ End of Year Prediction</h2>
-              {/* Your existing NASDAQ prediction content */}
-            </div>
-          </div>
+      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
+        <h2 className="text-xl font-semibold text-navy-900 mb-4">NASDAQ End of Year Prediction</h2>
+        {/* Your existing NASDAQ prediction content */}
+      </div>
+    </div>
 
-          {/* Right side - Projections and Live Data */}
-          <div className="space-y-6">
-            {/* S&P 500 Projections */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-3">Top S&P 500 Projections</h2>
-              <div className="space-y-2">
-                {[1, 2, 3, 4].map((_, i) => (
-                  <div key={i} className="border-b border-blue-100 pb-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-navy-900">Analyst {i + 1}</span>
-                      <span className="text-sm text-gray-600">Projection</span>
-                    </div>
-                  </div>
-                ))}
+    {/* Right side - Projections and Live Data */}
+    <div className="space-y-6">
+      {/* S&P 500 Projections */}
+      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+        <h2 className="text-lg font-semibold text-blue-800 mb-3">Top S&P 500 Projections</h2>
+        <div className="space-y-2">
+          {[1, 2, 3, 4].map((_, i) => (
+            <div key={i} className="border-b border-blue-100 pb-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-navy-900">Analyst {i + 1}</span>
+                <span className="text-sm text-gray-600">Projection</span>
               </div>
             </div>
-
-            {/* NASDAQ Projections */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-3">Top NASDAQ Projections</h2>
-              <div className="space-y-2">
-                {[1, 2, 3, 4].map((_, i) => (
-                  <div key={i} className="border-b border-blue-100 pb-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-navy-900">Analyst {i + 1}</span>
-                      <span className="text-sm text-gray-600">Projection</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Live Index ETF Tracking */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-3">Live Index ETF Tracking</h2>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">Dow Jones Industrial Average ETF (DIA)</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-semibold text-gray-600">
-                      ${marketIndexes().dowJones.value}
-                    </span>
-                    <span className={`text-xs ${marketIndexes().dowJones.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {marketIndexes().dowJones.change > 0 ? '+' : ''}{marketIndexes().dowJones.change}%
-                    </span>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">S&P 500 ETF (SPY)</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-semibold text-gray-600">
-                      ${marketIndexes().sp500.value}
-                    </span>
-                    <span className={`text-xs ${marketIndexes().sp500.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {marketIndexes().sp500.change > 0 ? '+' : ''}{marketIndexes().sp500.change}%
-                    </span>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">NASDAQ Composite ETF (ONEQ)</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-semibold text-gray-600">
-                      ${marketIndexes().nasdaq.value}
-                    </span>
-                    <span className={`text-xs ${marketIndexes().nasdaq.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {marketIndexes().nasdaq.change > 0 ? '+' : ''}{marketIndexes().nasdaq.change}%
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Spotify Embed */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Mood Music</h2>
-              <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-                {/* Spotify embed will go here */}
-                <span className="text-gray-500">Spotify Player Placeholder</span>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
+      </div>
 
-{/* Gainers/Losers section */}
-<div className="grid grid-cols-3 gap-6 mb-6">
-  <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-[220px]">
-    <div className="space-y-4">
-      {/* Top Gainers Section */}
-      <div>
-        <h3 className="text-sm font-semibold text-blue-800 mb-2">Top Gainers:</h3>
-        <div className="space-y-1">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">1. Stock A</span>
-            <span className="text-sm text-green-500">+5.2%</span>
+      {/* NASDAQ Projections */}
+      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+        <h2 className="text-lg font-semibold text-blue-800 mb-3">Top NASDAQ Projections</h2>
+        <div className="space-y-2">
+          {[1, 2, 3, 4].map((_, i) => (
+            <div key={i} className="border-b border-blue-100 pb-2">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-navy-900">Analyst {i + 1}</span>
+                <span className="text-sm text-gray-600">Projection</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Live Index ETF Tracking */}
+      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+        <h2 className="text-lg font-semibold text-blue-800 mb-3">Live Index ETF Tracking</h2>
+        <div className="space-y-3">
+          <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+            <span className="text-sm text-navy-900">Dow Jones Industrial Average ETF (DIA)</span>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-semibold text-gray-600">
+                ${marketIndexes().dowJones.value}
+              </span>
+              <span className={`text-xs ${marketIndexes().dowJones.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                {marketIndexes().dowJones.change > 0 ? '+' : ''}{marketIndexes().dowJones.change}%
+              </span>
+            </div>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">2. Stock B</span>
-            <span className="text-sm text-green-500">+4.8%</span>
+          <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+            <span className="text-sm text-navy-900">S&P 500 ETF (SPY)</span>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-semibold text-gray-600">
+                ${marketIndexes().sp500.value}
+              </span>
+              <span className={`text-xs ${marketIndexes().sp500.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                {marketIndexes().sp500.change > 0 ? '+' : ''}{marketIndexes().sp500.change}%
+              </span>
+            </div>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">3. Stock C</span>
-            <span className="text-sm text-green-500">+4.1%</span>
+          <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+            <span className="text-sm text-navy-900">NASDAQ Composite ETF (ONEQ)</span>
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-semibold text-gray-600">
+                ${marketIndexes().nasdaq.value}
+              </span>
+              <span className={`text-xs ${marketIndexes().nasdaq.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                {marketIndexes().nasdaq.change > 0 ? '+' : ''}{marketIndexes().nasdaq.change}%
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Top Losers Section */}
-      <div>
-        <h3 className="text-sm font-semibold text-blue-800 mb-2">Top Losers:</h3>
-        <div className="space-y-1">
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">1. Stock X</span>
-            <span className="text-sm text-red-500">-3.2%</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">2. Stock Y</span>
-            <span className="text-sm text-red-500">-2.8%</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">3. Stock Z</span>
-            <span className="text-sm text-red-500">-2.5%</span>
-          </div>
+      {/* Spotify Embed */}
+      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+        <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Mood Music</h2>
+        <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+          {/* Spotify embed will go here */}
+          <span className="text-gray-500">Spotify Player Placeholder</span>
         </div>
       </div>
     </div>
   </div>
-  
-  {/* Empty columns for spacing */}
-  <div></div>
-  <div></div>
-</div>
+
+  {/* Middle section with Market Movers and Graph */}
+  <div className="grid grid-cols-12 gap-6 mb-6">
+    {/* Left column - Market Movers */}
+    <div className="col-span-2">
+      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+        <h2 className="text-lg font-semibold text-blue-800 mb-3">Top Market Movers</h2>
+        <div className="space-y-4">
+          {/* Top Gainers Section */}
+          <div>
+            <h3 className="text-sm font-semibold text-blue-800 mb-2">Top Gainers:</h3>
+            <div className="space-y-1">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">1. Stock A</span>
+                <span className="text-sm text-green-500">+5.2%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">2. Stock B</span>
+                <span className="text-sm text-green-500">+4.8%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">3. Stock C</span>
+                <span className="text-sm text-green-500">+4.1%</span>
+              </div>
+            </div>
+          </div>
+          {/* Top Losers Section */}
+          <div>
+            <h3 className="text-sm font-semibold text-blue-800 mb-2">Top Losers:</h3>
+            <div className="space-y-1">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">1. Stock X</span>
+                <span className="text-sm text-red-500">-3.2%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">2. Stock Y</span>
+                <span className="text-sm text-red-500">-2.8%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">3. Stock Z</span>
+                <span className="text-sm text-red-500">-2.5%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Middle column - Graph Space */}
+    <div className="col-span-10">
+      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+        <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Overview</h2>
+        <div className="w-full h-[calc(100%-2rem)] bg-gray-50 rounded flex items-center justify-center">
+          <span className="text-gray-500">Graph Placeholder</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
         {/* Bottom row for macro indicators */}
         <div className="grid grid-cols-3 gap-6">
