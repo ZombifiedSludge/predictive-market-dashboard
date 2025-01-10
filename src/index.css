@@ -12,9 +12,22 @@
 a, button, [role="button"] {
     cursor: url('/whale.png'), pointer;
 }
-/* Add the gradient background to main content area */
-main {
+
+/* Background gradient */
+body > div {  /* This targets your root div with min-h-screen */
     background: linear-gradient(to top, rgba(0, 32, 96, 0.1), white);
-    /* or for a different navy color:
-    background: linear-gradient(to top, rgba(23, 37, 84, 0.1), white); */
+}
+
+/* Text Selection with Glow */
+::selection {
+    background: rgba(0, 32, 96, 0.8);
+    color: white;
+    text-shadow: 0 0 8px rgba(100, 149, 237, 0.5);
+}
+
+/* For Firefox */
+::-moz-selection {
+    background: rgba(0, 32, 96, 0.8);
+    color: white;
+    text-shadow: 0 0 8px rgba(100, 149, 237, 0.5);
 }
