@@ -98,9 +98,6 @@ onMount(() => {
         </nav>
       </header>
 
-      <main className="container mx-auto px-6 py-8">
-        <h1 className="text-4xl font-bold text-navy-900 mb-2">Predictive Markets Dashboard</h1>
-        <p className="text-lg text-blue-800 mb-8">Track today to capture tomorrow</p>
 
         <div className="grid grid-cols-4 gap-6">
           {/* Left side - Main content */}
