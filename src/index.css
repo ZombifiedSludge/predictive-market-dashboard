@@ -16,7 +16,7 @@ a, button, [role="button"] {
 
 /* Background gradient */
 body > div {
-    background: linear-gradient(to top, rgba(0, 32, 96, 0.08), white);
+    background: linear-gradient(to top, rgba(0, 32, 96, 0.15), white);
 }
 
 /* Text Selection with Glow */
