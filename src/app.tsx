@@ -8,91 +8,30 @@ const App = () => {
   const [unemploymentData, setUnemploymentData] = createSignal(null);
   const [durablesData, setDurablesData] = createSignal(null);
 
-  // Cache management functions
-  const shouldRefreshCache = (key, intervalHours) => {
-    const cached = localStorage.getItem(key);
-    if (!cached) return true;
-    
-    const { timestamp } = JSON.parse(cached);
-    const now = new Date().getTime();
-    return (now - timestamp) > (intervalHours * 60 * 60 * 1000);
-  };
-
-  const FRED_API_KEY = 'b12c1cced5c15f90f28f8f6aaeb331cd';
-
-const fetchFREDData = async () => {
-  const cacheKey = 'fred_data';
-  const cached = localStorage.getItem(cacheKey);
-  
-  if (cached) {
-    const { timestamp, data } = JSON.parse(cached);
-    if (Date.now() - timestamp < 96 * 60 * 60 * 1000) {
-      return data;
-    }
-  }
-
-  try {
-    const response = await fetch('/.netlify/functions/getFredData');
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    
-    // Add debug logging
-    console.log('FRED API Response:', data);
-    
-    if (!data || !data.observations) {
-      throw new Error('Invalid FRED API response structure');
-    }
-
-    localStorage.setItem(cacheKey, JSON.stringify({
-      timestamp: Date.now(),
-      data
-    }));
-    
-    return data;
-  } catch (error) {
-    console.error('FRED API Error:', error);
-    throw new Error(`FRED API Error: ${error.message} at ${new Date().toISOString()}`);
-  }
-};
-  
-onMount(async () => {
-  try {
-    console.log('Using FRED API Key:', FRED_API_KEY);  // Debug line
-    const fredData = await fetchFREDData();
-    console.log('FRED API Response:', fredData);  // Debug line
-    
-    if (fredData.fedData.observations) {
-      const latest = fredData.fedData.observations[0];
+  onMount(() => {
+    try {
+      // Set Federal Funds Rate
       setFedRateData({
-        rate: parseFloat(latest.value).toFixed(2),
-        date: new Date(latest.date).toLocaleDateString()
+        rate: "4.33",
+        date: "2025-01-08"
       });
-    }
 
-    if (fredData.unemploymentData.observations) {
-      const latest = fredData.unemploymentData.observations[0];
+      // Set Unemployment Rate
       setUnemploymentData({
-        rate: parseFloat(latest.value).toFixed(1),
-        date: new Date(latest.date).toLocaleDateString()
+        rate: "4.2",
+        date: "2024-11"
       });
-    }
 
-    if (fredData.durablesData.observations) {
-      const latest = fredData.durablesData.observations[0];
+      // Set Durables Data
       setDurablesData({
-        value: parseFloat(latest.value).toFixed(1),
-        date: new Date(latest.date).toLocaleDateString()
+        value: "284.712",
+        date: "2024-11"
       });
+    } catch (err) {
+      console.error('Error setting data:', err);
+      setError(err.message);
     }
-  } catch (err) {
-    console.error('Detailed error:', err);
-    setError(err.message);
-  }
-});
+  });
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
