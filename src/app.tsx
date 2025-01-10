@@ -1,4 +1,4 @@
-import { createSignal, onMount } from 'solid-js';
+import { createSignal, onMount, onCleanup } from 'solid-js';
 
 const App = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -98,7 +98,19 @@ onMount(() => {
         </nav>
       </header>
 
+           <main className="container mx-auto px-6 py-8">
+        <h1 className="text-4xl font-bold text-navy-900 mb-2">Predictive Markets Dashboard</h1>
+        <p className="text-lg text-blue-800 mb-8">Track today to capture tomorrow</p>
 
+        <div className="grid grid-cols-4 gap-6">
+          {/* Left side - Main content */}
+          <div className="col-span-3">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 mb-6">
+              <h2 className="text-xl font-semibold text-navy-900 mb-4">S&P 500 End of Year Prediction</h2>
+              {/* Your existing S&P prediction content */}
+            </div>
+
+      
         <div className="grid grid-cols-4 gap-6">
           {/* Left side - Main content */}
           <div className="col-span-3">
