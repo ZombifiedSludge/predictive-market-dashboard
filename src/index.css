@@ -1,3 +1,4 @@
+/* Your existing styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,8 +15,8 @@ a, button, [role="button"] {
 }
 
 /* Background gradient */
-body > div {  /* This targets your root div with min-h-screen */
-    background: linear-gradient(to top, rgba(0, 32, 96, 0.1), white);
+body > div {
+    background: linear-gradient(to top, rgba(0, 32, 96, 0.08), white);
 }
 
 /* Text Selection with Glow */
@@ -30,4 +31,39 @@ body > div {  /* This targets your root div with min-h-screen */
     background: rgba(0, 32, 96, 0.8);
     color: white;
     text-shadow: 0 0 8px rgba(100, 149, 237, 0.5);
+}
+
+/* Underwater Card Glow Effect */
+.bg-white\/95 {
+    transition: all 0.3s ease;
+}
+
+.bg-white\/95:hover {
+    box-shadow: 0 0 20px rgba(0, 32, 96, 0.2),
+                0 0 40px rgba(0, 32, 96, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Bioluminescent Link Effect */
+a, button {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+a:hover, button:hover {
+    color: rgb(0, 32, 96);
+    text-shadow: 0 0 8px rgba(100, 149, 237, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        text-shadow: 0 0 8px rgba(100, 149, 237, 0.3);
+    }
+    50% {
+        text-shadow: 0 0 12px rgba(100, 149, 237, 0.5);
+    }
+    100% {
+        text-shadow: 0 0 8px rgba(100, 149, 237, 0.3);
+    }
 }
