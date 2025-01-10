@@ -33,16 +33,15 @@ onMount(() => {
       date: "2025-01-06"
     });
 
-    // Add the market data fetch logic here
+    // Market data fetch function
     const fetchMarketData = async () => {
       try {
         const API_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
         
-        // Fetch data for each index
         const [dowData, spData, nasdaqData] = await Promise.all([
-          fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=QQQ&token=${API_KEY}`).then(r => r.json())
+          fetch(`https://finnhub.io/api/v1/quote?symbol=^DJI&token=${API_KEY}`).then(r => r.json()),
+          fetch(`https://finnhub.io/api/v1/quote?symbol=^SPX&token=${API_KEY}`).then(r => r.json()),
+          fetch(`https://finnhub.io/api/v1/quote?symbol=^IXIC&token=${API_KEY}`).then(r => r.json())
         ]);
 
         setMarketIndexes({
@@ -68,11 +67,12 @@ onMount(() => {
     // Initial fetch
     fetchMarketData();
 
-    // Set up polling every 5 minutes
-    const marketInterval = setInterval(fetchMarketData, 300000);
+    // Set up polling every 30 seconds
+    const marketInterval = setInterval(fetchMarketData, 30000);
 
-    // Clean up interval on unmount
+    // Cleanup
     onCleanup(() => clearInterval(marketInterval));
+    
   } catch (err) {
     console.error('Error setting data:', err);
     setError(err.message);
