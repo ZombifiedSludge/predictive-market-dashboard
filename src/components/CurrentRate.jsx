@@ -6,28 +6,24 @@ const CurrentRate = () => {
 
   createEffect(async () => {
     try {
-      // Step 1: Try to fetch the data
       const response = await fetch('/.netlify/functions/getFredData');
-      console.log('Step 1 - Raw Response:', response);
-
-      // Step 2: Check if response is OK
+      console.log('Raw Response Status:', response.status);
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      // Step 3: Parse the JSON
       const jsonData = await response.json();
-      console.log('Step 3 - Parsed JSON:', jsonData);
+      console.log('Actual Response Data:', jsonData);  // Let's see the exact data
 
-      // Step 4: Check the structure
-      console.log('Step 4 - Data Structure:', {
-        type: typeof jsonData,
-        keys: Object.keys(jsonData),
-        hasObservations: 'observations' in jsonData,
-        fedData: jsonData.fedData // Check if data is nested under fedData
-      });
+      // Check if we have data and handle both possible structures
+      const observations = jsonData.observations || (jsonData.fedData && jsonData.fedData.observations);
+      
+      if (!observations) {
+        throw new Error('No observations data found in response');
+      }
 
-      setData(jsonData);
+      setData(observations);
     } catch (err) {
       console.error('Detailed Error:', err);
       setError(err.message);
@@ -36,17 +32,23 @@ const CurrentRate = () => {
 
   return (
     <div class="p-4">
-      <h2>FRED API Debug Info:</h2>
+      <h2>Current Federal Funds Rate:</h2>
       {error() && (
         <div class="text-red-500">
-          <p>Error: {error()}</p>
+          Error: {error()}
         </div>
       )}
-      {data() && (
-        <pre class="bg-gray-100 p-4 mt-2 overflow-auto">
+      {data() && data()[0] && (
+        <div class="text-2xl font-bold mt-2">
+          {data()[0].value}%
+        </div>
+      )}
+      <div class="mt-4 text-sm text-gray-600">
+        Debug Info:
+        <pre class="bg-gray-100 p-2 mt-1 rounded">
           {JSON.stringify(data(), null, 2)}
         </pre>
-      )}
+      </div>
     </div>
   );
 };
