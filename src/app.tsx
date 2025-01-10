@@ -56,34 +56,6 @@ const App = () => {
         <h1 className="text-3xl font-bold text-navy-900 mb-2">Predictive Markets Dashboard</h1>
         <p className="text-lg text-blue-800 mb-8">Track today to capture tomorrow</p>
 
-        {/* Live Index Tracking Box */}
-        <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 mb-6">
-          <h2 className="text-xl font-semibold text-navy-900 mb-4">Live Index Tracking</h2>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center border-b border-blue-100 pb-3">
-              <span className="text-lg text-navy-900">Dow Jones Industrial Average</span>
-              <span className="text-lg font-semibold text-gray-600">--</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-blue-100 pb-3">
-              <span className="text-lg text-navy-900">S&P 500</span>
-              <span className="text-lg font-semibold text-gray-600">--</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-blue-100 pb-3">
-              <span className="text-lg text-navy-900">NASDAQ Composite</span>
-              <span className="text-lg font-semibold text-gray-600">--</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Spotify Embed Box */}
-        <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 mb-6">
-          <h2 className="text-xl font-semibold text-navy-900 mb-4">Market Mood Music</h2>
-          <div className="w-full h-96 bg-gray-100 flex items-center justify-center">
-            {/* Spotify embed will go here */}
-            <span className="text-gray-500">Spotify Player Placeholder</span>
-          </div>
-        </div>
-
         <div className="grid grid-cols-4 gap-6">
           {/* Left side - Main content */}
           <div className="col-span-3">
@@ -98,7 +70,7 @@ const App = () => {
             </div>
           </div>
 
-          {/* Right side - Projections */}
+          {/* Right side - Projections and Live Data */}
           <div className="space-y-6">
             {/* S&P 500 Projections */}
             <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
@@ -129,6 +101,34 @@ const App = () => {
                 ))}
               </div>
             </div>
+
+            {/* Live Index Tracking */}
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+              <h2 className="text-lg font-semibold text-blue-800 mb-3">Live Index Tracking</h2>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-sm text-navy-900">Dow Jones Industrial Average</span>
+                  <span className="text-sm font-semibold text-gray-600">--</span>
+                </div>
+                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-sm text-navy-900">S&P 500</span>
+                  <span className="text-sm font-semibold text-gray-600">--</span>
+                </div>
+                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-sm text-navy-900">NASDAQ Composite</span>
+                  <span className="text-sm font-semibold text-gray-600">--</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Spotify Embed */}
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+              <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Mood Music</h2>
+              <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+                {/* Spotify embed will go here */}
+                <span className="text-gray-500">Spotify Player Placeholder</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -137,7 +137,7 @@ const App = () => {
           {/* Your existing market movers content */}
         </div>
 
-        {/* Macroeconomic Indicators moved to the bottom */}
+        {/* Macroeconomic Indicators */}
         <div className="grid grid-cols-3 gap-6 mt-24">
           {/* Federal Funds Rate */}
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
@@ -221,5 +221,3 @@ const App = () => {
     </div>
   );
 };
-
-export default App;
