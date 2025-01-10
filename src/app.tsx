@@ -296,7 +296,10 @@ onMount(() => {
     </div>
   </div>
 </div>
-</main> {/* Ensure the main tag is properly closed */}
-</div> {/* Ensure the outer div is properly closed */}
+        </div> {/* Close the container div */}
+      </main>
+    </div> {/* Close the outer div */}
+  );
+};
 
 export default App;
