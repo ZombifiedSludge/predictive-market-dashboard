@@ -25,7 +25,7 @@ const App = () => {
       // Set Durables Data
       setDurablesData({
         value: "284.712",
-        date: "2025-1-06"
+        date: "2025-01-06"
       });
     } catch (err) {
       console.error('Error setting data:', err);
@@ -43,10 +43,10 @@ const App = () => {
             
             {/* Navigation Links */}
             <div className="flex space-x-8">
-              <a href="#dashboard" className="font-monaco font-bold text-blue-900 hover:text-blue-700">Dashboard</a>
-              <a href="#bellwether" className="font-monaco font-bold text-blue-900 hover:text-blue-700">Bellwethers</a>
-              <a href="#betting" className="font-monaco font-bold text-blue-900 hover:text-blue-700">Why Betting Markets</a>
-              <a href="#sources" className="font-monaco font-bold text-blue-900 hover:text-blue-700">Sources</a>
+              <a href="#dashboard" className="font-serif font-bold text-blue-900 hover:text-blue-700">Dashboard</a>
+              <a href="#bellwether" className="font-serif font-bold text-blue-900 hover:text-blue-700">Bellwethers</a>
+              <a href="#betting" className="font-serif font-bold text-blue-900 hover:text-blue-700">Why Betting Markets</a>
+              <a href="#sources" className="font-serif font-bold text-blue-900 hover:text-blue-700">Sources</a>
             </div>
           </div>
         </nav>
