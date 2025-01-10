@@ -33,25 +33,32 @@ const fetchFREDData = async () => {
 
   try {
     const response = await fetch('/.netlify/functions/getFredData');
-    console.log('Response:', response); // Log the response for debugging
+    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
+    
     const data = await response.json();
     
+    // Add debug logging
+    console.log('FRED API Response:', data);
+    
+    if (!data || !data.observations) {
+      throw new Error('Invalid FRED API response structure');
+    }
+
     localStorage.setItem(cacheKey, JSON.stringify({
       timestamp: Date.now(),
       data
     }));
-
+    
     return data;
   } catch (error) {
     console.error('FRED API Error:', error);
-    throw new Error(`FRED API Error: ${error.message} at ${new Date().toISOString()}`); // Include timestamp for debugging
+    throw new Error(`FRED API Error: ${error.message} at ${new Date().toISOString()}`);
   }
 };
-
+  
 onMount(async () => {
   try {
     console.log('Using FRED API Key:', FRED_API_KEY);  // Debug line
