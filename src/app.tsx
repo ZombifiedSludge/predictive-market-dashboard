@@ -30,42 +30,11 @@ const fetchFREDData = async () => {
     }
   }
 
-  const fetchOptions = {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json'
-    },
-    mode: 'cors'
-  };
-
   try {
-    const fedResponse = await fetch(
-      `https://api.stlouisfed.org/fred/series/observations?series_id=FEDFUNDS&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=lin`,
-      fetchOptions
-    );
-    if (!fedResponse.ok) throw new Error(`Fed data HTTP error! status: ${fedResponse.status}`);
-    const fedData = await fedResponse.json();
-
-    const unemploymentResponse = await fetch(
-      `https://api.stlouisfed.org/fred/series/observations?series_id=UNRATE&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=lin`,
-      fetchOptions
-    );
-    if (!unemploymentResponse.ok) throw new Error(`Unemployment data HTTP error! status: ${unemploymentResponse.status}`);
-    const unemploymentData = await unemploymentResponse.json();
-
-    const durablesResponse = await fetch(
-      `https://api.stlouisfed.org/fred/series/observations?series_id=DGORDER&api_key=${FRED_API_KEY}&sort_order=desc&limit=1&file_type=json&frequency=m&units=mil`,
-      fetchOptions
-    );
-    if (!durablesResponse.ok) throw new Error(`Durables data HTTP error! status: ${durablesResponse.status}`);
-    const durablesData = await durablesResponse.json();
-
-    const data = {
-      fedData,
-      unemploymentData,
-      durablesData
-    };
-
+    const response = await fetch('/.netlify/functions/getFredData');
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+    
     localStorage.setItem(cacheKey, JSON.stringify({
       timestamp: Date.now(),
       data
@@ -77,7 +46,7 @@ const fetchFREDData = async () => {
     throw new Error(`FRED API Error: ${error.message}`);
   }
 };
-
+  
 onMount(async () => {
   try {
     console.log('Using FRED API Key:', FRED_API_KEY);  // Debug line
