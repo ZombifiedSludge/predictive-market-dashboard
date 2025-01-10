@@ -211,6 +211,7 @@ const App = () => {
                   </>
                 )}
               </div>
+            </div>
               <div className="text-sm text-gray-600">
                 <p>Durable Goods Orders measures the value of manufacturing orders for goods that last longer than three years, such as vehicles and equipment. Increasing orders suggest potential economy growth, strong business investment, and promising earnings in industrial sectors.</p>
               </div>
@@ -221,3 +222,5 @@ const App = () => {
     </div>
   );
 };
+
+export default App;
