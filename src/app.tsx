@@ -13,19 +13,19 @@ const App = () => {
       // Set Federal Funds Rate
       setFedRateData({
         rate: "4.33",
-        date: "2025-01-08"
+        date: "2025-01-02"
       });
 
       // Set Unemployment Rate
       setUnemploymentData({
         rate: "4.2",
-        date: "2024-11"
+        date: "2024-12-06"
       });
 
       // Set Durables Data
       setDurablesData({
         value: "284.712",
-        date: "2024-11"
+        date: "2025-1-06"
       });
     } catch (err) {
       console.error('Error setting data:', err);
@@ -111,30 +111,33 @@ const App = () => {
 
         {/* Macroeconomic Indicators at the bottom */}
         <div className="grid grid-cols-3 gap-6 mt-12">
-          {/* Federal Funds Rate */}
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
-            <h2 className="text-xl font-semibold text-navy-900 mb-4">Federal Funds Rate</h2>
-            <div className="space-y-4">
-              <div className="border-b border-blue-100 pb-4">
-                <p className="text-sm text-blue-800">Current Rate</p>
-                {error() ? (
-                  <p className="text-red-500 text-sm">Error: {error()}</p>
-                ) : !fedRateData() ? (
-                  <p className="text-2xl font-bold text-navy-900">Loading...</p>
-                ) : (
-                  <>
-                    <p className="text-2xl font-bold text-navy-900">{fedRateData().rate}%</p>
-                    <p className="text-sm text-blue-600">Last Updated: {fedRateData().date}</p>
-                    <p className="text-xs text-gray-500 mt-2">Source: Federal Reserve Bank of St. Louis</p>
-                  </>
-                )}
-              </div>
-              <div className="text-sm text-gray-600">
-                <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt.</p>
-              </div>
-            </div>
-          </div>
 
+          {/* Federal Funds Rate */}
+<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
+  <h2 className="text-xl font-semibold text-navy-900 mb-4">Federal Funds Rate</h2>
+  <div className="space-y-4">
+    <div className="border-b border-blue-100 pb-4">
+      <p className="text-sm text-blue-800">Current Rate</p>
+      {error() ? (
+        <p className="text-red-500 text-sm">Error: {error()}</p>
+      ) : !fedRateData() ? (
+        <p className="text-2xl font-bold text-navy-900">Loading...</p>
+      ) : (
+        <>
+        <p className="text-2xl font-bold text-navy-900">{fedRateData().rate}%</p>
+        <p className="text-sm text-blue-600">Last Updated: {fedRateData().date}</p>
+        <p className="text-xs text-gray-500 mt-2">
+          Source: <a href="https://fred.stlouisfed.org/series/EFFR" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+        </p>
+        </>
+      )}
+    </div>
+    <div className="text-sm text-gray-600">
+      <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt.</p>
+    </div>
+  </div>
+</div>
+          
        {/* Unemployment Rate */}
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
             <h2 className="text-xl font-semibold text-navy-900 mb-4">Unemployment Rate</h2>
@@ -149,7 +152,9 @@ const App = () => {
                   <>
                     <p className="text-2xl font-bold text-navy-900">{unemploymentData().rate}%</p>
                     <p className="text-sm text-blue-600">Last Updated: {unemploymentData().date}</p>
-                    <p className="text-xs text-gray-500 mt-2">Source: Federal Reserve Bank of St. Louis</p>
+                   <p className="text-xs text-gray-500 mt-2">
+  Source: <a href="https://fred.stlouisfed.org/series/UNRATE" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+</p>
                   </>
                 )}
               </div>
@@ -171,10 +176,12 @@ const App = () => {
                   <p className="text-2xl font-bold text-navy-900">Loading...</p>
                 ) : (
                   <>
-                    <p className="text-2xl font-bold text-navy-900">${durablesData().value}B</p>
-                    <p className="text-sm text-blue-600">Last Updated: {durablesData().date}</p>
-                    <p className="text-xs text-gray-500 mt-2">Source: Federal Reserve Bank of St. Louis</p>
-                  </>
+                 <p className="text-2xl font-bold text-navy-900">${durablesData().value}B</p>
+<p className="text-sm text-blue-600">Last Updated: {durablesData().date}</p>
+<p className="text-xs text-gray-500 mt-2">
+  Source: <a href="https://fred.stlouisfed.org/series/DGORDER" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+</p>
+</>
                 )}
               </div>
               <div className="text-sm text-gray-600">
