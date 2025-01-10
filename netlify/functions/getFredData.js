@@ -11,16 +11,19 @@ export async function handler(event, context) {
       throw new Error(`FRED API responded with status: ${fedResponse.status}`);
     }
     
-    const data = await fedResponse.json();
-    
-    // Return the data directly without wrapping it
+    const responseData = await fedResponse.json();
+    console.log('FRED Direct Response:', responseData);  // Add this log
+
+    // Return the data with proper structure
     return {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        observations: responseData.observations  // Make sure we're sending the observations
+      })
     };
   } catch (error) {
     console.error('Error:', error);
