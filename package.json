@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@solidjs/router": "^0.15.1",
-    "solid-js": "^1.9.3",
-    "node-fetch": "^3.3.0"
+    "node-fetch": "^3.3.2",
+    "solid-js": "^1.9.3"
   }
 }
