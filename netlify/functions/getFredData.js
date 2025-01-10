@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';  // Import fetch from node-fetch
+const fetch = require('node-fetch');  // Use require for node-fetch@2
 
 export async function handler(event, context) {
   // Hardcoded API key
