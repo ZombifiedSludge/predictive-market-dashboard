@@ -191,7 +191,7 @@ const App = () => {
             </div>
           </div>
 
-          {/* Durable Goods Orders */}
+      {/* Durable Goods Orders */}
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
             <h2 className="text-xl font-semibold text-navy-900 mb-4">Durable Goods Orders</h2>
             <div className="space-y-4">
@@ -211,7 +211,6 @@ const App = () => {
                   </>
                 )}
               </div>
-            </div>
               <div className="text-sm text-gray-600">
                 <p>Durable Goods Orders measures the value of manufacturing orders for goods that last longer than three years, such as vehicles and equipment. Increasing orders suggest potential economy growth, strong business investment, and promising earnings in industrial sectors.</p>
               </div>
