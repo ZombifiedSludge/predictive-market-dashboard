@@ -3,4 +3,23 @@
   functions = "netlify/functions"
   publish = "dist"
 
-  ## more info on configuring this file: https://www.netlify.com/docs/netlify-toml-reference/
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+    Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept"
+
+[functions]
+  node_bundler = "esbuild"
+
+[dev]
+  functions = "netlify/functions"
+  publish = "dist"
+  port = 8888
+
+# Redirect all API calls to the serverless functions
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
