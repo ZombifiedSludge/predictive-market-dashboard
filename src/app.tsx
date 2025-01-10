@@ -80,7 +80,7 @@ const App = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen">
       <header className="bg-white shadow-lg">
         <nav className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
