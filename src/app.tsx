@@ -80,7 +80,7 @@ const App = () => {
   });
 
   return (
-    <div className="min-h-screen">
+  <div className="min-h-screen" onClick={createBubble}>
       <header className="bg-white shadow-lg">
         <nav className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
@@ -277,6 +277,30 @@ const App = () => {
       </main>
     </div>
   );
+};
+
+
+// Add bubble creation function here
+const createBubble = (e: MouseEvent) => {
+  const bubble = document.createElement('div');
+  const size = Math.random() * 30 + 20;
+  const left = e.clientX - size / 2;
+  const top = e.clientY - size / 2;
+  const travelDistance = Math.random() * 100 - 50;
+
+  bubble.className = 'bubble';
+  bubble.style.width = `${size}px`;
+  bubble.style.height = `${size}px`;
+  bubble.style.left = `${left}px`;
+  bubble.style.top = `${top}px`;
+  bubble.style.setProperty('--travel-x', `${travelDistance}px`);
+  bubble.style.animation = `float ${Math.random() * 2 + 3}s ease-in forwards`;
+
+  document.body.appendChild(bubble);
+
+  bubble.addEventListener('animationend', () => {
+    document.body.removeChild(bubble);
+  });
 };
 
 export default App;
