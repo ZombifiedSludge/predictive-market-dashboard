@@ -7,32 +7,78 @@ const App = () => {
   const [isDropdownOpen, setIsDropdownOpen] = createSignal(false);
   const [unemploymentData, setUnemploymentData] = createSignal(null);
   const [durablesData, setDurablesData] = createSignal(null);
+  const [marketIndexes, setMarketIndexes] = createSignal({
+  dowJones: { value: '--', change: 0 },
+  sp500: { value: '--', change: 0 },
+  nasdaq: { value: '--', change: 0 }
+});
 
-  onMount(() => {
-    try {
-      // Set Federal Funds Rate
-      setFedRateData({
-        rate: "4.33",
-        date: "2025-01-02"
-      });
+onMount(() => {
+  try {
+    // Set Federal Funds Rate
+    setFedRateData({
+      rate: "4.33",
+      date: "2025-01-02"
+    });
 
-      // Set Unemployment Rate
-      setUnemploymentData({
-        rate: "4.2",
-        date: "2024-12-06"
-      });
+    // Set Unemployment Rate
+    setUnemploymentData({
+      rate: "4.2",
+      date: "2024-12-06"
+    });
 
-      // Set Durables Data
-      setDurablesData({
-        value: "284.712",
-        date: "2025-01-06"
-      });
-    } catch (err) {
-      console.error('Error setting data:', err);
-      setError(err.message);
-    }
-  });
-  
+    // Set Durables Data
+    setDurablesData({
+      value: "284.712",
+      date: "2025-01-06"
+    });
+
+    // Add the market data fetch logic here
+    const fetchMarketData = async () => {
+      try {
+        const API_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
+        
+        // Fetch data for each index
+        const [dowData, spData, nasdaqData] = await Promise.all([
+          fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
+          fetch(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${API_KEY}`).then(r => r.json()),
+          fetch(`https://finnhub.io/api/v1/quote?symbol=QQQ&token=${API_KEY}`).then(r => r.json())
+        ]);
+
+        setMarketIndexes({
+          dowJones: {
+            value: dowData.c.toFixed(2),
+            change: ((dowData.c - dowData.pc) / dowData.pc * 100).toFixed(2)
+          },
+          sp500: {
+            value: spData.c.toFixed(2),
+            change: ((spData.c - spData.pc) / spData.pc * 100).toFixed(2)
+          },
+          nasdaq: {
+            value: nasdaqData.c.toFixed(2),
+            change: ((nasdaqData.c - nasdaqData.pc) / nasdaqData.pc * 100).toFixed(2)
+          }
+        });
+      } catch (err) {
+        console.error('Error fetching market data:', err);
+        setError(err.message);
+      }
+    };
+
+    // Initial fetch
+    fetchMarketData();
+
+    // Set up polling every 5 minutes
+    const marketInterval = setInterval(fetchMarketData, 300000);
+
+    // Clean up interval on unmount
+    onCleanup(() => clearInterval(marketInterval));
+  } catch (err) {
+    console.error('Error setting data:', err);
+    setError(err.message);
+  }
+});
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <header className="bg-white shadow-lg">
@@ -102,24 +148,45 @@ const App = () => {
               </div>
             </div>
 
-            {/* Live Index Tracking */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-3">Live Index Tracking</h2>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">Dow Jones Industrial Average</span>
-                  <span className="text-sm font-semibold text-gray-600">--</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">S&P 500</span>
-                  <span className="text-sm font-semibold text-gray-600">--</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">NASDAQ Composite</span>
-                  <span className="text-sm font-semibold text-gray-600">--</span>
-                </div>
-              </div>
-            </div>
+        {/* Live Index Tracking */}
+<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+  <h2 className="text-lg font-semibold text-blue-800 mb-3">Live Index Tracking</h2>
+  <div className="space-y-3">
+    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+      <span className="text-sm text-navy-900">Dow Jones Industrial Average</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-semibold text-gray-600">
+          ${marketIndexes().dowJones.value}
+        </span>
+        <span className={`text-xs ${marketIndexes().dowJones.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {marketIndexes().dowJones.change > 0 ? '+' : ''}{marketIndexes().dowJones.change}%
+        </span>
+      </div>
+    </div>
+    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+      <span className="text-sm text-navy-900">S&P 500</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-semibold text-gray-600">
+          ${marketIndexes().sp500.value}
+        </span>
+        <span className={`text-xs ${marketIndexes().sp500.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {marketIndexes().sp500.change > 0 ? '+' : ''}{marketIndexes().sp500.change}%
+        </span>
+      </div>
+    </div>
+    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+      <span className="text-sm text-navy-900">NASDAQ Composite</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-semibold text-gray-600">
+          ${marketIndexes().nasdaq.value}
+        </span>
+        <span className={`text-xs ${marketIndexes().nasdaq.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {marketIndexes().nasdaq.change > 0 ? '+' : ''}{marketIndexes().nasdaq.change}%
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
             {/* Spotify Embed */}
             <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
