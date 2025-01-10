@@ -23,6 +23,7 @@ const App = () => {
 const fetchFREDData = async () => {
   const cacheKey = 'fred_data';
   const cached = localStorage.getItem(cacheKey);
+  
   if (cached) {
     const { timestamp, data } = JSON.parse(cached);
     if (Date.now() - timestamp < 96 * 60 * 60 * 1000) {
@@ -32,7 +33,11 @@ const fetchFREDData = async () => {
 
   try {
     const response = await fetch('/.netlify/functions/getFredData');
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    console.log('Response:', response); // Log the response for debugging
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
     
     localStorage.setItem(cacheKey, JSON.stringify({
@@ -43,10 +48,10 @@ const fetchFREDData = async () => {
     return data;
   } catch (error) {
     console.error('FRED API Error:', error);
-    throw new Error(`FRED API Error: ${error.message}`);
+    throw new Error(`FRED API Error: ${error.message} at ${new Date().toISOString()}`); // Include timestamp for debugging
   }
 };
-  
+
 onMount(async () => {
   try {
     console.log('Using FRED API Key:', FRED_API_KEY);  // Debug line
