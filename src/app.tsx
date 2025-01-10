@@ -99,7 +99,7 @@ onMount(() => {
       </header>
 
       <main className="container mx-auto px-6 py-8">
-        <h1 className="text-3xl font-bold text-navy-900 mb-2">Predictive Markets Dashboard</h1>
+        <h1 className="text-4xl font-bold text-navy-900 mb-2">Predictive Markets Dashboard</h1>
         <p className="text-lg text-blue-800 mb-8">Track today to capture tomorrow</p>
 
         <div className="grid grid-cols-4 gap-6">
@@ -148,12 +148,12 @@ onMount(() => {
               </div>
             </div>
 
-        {/* Live Index Tracking */}
+        {/* Live Index ETF Tracking */}
 <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
   <h2 className="text-lg font-semibold text-blue-800 mb-3">Live Index Tracking</h2>
   <div className="space-y-3">
     <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-      <span className="text-sm text-navy-900">Dow Jones Industrial Average</span>
+      <span className="text-sm text-navy-900">Dow Jones Industrial Average ETF (DIA)</span>
       <div className="flex items-center space-x-2">
         <span className="text-sm font-semibold text-gray-600">
           ${marketIndexes().dowJones.value}
@@ -164,7 +164,7 @@ onMount(() => {
       </div>
     </div>
     <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-      <span className="text-sm text-navy-900">S&P 500</span>
+      <span className="text-sm text-navy-900">S&P 500 ETF (SPY)</span>
       <div className="flex items-center space-x-2">
         <span className="text-sm font-semibold text-gray-600">
           ${marketIndexes().sp500.value}
@@ -175,7 +175,7 @@ onMount(() => {
       </div>
     </div>
     <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-      <span className="text-sm text-navy-900">NASDAQ Composite</span>
+      <span className="text-sm text-navy-900">NASDAQ Composite ETF (ONEQ)</span>
       <div className="flex items-center space-x-2">
         <span className="text-sm font-semibold text-gray-600">
           ${marketIndexes().nasdaq.value}
