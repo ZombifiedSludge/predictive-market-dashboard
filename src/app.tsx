@@ -18,13 +18,13 @@ const App = () => {
       // Set Federal Funds Rate
       setFedRateData({
         rate: "4.33",
-        date: "2025-01-02"
+        date: "2025-01-10"
       });
 
       // Set Unemployment Rate
       setUnemploymentData({
-        rate: "4.2",
-        date: "2024-12-06"
+        rate: "4.1",
+        date: "2025-01-10"
       });
 
       // Set Durables Data
@@ -193,6 +193,55 @@ const App = () => {
             </div>
           </div>
         </div>
+
+{/* Gainers/Losers section */}
+<div className="grid grid-cols-3 gap-6 mb-6">
+  <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-[220px]">
+    <div className="space-y-4">
+      {/* Top Gainers Section */}
+      <div>
+        <h3 className="text-sm font-semibold text-blue-800 mb-2">Top Gainers:</h3>
+        <div className="space-y-1">
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600">1. Stock A</span>
+            <span className="text-sm text-green-500">+5.2%</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600">2. Stock B</span>
+            <span className="text-sm text-green-500">+4.8%</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600">3. Stock C</span>
+            <span className="text-sm text-green-500">+4.1%</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Top Losers Section */}
+      <div>
+        <h3 className="text-sm font-semibold text-blue-800 mb-2">Top Losers:</h3>
+        <div className="space-y-1">
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600">1. Stock X</span>
+            <span className="text-sm text-red-500">-3.2%</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600">2. Stock Y</span>
+            <span className="text-sm text-red-500">-2.8%</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-gray-600">3. Stock Z</span>
+            <span className="text-sm text-red-500">-2.5%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {/* Empty columns for spacing */}
+  <div></div>
+  <div></div>
+</div>
 
         {/* Bottom row for macro indicators */}
         <div className="grid grid-cols-3 gap-6">
