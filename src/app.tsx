@@ -39,9 +39,9 @@ onMount(() => {
         const API_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
         
         const [dowData, spData, nasdaqData] = await Promise.all([
-          fetch(`https://finnhub.io/api/v1/quote?symbol=^DJI&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=^SPX&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=^IXIC&token=${API_KEY}`).then(r => r.json())
+          fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
+          fetch(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${API_KEY}`).then(r => r.json()),
+          fetch(`https://finnhub.io/api/v1/quote?symbol=ONEQ&token=${API_KEY}`).then(r => r.json())
         ]);
 
         setMarketIndexes({
