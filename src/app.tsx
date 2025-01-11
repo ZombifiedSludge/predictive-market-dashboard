@@ -1,5 +1,5 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
-import VixGauge from './widgets/VixGauge';
+import CopperIndicator from './widgets/CopperIndicator';
 
 const App = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -197,8 +197,8 @@ const App = () => {
           </div>
         </div>
       </div>
-      {/* VixGauge */}
-      <VixGauge />
+      {/* Copper Price Indicator */}
+      <CopperIndicator />
     </div>
 
         {/* Market Overview Graph */}
