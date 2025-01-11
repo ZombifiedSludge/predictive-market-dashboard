@@ -82,6 +82,7 @@ const App = () => {
   });
 
   return (
+    <ThemeProvider>
   <div className="min-h-screen" onClick={createBubble}>
       <header className="bg-white shadow-lg">
         <nav className="container mx-auto px-6 py-4">
@@ -348,8 +349,9 @@ const App = () => {
             </div>
           </div>
         </div>
-      </main>
+         </main>
     </div>
+  </ThemeProvider>   {/* Add this line here */}
   );
 };
 
