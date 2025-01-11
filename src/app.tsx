@@ -1,4 +1,5 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
+import VixGauge from './widgets/VixGauge';
 
 const App = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -261,13 +262,20 @@ const App = () => {
       </div>
     </div>
   </div>
-  
-        {/* Bottom row for macro indicators */}
-        <div className="grid grid-cols-3 gap-6">
-          {/* Federal Funds Rate */}
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-            <h2 className="text-lg font-semibold text-blue-800 mb-3">Federal Funds Rate</h2>
-            <div className="space-y-2">
+
+  {/* Container for VixGauge */}
+  <div className="grid grid-cols-12 gap-6 mb-6">
+    <div className="col-span-2">
+      <VixGauge />
+    </div>
+  </div>
+
+  {/* Bottom row for macro indicators */}
+  <div className="grid grid-cols-3 gap-6">
+    {/* Federal Funds Rate */}
+    <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+      <h2 className="text-lg font-semibold text-blue-800 mb-3">Federal Funds Rate</h2>
+      <div className="space-y-2">
               <div className="border-b border-blue-100 pb-2">
                 <p className="text-sm text-blue-800">Current Rate</p>
                 {error() ? (
