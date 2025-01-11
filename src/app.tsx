@@ -376,4 +376,14 @@ const createBubble = (e: MouseEvent) => {
   });
 };
 
+import ThemeProvider from './components/ThemeProvider';
+
+function App() {
+  return (
+    <ThemeProvider>
+      {/* Your existing app content */}
+    </ThemeProvider>
+  );
+}
+
 export default App;
