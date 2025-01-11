@@ -90,11 +90,11 @@ const OilGauge = () => {
             stroke-linecap="round"
           />
           
-    {/* Tick marks */}
-{[...Array(33)].map((_, i) => {
-  const angle = -90 + (i * 180 / 32);
-  const isMajorTick = i % 4 === 0; // Every 4th tick is major (20 unit intervals)
-  const tickLength = isMajorTick ? 10 : 5; // Major ticks are longer
+{/* Tick marks */}
+{[...Array(65)].map((_, i) => {  // Increased from 33 to 65 to double the density
+  const angle = -180 + (i * 180 / 32);  // Start from -180 instead of -90 to cover the left side
+  const isMajorTick = i % 4 === 0;
+  const tickLength = isMajorTick ? 10 : 5;
   
   const x1 = 100 + (85 + (isMajorTick ? 0 : 5)) * Math.cos((angle * Math.PI) / 180);
   const y1 = 100 + (85 + (isMajorTick ? 0 : 5)) * Math.sin((angle * Math.PI) / 180);
