@@ -1,36 +1,78 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
 
-const API_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
+const ALPHA_VANTAGE_KEY = '5OXIQR1MY9ZYBDKO';
+const CACHE_KEY = 'vix_cache';
+const CACHE_TIMESTAMP_KEY = 'vix_cache_timestamp';
 
 const VixGauge = () => {
   const [vixValue, setVixValue] = createSignal(null);
   const [rotation, setRotation] = createSignal(-90);
-  
+
   const calculateRotation = (value) => {
     return -90 + (value * 180 / 50);
   };
-  
+
   const getValueColor = (value) => {
     if (value === null) return 'text-gray-600';
     if (value < 20) return 'text-green-500';
     if (value <= 30) return 'text-yellow-500';
     return 'text-red-500';
   };
-  
-  onMount(() => {
-    const fetchVix = async () => {
-      try {
-        const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=VIX&token=${API_KEY}`);
-        const data = await response.json();
-        setVixValue(data.c);
-        setRotation(calculateRotation(data.c));
-      } catch (error) {
-        console.error('Error fetching VIX:', error);
-      }
-    };
+
+  const shouldFetchNewData = () => {
+    const now = new Date();
+    const lastUpdate = new Date(localStorage.getItem(CACHE_TIMESTAMP_KEY));
     
-    fetchVix();
-    const interval = setInterval(fetchVix, 30000);
+    if (!lastUpdate || isNaN(lastUpdate.getTime())) return true;
+
+    const lastClose = new Date();
+    lastClose.setHours(16, 0, 0, 0); // 4 PM EST
+    
+    if (now.getHours() >= 16 && lastUpdate < lastClose) return true;
+    if (lastUpdate < lastClose - 24 * 60 * 60 * 1000) return true;
+    
+    return false;
+  };
+
+  const fetchVixData = async () => {
+    try {
+      const response = await fetch(
+        `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=VIX&apikey=${ALPHA_VANTAGE_KEY}`
+      );
+      const data = await response.json();
+      
+      if (data['Global Quote'] && data['Global Quote']['05. price']) {
+        const price = parseFloat(data['Global Quote']['05. price']);
+        
+        localStorage.setItem(CACHE_KEY, price.toString());
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, new Date().toISOString());
+        
+        setVixValue(price);
+        setRotation(calculateRotation(price));
+      }
+    } catch (error) {
+      console.error('Error fetching VIX:', error);
+    }
+  };
+
+  onMount(() => {
+    const cachedValue = localStorage.getItem(CACHE_KEY);
+    if (cachedValue) {
+      const value = parseFloat(cachedValue);
+      setVixValue(value);
+      setRotation(calculateRotation(value));
+    }
+
+    if (shouldFetchNewData()) {
+      fetchVixData();
+    }
+
+    const interval = setInterval(() => {
+      if (shouldFetchNewData()) {
+        fetchVixData();
+      }
+    }, 60 * 60 * 1000); // Check every hour
+
     onCleanup(() => clearInterval(interval));
   });
 
