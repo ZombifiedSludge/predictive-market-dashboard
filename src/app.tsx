@@ -330,7 +330,7 @@ return (
         </div>
       </div>
 
-      {/* Durable Goods Orders */}
+{/* Durable Goods Orders */}
       <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
         <h2 className="text-lg font-semibold text-blue-800 mb-3">Durable Goods Orders</h2>
         <div className="space-y-2">
@@ -356,6 +356,7 @@ return (
         </div>
       </div>
     </div>
+  </div> {/* Added this closing div for grid-cols-3 */}
   </main>
 </div>
 </ThemeProvider>
