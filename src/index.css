@@ -21,7 +21,11 @@ body > div {
 
 /* Add dark mode background */
 .dark body > div {
-    background: linear-gradient(to top, black, rgb(0, 27, 83));
+    background: linear-gradient(to top, 
+        #000B18,  /* deep ocean bottom */
+        #002342,  /* midnight ocean middle */
+        #003362   /* upper ocean depths */
+    );
 }
 
 /* Text Selection with Glow */
