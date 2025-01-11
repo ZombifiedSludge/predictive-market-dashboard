@@ -90,24 +90,28 @@ const OilGauge = () => {
             stroke-linecap="round"
           />
           
-          {/* Tick marks */}
-          {[...Array(9)].map((_, i) => {
-            const angle = -90 + (i * 180 / 8);
-            const x1 = 100 + 85 * Math.cos((angle * Math.PI) / 180);
-            const y1 = 100 + 85 * Math.sin((angle * Math.PI) / 180);
-            const x2 = 100 + 95 * Math.cos((angle * Math.PI) / 180);
-            const y2 = 100 + 95 * Math.sin((angle * Math.PI) / 180);
-            return (
-              <line
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke="#94a3b8"
-                stroke-width="2"
-              />
-            );
-          })}
+    {/* Tick marks */}
+{[...Array(33)].map((_, i) => {
+  const angle = -90 + (i * 180 / 32);
+  const isMajorTick = i % 4 === 0; // Every 4th tick is major (20 unit intervals)
+  const tickLength = isMajorTick ? 10 : 5; // Major ticks are longer
+  
+  const x1 = 100 + (85 + (isMajorTick ? 0 : 5)) * Math.cos((angle * Math.PI) / 180);
+  const y1 = 100 + (85 + (isMajorTick ? 0 : 5)) * Math.sin((angle * Math.PI) / 180);
+  const x2 = 100 + 95 * Math.cos((angle * Math.PI) / 180);
+  const y2 = 100 + 95 * Math.sin((angle * Math.PI) / 180);
+  
+  return (
+    <line
+      x1={x1}
+      y1={y1}
+      x2={x2}
+      y2={y2}
+      stroke={isMajorTick ? "#64748b" : "#94a3b8"}
+      stroke-width={isMajorTick ? "2" : "1"}
+    />
+  );
+})}
           
           {/* Price markers */}
           <text x="0" y="115" font-size="10" fill="#64748b">0</text>
