@@ -1,4 +1,5 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
+import ThemeProvider from './components/ThemeProvider';
 import OilGauge from './widgets/OilGauge';
 
 const App = () => {
@@ -375,15 +376,5 @@ const createBubble = (e: MouseEvent) => {
     document.body.removeChild(bubble);
   });
 };
-
-import ThemeProvider from './components/ThemeProvider';
-
-function App() {
-  return (
-    <ThemeProvider>
-      {/* Your existing app content */}
-    </ThemeProvider>
-  );
-}
 
 export default App;
