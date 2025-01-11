@@ -255,19 +255,22 @@ return (
             </div>
           </div>
 
-          {/* Spotify Embed */}
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-            <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Mood Music</h2>
-            <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-              {/* Spotify embed will go here */}
-              <span className="text-gray-500">Spotify Player Placeholder</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+   {/* Spotify Embed */}
+<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+  <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Mood Music</h2>
+  <div className="w-full flex items-center justify-center">
+    <iframe 
+      style={{ borderRadius: '12px' }}
+      src="https://open.spotify.com/embed/episode/3NrEWv2X6zSN7AGF0rJoFy?utm_source=generator&t=85337" 
+      width="100%" 
+      height="152"
+      frameBorder="0" 
+      allowFullScreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+      loading="lazy"
+    ></iframe>
   </div>
-
+</div>
 
   {/* Bottom row for macro indicators */}
   <div className="grid grid-cols-3 gap-6">
