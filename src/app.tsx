@@ -81,9 +81,9 @@ const App = () => {
     }
   });
 
-  return (
+return (
     <ThemeProvider>
-  <div className="min-h-screen" onClick={createBubble}>
+      <div className="min-h-screen" onClick={createBubble}>
       <header className="bg-white shadow-lg">
         <nav className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
@@ -351,7 +351,7 @@ const App = () => {
         </div>
          </main>
     </div>
-  </ThemeProvider>   {/* Add this line here */}
+  </ThemeProvider>  
   );
 };
 
