@@ -356,7 +356,6 @@ return (
         </div>
       </div>
     </div>
-  </div> {/* Added this closing div for grid-cols-3 */}
   </main>
 </div>
 </ThemeProvider>
