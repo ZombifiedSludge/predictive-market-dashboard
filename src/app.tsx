@@ -214,6 +214,7 @@ return (
             </div>
           </div>
 
+
 {/* Spotify Embed */}
 <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
   <h2 className="text-lg font-semibold text-blue-800 mb-3">Playlist</h2>
@@ -227,10 +228,9 @@ return (
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
       loading="lazy"
       style="border-radius:12px"
-    />
+    /> {/* Note the /> here */}
   </div>
 </div>
-
 
   {/* Bottom row for macro indicators */}
   <div className="grid grid-cols-3 gap-6">
