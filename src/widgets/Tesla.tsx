@@ -21,38 +21,26 @@ type BasicFinancials = {
 const FINNHUB_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-// Check if we should fetch new data based on market close time
 const shouldFetchNewData = (lastFetchTimestamp: number): boolean => {
   const now = new Date();
   const lastFetch = new Date(lastFetchTimestamp);
-  
-  // Get last market close (4:00 PM EST)
   const lastMarketClose = new Date();
   lastMarketClose.setUTCHours(20, 0, 0, 0); // 4:00 PM EST in UTC
-  
-  // If current time is before 4:00 PM EST, use previous day's close
   if (now.getUTCHours() < 20) {
     lastMarketClose.setDate(lastMarketClose.getDate() - 1);
   }
-  
-  // Return true if lastFetch is before lastMarketClose
   return lastFetch < lastMarketClose;
 };
 
-// Cache management functions
 const getCachedData = (key: string) => {
   try {
     const cached = localStorage.getItem(key);
     if (!cached) return null;
-    
     const { data, timestamp } = JSON.parse(cached);
-    
-    // Check if cache is still valid
     if (Date.now() - timestamp > CACHE_DURATION || shouldFetchNewData(timestamp)) {
       localStorage.removeItem(key);
       return null;
     }
-    
     return data;
   } catch (error) {
     console.error('Cache retrieval error:', error);
@@ -73,7 +61,6 @@ const setCachedData = (key: string, data: any) => {
 };
 
 const fetchQuote = async () => {
-  // Check cache first
   const cached = getCachedData('tesla-quote');
   if (cached) return cached;
 
@@ -92,7 +79,6 @@ const fetchQuote = async () => {
 };
 
 const fetchFinancials = async () => {
-  // Check cache first
   const cached = getCachedData('tesla-financials');
   if (cached) return cached;
 
@@ -110,35 +96,27 @@ const fetchFinancials = async () => {
   }
 };
 
-const Tesla: Component<{ isDarkMode?: boolean }> = (props) => {
-  // Create resources with cached data handling
+const Tesla: Component = () => {
   const [quote] = createResource<Quote>(fetchQuote);
   const [financials] = createResource<BasicFinancials>(fetchFinancials);
 
-  // Check for updates at market close
   createEffect(() => {
     const checkForUpdates = () => {
       const now = new Date();
       const hours = now.getUTCHours();
       const minutes = now.getUTCMinutes();
-      
-      // If it's 4:00 PM EST (20:00 UTC)
       if (hours === 20 && minutes === 0) {
-        // Clear cache to force refresh
         localStorage.removeItem('tesla-quote');
         localStorage.removeItem('tesla-financials');
-        // Refetch data
         quote.refetch();
         financials.refetch();
       }
     };
 
-    // Check every minute
     const interval = setInterval(checkForUpdates, 60000);
     return () => clearInterval(interval);
   });
 
-  // Formatting functions
   const formatCurrency = (num: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -156,16 +134,10 @@ const Tesla: Component<{ isDarkMode?: boolean }> = (props) => {
 
   return (
     <div class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-      {/* Tesla Logo */}
       <div class="flex justify-center mb-4">
-        <img 
-          src="/tesla-logo.png" 
-          alt="Tesla" 
-          class={`h-8 ${props.isDarkMode ? 'filter brightness-200' : ''}`}
-        />
+        <img src="/tesla-logo.png" alt="Tesla" class="h-8" />
       </div>
       
-      {/* U-shaped Charger Display */}
       <div class="relative flex justify-center mb-6">
         <div class="w-48">
           <svg viewBox="0 0 100 160" class="w-full">
@@ -176,7 +148,6 @@ const Tesla: Component<{ isDarkMode?: boolean }> = (props) => {
               </filter>
             </defs>
 
-            {/* U-shaped outline */}
             <path 
               d="M20,0 
                  L80,0 
@@ -191,7 +162,6 @@ const Tesla: Component<{ isDarkMode?: boolean }> = (props) => {
               stroke-linejoin="round"
             />
             
-            {/* Stock price display */}
             <Show when={quote()} fallback={
               <text x="50" y="50" text-anchor="middle" font-size="12">Loading...</text>
             }>
@@ -223,7 +193,6 @@ const Tesla: Component<{ isDarkMode?: boolean }> = (props) => {
         </div>
       </div>
 
-      {/* Financial Metrics */}
       <Show when={financials()} fallback={
         <div class="text-center text-sm text-gray-500">Loading metrics...</div>
       }>
