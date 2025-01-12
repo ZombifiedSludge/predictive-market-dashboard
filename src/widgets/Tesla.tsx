@@ -1,47 +1,72 @@
-import { createSignal, createEffect, Show } from 'solid-js';
+mport { createSignal, createEffect, Show } from 'solid-js';
 import type { Component } from 'solid-js';
+
+type Quote = {
+  c: number;  // Current price
+  d: number;  // Change
+  dp: number; // Percent change
+};
+
+type BasicFinancials = {
+  metric: {
+    '52WeekHigh': number;
+    '52WeekLow': number;
+    currentRatioQuarterly: number;
+    peRatio: number;
+  };
+};
 
 const FINNHUB_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
 
 const Tesla: Component = () => {
-  const [quoteData, setQuoteData] = createSignal({
-    value: '--',
-    change: 0,
-    previousClose: 0
-  });
+  const [quote, setQuote] = createSignal<Quote | null>(null);
+  const [financials, setFinancials] = createSignal<BasicFinancials | null>(null);
+  const [error, setError] = createSignal<string | null>(null);
 
-  const fetchTeslaData = async () => {
+  const fetchData = async () => {
     try {
-      const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=TSLA&token=${FINNHUB_KEY}`);
-      const data = await response.json();
-      
-      if (data && data.c) {
-        setQuoteData({
-          value: data.c.toFixed(2),
-          change: ((data.c - data.pc) / data.pc * 100).toFixed(2),
-          previousClose: data.pc
-        });
+      // Fetch quote data
+      const quoteResponse = await fetch(
+        `https://finnhub.io/api/v1/quote?symbol=TSLA&token=${FINNHUB_KEY}`
+      );
+      const quoteData = await quoteResponse.json();
+      if (quoteData.c) {
+        setQuote(quoteData);
+      }
+
+      // Fetch basic financials
+      const financialsResponse = await fetch(
+        `https://finnhub.io/api/v1/stock/metric?symbol=TSLA&metric=all&token=${FINNHUB_KEY}`
+      );
+      const financialsData = await financialsResponse.json();
+      if (financialsData.metric) {
+        setFinancials(financialsData);
       }
     } catch (err) {
-      console.error('Error fetching Tesla data:', err);
+      console.error('Error fetching data:', err);
+      setError('Error fetching data');
     }
   };
 
   createEffect(() => {
-    // Initial fetch
-    fetchTeslaData();
-
-    // Set up polling every 30 seconds
-    const interval = setInterval(fetchTeslaData, 30000);
+    fetchData();
+    const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
   });
 
-  const formatCurrency = (num: string | number) => {
-    const value = typeof num === 'string' ? parseFloat(num) : num;
+  const formatCurrency = (num: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-    }).format(value);
+    }).format(num);
+  };
+
+  const formatPercent = (num: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'percent',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(num / 100);
   };
 
   return (
@@ -77,59 +102,73 @@ const Tesla: Component = () => {
               stroke-linejoin="round"
             />
             
-            <text 
-              x="50" 
-              y="50" 
-              text-anchor="middle" 
-              font-size="15"
-              font-family="'Space Grotesk', system-ui, sans-serif"
-              font-weight="500"
-              filter="url(#crisp-text)"
-            >
-              {formatCurrency(quoteData().value)}
-            </text>
-            <text 
-              x="50" 
-              y="65" 
-              text-anchor="middle" 
-              font-size="10"
-              font-family="'Space Grotesk', system-ui, sans-serif"
-              fill={parseFloat(quoteData().change) >= 0 ? "#22C55E" : "#EF4444"}
-              font-weight="500"
-              filter="url(#crisp-text)"
-            >
-              {parseFloat(quoteData().change) >= 0 ? '+' : ''}{quoteData().change}%
-            </text>
+            <Show when={quote()} fallback={
+              <text x="50" y="50" text-anchor="middle" font-size="12">Loading...</text>
+            }>
+              <text 
+                x="50" 
+                y="50" 
+                text-anchor="middle" 
+                font-size="15"
+                font-family="'Space Grotesk', system-ui, sans-serif"
+                font-weight="500"
+                filter="url(#crisp-text)"
+              >
+                {formatCurrency(quote()!.c)}
+              </text>
+              <text 
+                x="50" 
+                y="65" 
+                text-anchor="middle" 
+                font-size="10"
+                font-family="'Space Grotesk', system-ui, sans-serif"
+                fill={quote()!.dp > 0 ? "#22C55E" : "#EF4444"}
+                font-weight="500"
+                filter="url(#crisp-text)"
+              >
+                {quote()!.dp > 0 ? '+' : ''}{formatPercent(quote()!.dp)}
+              </text>
+            </Show>
           </svg>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3 text-sm">
-        <div class="bg-gray-50 p-2 rounded">
-          <div class="text-gray-600 text-xs">Day Range</div>
-          <div class="font-medium">
-            {formatCurrency(quoteData().value)} - {formatCurrency(quoteData().previousClose)}
+      <Show when={financials()} fallback={
+        <div class="text-center text-sm text-gray-500">Loading metrics...</div>
+      }>
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div class="bg-gray-50 p-2 rounded">
+            <div class="text-gray-600 text-xs">52W High</div>
+            <div class="font-medium">
+              {formatCurrency(financials()!.metric['52WeekHigh'])}
+            </div>
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <div class="text-gray-600 text-xs">52W Low</div>
+            <div class="font-medium">
+              {formatCurrency(financials()!.metric['52WeekLow'])}
+            </div>
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <div class="text-gray-600 text-xs">Current Ratio</div>
+            <div class="font-medium">
+              {financials()!.metric.currentRatioQuarterly.toFixed(2)}
+            </div>
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <div class="text-gray-600 text-xs">P/E Ratio</div>
+            <div class="font-medium">
+              {financials()!.metric.peRatio.toFixed(2)}
+            </div>
           </div>
         </div>
-        <div class="bg-gray-50 p-2 rounded">
-          <div class="text-gray-600 text-xs">Previous Close</div>
-          <div class="font-medium">
-            {formatCurrency(quoteData().previousClose)}
-          </div>
+      </Show>
+
+      <Show when={error()}>
+        <div class="text-center text-sm text-red-500 mt-2">
+          {error()}
         </div>
-        <div class="bg-gray-50 p-2 rounded">
-          <div class="text-gray-600 text-xs">Change ($)</div>
-          <div class="font-medium">
-            {formatCurrency(parseFloat(quoteData().value) - quoteData().previousClose)}
-          </div>
-        </div>
-        <div class="bg-gray-50 p-2 rounded">
-          <div class="text-gray-600 text-xs">Change (%)</div>
-          <div class="font-medium">
-            {quoteData().change}%
-          </div>
-        </div>
-      </div>
+      </Show>
     </div>
   );
 };
