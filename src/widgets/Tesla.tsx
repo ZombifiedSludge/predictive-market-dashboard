@@ -1,4 +1,4 @@
-mport { createSignal, createEffect, Show } from 'solid-js';
+import { createSignal, createEffect, Show } from 'solid-js';
 import type { Component } from 'solid-js';
 
 type Quote = {
