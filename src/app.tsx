@@ -321,7 +321,8 @@ return (
 </ThemeProvider>
 );
 
-// Add bubble creation function here
+};  // This closes the App component
+
 const createBubble = (e: MouseEvent) => {
   const bubble = document.createElement('div');
   const size = Math.random() * 30 + 20;
