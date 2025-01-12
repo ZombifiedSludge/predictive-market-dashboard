@@ -153,17 +153,15 @@ return (
       </div>
     </div>
 
-{/* Middle section with Tesla, Graph, and ETF/Music */}
-<div class="col-span-12">
-  <div class="grid grid-cols-12 gap-6">
-    {/* Left Column with Tesla and Oil Gauge */}
-    <div class="col-span-2 space-y-6">
-      {/* Tesla Component replaces Market Movers */}
-      <Tesla isDarkMode={isDarkMode()} />
-      {/* Oil Gauge */}
-      <OilGauge />
-    </div>
-    
+      {/* Middle section with Tesla, Graph, and ETF/Music */}
+      <div class="col-span-12">
+        <div class="grid grid-cols-12 gap-6">
+          {/* Left Column with Tesla and Oil Gauge */}
+          <div class="col-span-2 space-y-6">
+            <Tesla />
+            <OilGauge />
+          </div>
+          
         {/* Market Overview Graph */}
         <div className="col-span-7">
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
