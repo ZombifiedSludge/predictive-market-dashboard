@@ -152,7 +152,7 @@ const Tesla: Component = () => {
                 x="50" 
                 y="50" 
                 text-anchor="middle" 
-                font-size="15"
+                font-size="13"
                 font-family="'Space Mono', monospace"
                 font-weight="500"
                 filter="url(#crisp-text)"
@@ -163,7 +163,7 @@ const Tesla: Component = () => {
                 x="50" 
                 y="65" 
                 text-anchor="middle" 
-                font-size="10"
+                font-size="8"
                 font-family="'Space Mono', monospace"
                 fill={quote()!.dp > 0 ? "#22C55E" : "#EF4444"}
                 font-weight="500"
