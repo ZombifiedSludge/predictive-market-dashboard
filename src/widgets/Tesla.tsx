@@ -133,14 +133,14 @@ const Tesla: Component = () => {
   };
 
   return (
-    <div class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-3">
-      <div class="flex justify-center mb-2">
-        <img src="/tesla-logo.png" alt="Tesla" class="h-6" />
+    <div class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+      <div class="flex justify-center mb-4">
+        <img src="/tesla-logo.png" alt="Tesla" class="h-8" />
       </div>
       
-      <div class="relative flex justify-center mb-3">
-        <div class="w-40">
-          <svg viewBox="0 0 100 140" class="w-full">
+      <div class="relative flex justify-center mb-6">
+        <div class="w-48">
+          <svg viewBox="0 0 100 160" class="w-full">
             <defs>
               <filter id="crisp-text">
                 <feFlood flood-color="white" result="backgroundColor"/>
@@ -194,28 +194,28 @@ const Tesla: Component = () => {
       </div>
 
 <Show when={financials()} fallback={
-  <div class="text-center text-xs text-gray-500">Loading metrics...</div>
+  <div class="text-center text-sm text-gray-500">Loading metrics...</div>
 }>
-  <div class="grid grid-cols-2 gap-2 text-xs">
-    <div class="bg-gray-50 p-1.5 rounded">
+  <div class="grid grid-cols-2 gap-3 text-sm">
+    <div class="bg-gray-50 p-2 rounded">
       <div class="text-gray-600 text-xs">52W High</div>
       <div class="font-medium">
         {formatCurrency(financials()!.metric['52WeekHigh'])}
       </div>
     </div>
-    <div class="bg-gray-50 p-1.5 rounded">
+    <div class="bg-gray-50 p-2 rounded">
       <div class="text-gray-600 text-xs">52W Low</div>
       <div class="font-medium">
         {formatCurrency(financials()!.metric['52WeekLow'])}
       </div>
     </div>
-    <div class="bg-gray-50 p-1.5 rounded">
+    <div class="bg-gray-50 p-2 rounded">
       <div class="text-gray-600 text-xs">Current Ratio</div>
       <div class="font-medium">
         {financials()!.metric.currentRatioQuarterly.toFixed(2)}
       </div>
     </div>
-    <div class="bg-gray-50 p-1.5 rounded">
+    <div class="bg-gray-50 p-2 rounded">
       <div class="text-gray-600 text-xs">P/E Ratio</div>
       <div class="font-medium">
         {financials()!.metric.peRatio.toFixed(2)}
