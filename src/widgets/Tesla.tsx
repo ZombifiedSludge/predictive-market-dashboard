@@ -7,50 +7,100 @@ type Quote = {
   dp: number; // Percent change
 };
 
-type BasicFinancials = {
-  metric: {
-    '52WeekHigh': number;
-    '52WeekLow': number;
-    currentRatioQuarterly: number;
-    peRatio: number;
-  };
+type AlphaMetrics = {
+  rsi: number;
+  eps: number;
+  week52High: number;
+  week52Low: number;
+  timestamp: number;
 };
 
 const FINNHUB_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
+const ALPHA_KEY = 'WM4K3AZW1FX4LQ6M';
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
 const Tesla: Component = () => {
   const [quote, setQuote] = createSignal<Quote | null>(null);
-  const [financials, setFinancials] = createSignal<BasicFinancials | null>(null);
+  const [metrics, setMetrics] = createSignal<AlphaMetrics | null>(null);
   const [error, setError] = createSignal<string | null>(null);
 
-  const fetchData = async () => {
+  // Function to get cached data
+  const getCachedMetrics = () => {
     try {
-      // Fetch quote data
-      const quoteResponse = await fetch(
+      const cached = localStorage.getItem('tesla-metrics');
+      if (!cached) return null;
+      
+      const data = JSON.parse(cached);
+      if (Date.now() - data.timestamp > CACHE_DURATION) {
+        localStorage.removeItem('tesla-metrics');
+        return null;
+      }
+      return data;
+    } catch (err) {
+      console.error('Cache read error:', err);
+      return null;
+    }
+  };
+
+  // Function to fetch and cache Alpha Vantage data
+  const fetchAlphaMetrics = async () => {
+    // Check cache first
+    const cached = getCachedMetrics();
+    if (cached) {
+      setMetrics(cached);
+      return;
+    }
+
+    try {
+      // Fetch RSI and Company Overview in parallel
+      const [rsiResponse, overviewResponse] = await Promise.all([
+        fetch(`https://www.alphavantage.co/query?function=RSI&symbol=TSLA&interval=daily&time_period=14&series_type=close&apikey=${ALPHA_KEY}`),
+        fetch(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=TSLA&apikey=${ALPHA_KEY}`)
+      ]);
+
+      const rsiData = await rsiResponse.json();
+      const overviewData = await overviewResponse.json();
+
+      const metricsData: AlphaMetrics = {
+        rsi: parseFloat(Object.values(rsiData['Technical Analysis: RSI'])[0]['RSI']),
+        eps: parseFloat(overviewData['EPS']),
+        week52High: parseFloat(overviewData['52WeekHigh']),
+        week52Low: parseFloat(overviewData['52WeekLow']),
+        timestamp: Date.now()
+      };
+
+      // Cache the data
+      localStorage.setItem('tesla-metrics', JSON.stringify(metricsData));
+      setMetrics(metricsData);
+    } catch (err) {
+      console.error('Alpha Vantage fetch error:', err);
+      setError('Error fetching metrics');
+    }
+  };
+
+  // Function to fetch Finnhub price data
+  const fetchQuote = async () => {
+    try {
+      const response = await fetch(
         `https://finnhub.io/api/v1/quote?symbol=TSLA&token=${FINNHUB_KEY}`
       );
-      const quoteData = await quoteResponse.json();
-      if (quoteData.c) {
-        setQuote(quoteData);
-      }
-
-      // Fetch basic financials
-      const financialsResponse = await fetch(
-        `https://finnhub.io/api/v1/stock/metric?symbol=TSLA&metric=all&token=${FINNHUB_KEY}`
-      );
-      const financialsData = await financialsResponse.json();
-      if (financialsData.metric) {
-        setFinancials(financialsData);
+      const data = await response.json();
+      if (data.c) {
+        setQuote(data);
       }
     } catch (err) {
-      console.error('Error fetching data:', err);
-      setError('Error fetching data');
+      console.error('Quote fetch error:', err);
+      setError('Error fetching price');
     }
   };
 
   createEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 30000);
+    // Fetch Alpha metrics once per day
+    fetchAlphaMetrics();
+
+    // Fetch and update quote regularly
+    fetchQuote();
+    const interval = setInterval(fetchQuote, 30000);
     return () => clearInterval(interval);
   });
 
@@ -71,13 +121,12 @@ const Tesla: Component = () => {
 
   return (
     <div class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+      {/* Tesla Logo */}
       <div class="flex justify-center mb-4">
-        <svg class="h-8" viewBox="0 0 342 35" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 .1a9.7 9.7 0 0 0 7 7h11l.5.1v27.6h6.8V7.3L26 7h11a9.8 9.8 0 0 0 7-7H0zm238.6 0h-6.8v34.8H263a9.7 9.7 0 0 0 6-6.8h-30.3V0zm-52.3 6.8c3.6-1 6.6-3.8 7.4-6.9l-38.1.1v20.6h31.1v7.2h-24.4a13.6 13.6 0 0 0-8.7 7h39.9v-21h-31.2v-7h24zm116.2 28h6.7v-14h24.6v14h6.7v-21h-38zM85.3 7h24v27.6h6.7V7h24.1V0H85.3z" fill="#E82127"/>
-          <path d="M311.5 0h-21.4v6.8h14.6v21.1h6.8V0zm-50.7 7h-23.3v27.6h6.8v-7h24.3a9.5 9.5 0 0 0 6-6.8h-30.3V7h23.3A9.5 9.5 0 0 0 261 .1v34.8h6.8V0h-6.8z" fill="#E82127"/>
-        </svg>
+        <img src="/tesla-logo.png" alt="Tesla" class="h-12 -mt-2 -mb-2" />
       </div>
       
+      {/* Price Display */}
       <div class="relative flex justify-center mb-6">
         <div class="w-48">
           <svg viewBox="0 0 100 160" class="w-full">
@@ -89,13 +138,7 @@ const Tesla: Component = () => {
             </defs>
 
             <path 
-              d="M20,0 
-                 L80,0 
-                 C90,0 90,10 90,10
-                 L90,100
-                 A30,30 0 0,1 10,100
-                 L10,10
-                 C10,10 10,0 20,0"
+              d="M20,0 L80,0 C90,0 90,10 90,10 L90,100 A30,30 0 0,1 10,100 L10,10 C10,10 10,0 20,0"
               fill="white"
               stroke="#E82127"
               stroke-width="8"
@@ -133,32 +176,33 @@ const Tesla: Component = () => {
         </div>
       </div>
 
-      <Show when={financials()} fallback={
+      {/* Metrics Display */}
+      <Show when={metrics()} fallback={
         <div class="text-center text-sm text-gray-500">Loading metrics...</div>
       }>
         <div class="grid grid-cols-2 gap-3 text-sm">
           <div class="bg-gray-50 p-2 rounded">
             <div class="text-gray-600 text-xs">52W High</div>
             <div class="font-medium">
-              {formatCurrency(financials()!.metric['52WeekHigh'])}
+              {formatCurrency(metrics()!.week52High)}
             </div>
           </div>
           <div class="bg-gray-50 p-2 rounded">
             <div class="text-gray-600 text-xs">52W Low</div>
             <div class="font-medium">
-              {formatCurrency(financials()!.metric['52WeekLow'])}
+              {formatCurrency(metrics()!.week52Low)}
             </div>
           </div>
           <div class="bg-gray-50 p-2 rounded">
-            <div class="text-gray-600 text-xs">Current Ratio</div>
-            <div class="font-medium">
-              {financials()!.metric.currentRatioQuarterly.toFixed(2)}
+            <div class="text-gray-600 text-xs">RSI</div>
+            <div class="font-medium" style={{ color: metrics()!.rsi > 70 ? '#EF4444' : metrics()!.rsi < 30 ? '#22C55E' : 'inherit' }}>
+              {metrics()!.rsi.toFixed(2)}
             </div>
           </div>
           <div class="bg-gray-50 p-2 rounded">
-            <div class="text-gray-600 text-xs">P/E Ratio</div>
+            <div class="text-gray-600 text-xs">EPS</div>
             <div class="font-medium">
-              {financials()!.metric.peRatio.toFixed(2)}
+              {metrics()!.eps.toFixed(2)}
             </div>
           </div>
         </div>
