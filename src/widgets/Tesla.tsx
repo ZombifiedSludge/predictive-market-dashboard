@@ -80,19 +80,46 @@ const fetchQuote = async () => {
 
 const fetchFinancials = async () => {
   const cached = getCachedData('tesla-financials');
-  if (cached) return cached;
+  if (cached) {
+    console.log('Using cached financial data:', cached);
+    return cached;
+  }
 
   try {
+    console.log('Fetching new financial data...');
     const response = await fetch(
       `https://finnhub.io/api/v1/stock/metric?symbol=TSLA&metric=all&token=${FINNHUB_KEY}`
     );
     const data = await response.json();
+    console.log('Received financial data:', data);
+    
+    if (!data || !data.metric) {
+      console.error('Invalid data format received:', data);
+      return {
+        metric: {
+          '52WeekHigh': 0,
+          '52WeekLow': 0,
+          currentRatioQuarterly: 0,
+          peRatio: 0
+        },
+        timestamp: Date.now()
+      };
+    }
+    
     const financialData = { ...data, timestamp: Date.now() };
     setCachedData('tesla-financials', financialData);
     return financialData;
   } catch (error) {
     console.error('Financials fetch error:', error);
-    throw error;
+    return {
+      metric: {
+        '52WeekHigh': 0,
+        '52WeekLow': 0,
+        currentRatioQuarterly: 0,
+        peRatio: 0
+      },
+      timestamp: Date.now()
+    };
   }
 };
 
