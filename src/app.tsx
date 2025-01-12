@@ -1,7 +1,7 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
 import ThemeProvider from './components/ThemeProvider';
 import OilGauge from './widgets/OilGauge';
-import { Tesla } from "~/components/Tesla";
+import { Tesla } from './widgets/Tesla';
 
 const App = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
