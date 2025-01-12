@@ -21,57 +21,13 @@ type BasicFinancials = {
 const FINNHUB_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-const shouldFetchNewData = (lastFetchTimestamp: number): boolean => {
-  const now = new Date();
-  const lastFetch = new Date(lastFetchTimestamp);
-  const lastMarketClose = new Date();
-  lastMarketClose.setUTCHours(20, 0, 0, 0); // 4:00 PM EST in UTC
-  if (now.getUTCHours() < 20) {
-    lastMarketClose.setDate(lastMarketClose.getDate() - 1);
-  }
-  return lastFetch < lastMarketClose;
-};
-
-const getCachedData = (key: string) => {
-  try {
-    const cached = localStorage.getItem(key);
-    if (!cached) return null;
-    const { data, timestamp } = JSON.parse(cached);
-    if (Date.now() - timestamp > CACHE_DURATION || shouldFetchNewData(timestamp)) {
-      localStorage.removeItem(key);
-      return null;
-    }
-    return data;
-  } catch (error) {
-    console.error('Cache retrieval error:', error);
-    return null;
-  }
-};
-
-const setCachedData = (key: string, data: any) => {
-  try {
-    const cacheData = {
-      data,
-      timestamp: Date.now()
-    };
-    localStorage.setItem(key, JSON.stringify(cacheData));
-  } catch (error) {
-    console.error('Cache setting error:', error);
-  }
-};
-
 const fetchQuote = async () => {
-  const cached = getCachedData('tesla-quote');
-  if (cached) return cached;
-
   try {
     const response = await fetch(
       `https://finnhub.io/api/v1/quote?symbol=TSLA&token=${FINNHUB_KEY}`
     );
     const data = await response.json();
-    const quoteData = { ...data, timestamp: Date.now() };
-    setCachedData('tesla-quote', quoteData);
-    return quoteData;
+    return { ...data, timestamp: Date.now() };
   } catch (error) {
     console.error('Quote fetch error:', error);
     throw error;
@@ -79,70 +35,21 @@ const fetchQuote = async () => {
 };
 
 const fetchFinancials = async () => {
-  const cached = getCachedData('tesla-financials');
-  if (cached) {
-    console.log('Using cached financial data:', cached);
-    return cached;
-  }
-
   try {
-    console.log('Fetching new financial data...');
     const response = await fetch(
       `https://finnhub.io/api/v1/stock/metric?symbol=TSLA&metric=all&token=${FINNHUB_KEY}`
     );
     const data = await response.json();
-    console.log('Received financial data:', data);
-    
-    if (!data || !data.metric) {
-      console.error('Invalid data format received:', data);
-      return {
-        metric: {
-          '52WeekHigh': 0,
-          '52WeekLow': 0,
-          currentRatioQuarterly: 0,
-          peRatio: 0
-        },
-        timestamp: Date.now()
-      };
-    }
-    
-    const financialData = { ...data, timestamp: Date.now() };
-    setCachedData('tesla-financials', financialData);
-    return financialData;
+    return { ...data, timestamp: Date.now() };
   } catch (error) {
     console.error('Financials fetch error:', error);
-    return {
-      metric: {
-        '52WeekHigh': 0,
-        '52WeekLow': 0,
-        currentRatioQuarterly: 0,
-        peRatio: 0
-      },
-      timestamp: Date.now()
-    };
+    throw error;
   }
 };
 
 const Tesla: Component = () => {
   const [quote] = createResource<Quote>(fetchQuote);
   const [financials] = createResource<BasicFinancials>(fetchFinancials);
-
-  createEffect(() => {
-    const checkForUpdates = () => {
-      const now = new Date();
-      const hours = now.getUTCHours();
-      const minutes = now.getUTCMinutes();
-      if (hours === 20 && minutes === 0) {
-        localStorage.removeItem('tesla-quote');
-        localStorage.removeItem('tesla-financials');
-        quote.refetch();
-        financials.refetch();
-      }
-    };
-
-    const interval = setInterval(checkForUpdates, 60000);
-    return () => clearInterval(interval);
-  });
 
   const formatCurrency = (num: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -159,10 +66,22 @@ const Tesla: Component = () => {
     }).format(num / 100);
   };
 
+  createEffect(() => {
+    const interval = setInterval(() => {
+      quote.refetch();
+      financials.refetch();
+    }, 30000); // Refresh every 30 seconds like in your App.tsx
+
+    return () => clearInterval(interval);
+  });
+
   return (
     <div class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
       <div class="flex justify-center mb-4">
-        <img src="/tesla-logo.png" alt="Tesla" class="h-8" />
+        <svg class="h-8" viewBox="0 0 342 35" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 .1a9.7 9.7 0 0 0 7 7h11l.5.1v27.6h6.8V7.3L26 7h11a9.8 9.8 0 0 0 7-7H0zm238.6 0h-6.8v34.8H263a9.7 9.7 0 0 0 6-6.8h-30.3V0zm-52.3 6.8c3.6-1 6.6-3.8 7.4-6.9l-38.1.1v20.6h31.1v7.2h-24.4a13.6 13.6 0 0 0-8.7 7h39.9v-21h-31.2v-7h24zm116.2 28h6.7v-14h24.6v14h6.7v-21h-38zM85.3 7h24v27.6h6.7V7h24.1V0H85.3z" fill="#E82127"/>
+          <path d="M311.5 0h-21.4v6.8h14.6v21.1h6.8V0zm-50.7 7h-23.3v27.6h6.8v-7h24.3a9.5 9.5 0 0 0 6-6.8h-30.3V7h23.3A9.5 9.5 0 0 0 261 .1v34.8h6.8V0h-6.8z" fill="#E82127"/>
+        </svg>
       </div>
       
       <div class="relative flex justify-center mb-6">
@@ -184,7 +103,7 @@ const Tesla: Component = () => {
                  L10,10
                  C10,10 10,0 20,0"
               fill="white"
-              stroke="#E31937"
+              stroke="#E82127"
               stroke-width="8"
               stroke-linejoin="round"
             />
@@ -220,38 +139,38 @@ const Tesla: Component = () => {
         </div>
       </div>
 
-<Show when={financials()} fallback={
-  <div class="text-center text-sm text-gray-500">Loading metrics...</div>
-}>
-  <div class="grid grid-cols-2 gap-3 text-sm">
-    <div class="bg-gray-50 p-2 rounded">
-      <div class="text-gray-600 text-xs">52W High</div>
-      <div class="font-medium">
-        {formatCurrency(financials()!.metric['52WeekHigh'])}
-      </div>
+      <Show when={financials()} fallback={
+        <div class="text-center text-sm text-gray-500">Loading metrics...</div>
+      }>
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div class="bg-gray-50 p-2 rounded">
+            <div class="text-gray-600 text-xs">52W High</div>
+            <div class="font-medium">
+              {formatCurrency(financials()!.metric['52WeekHigh'])}
+            </div>
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <div class="text-gray-600 text-xs">52W Low</div>
+            <div class="font-medium">
+              {formatCurrency(financials()!.metric['52WeekLow'])}
+            </div>
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <div class="text-gray-600 text-xs">Current Ratio</div>
+            <div class="font-medium">
+              {financials()!.metric.currentRatioQuarterly.toFixed(2)}
+            </div>
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <div class="text-gray-600 text-xs">P/E Ratio</div>
+            <div class="font-medium">
+              {financials()!.metric.peRatio.toFixed(2)}
+            </div>
+          </div>
+        </div>
+      </Show>
     </div>
-    <div class="bg-gray-50 p-2 rounded">
-      <div class="text-gray-600 text-xs">52W Low</div>
-      <div class="font-medium">
-        {formatCurrency(financials()!.metric['52WeekLow'])}
-      </div>
-    </div>
-    <div class="bg-gray-50 p-2 rounded">
-      <div class="text-gray-600 text-xs">Current Ratio</div>
-      <div class="font-medium">
-        {financials()!.metric.currentRatioQuarterly.toFixed(2)}
-      </div>
-    </div>
-    <div class="bg-gray-50 p-2 rounded">
-      <div class="text-gray-600 text-xs">P/E Ratio</div>
-      <div class="font-medium">
-        {financials()!.metric.peRatio.toFixed(2)}
-      </div>
-    </div>
-  </div>
-</Show>
-</div>
-);
+  );
 };
 
 export default Tesla;
