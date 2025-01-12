@@ -120,11 +120,11 @@ const Tesla: Component = () => {
   };
 
   return (
-    <div class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-      {/* Tesla Logo */}
-      <div class="flex justify-center mb-4">
-        <img src="/tesla-logo.png" alt="Tesla" class="h-12 -mt-2 -mb-2" />
-      </div>
+  <div class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+    {/* Tesla Logo */}
+    <div class="flex justify-center mb-4">
+      <img src="/tesla-logo.png" alt="Tesla" class="h-16 -mt-4 -mb-4" />
+    </div>
       
       {/* Price Display */}
       <div class="relative flex justify-center mb-6">
@@ -153,7 +153,7 @@ const Tesla: Component = () => {
                 y="50" 
                 text-anchor="middle" 
                 font-size="15"
-                font-family="'Space Grotesk', system-ui, sans-serif"
+                font-family=="'Space Mono', monospace"
                 font-weight="500"
                 filter="url(#crisp-text)"
               >
@@ -164,7 +164,7 @@ const Tesla: Component = () => {
                 y="65" 
                 text-anchor="middle" 
                 font-size="10"
-                font-family="'Space Grotesk', system-ui, sans-serif"
+                font-family=="'Space Mono', monospace"
                 fill={quote()!.dp > 0 ? "#22C55E" : "#EF4444"}
                 font-weight="500"
                 filter="url(#crisp-text)"
