@@ -255,100 +255,128 @@ return (
             </div>
           </div>
 
-
-    {/* Spotify Embed - temporarily commented out */}
+          {/* Spotify Embed */}
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
             <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Mood Music</h2>
-            <div className="w-full flex items-center justify-center">
-              {/* Placeholder instead of iframe */}
-              <span>Spotify Player Placeholder</span>
+            <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+              {/* Spotify embed will go here */}
+              <span className="text-gray-500">Spotify Player Placeholder</span>
             </div>
-          </div>
-
-    {/* Bottom row for macro indicators */}
-    <div className="grid grid-cols-3 gap-6">
-      {/* Federal Funds Rate */}
-      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-        <h2 className="text-lg font-semibold text-blue-800 mb-3">Federal Funds Rate</h2>
-        <div className="space-y-2">
-          <div className="border-b border-blue-100 pb-2">
-            <p className="text-sm text-blue-800">Current Rate</p>
-            {error() ? (
-              <p className="text-red-500 text-sm">Error: {error()}</p>
-            ) : !fedRateData() ? (
-              <p className="text-lg font-bold text-navy-900">Loading...</p>
-            ) : (
-              <>
-                <p className="text-lg font-bold text-navy-900">{fedRateData().rate}%</p>
-                <p className="text-xs text-blue-600">Last Updated: {fedRateData().date}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Source: <a href="https://fred.stlouisfed.org/series/EFFR" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                </p>
-              </>
-            )}
-          </div>
-          <div className="text-xs text-gray-600">
-            <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Unemployment Rate */}
-      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-        <h2 className="text-lg font-semibold text-blue-800 mb-3">Unemployment Rate</h2>
-        <div className="space-y-2">
-          <div className="border-b border-blue-100 pb-2">
-            <p className="text-sm text-blue-800">Current Rate</p>
-            {error() ? (
-              <p className="text-red-500 text-sm">Error: {error()}</p>
-            ) : !unemploymentData() ? (
-              <p className="text-lg font-bold text-navy-900">Loading...</p>
-            ) : (
-              <>
-                <p className="text-lg font-bold text-navy-900">{unemploymentData().rate}%</p>
-                <p className="text-xs text-blue-600">Last Updated: {unemploymentData().date}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Source: <a href="https://fred.stlouisfed.org/series/UNRATE" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                </p>
-              </>
-            )}
-          </div>
-          <div className="text-xs text-gray-600">
-            <p>The Unemployment Rate measures the percentage of jobseekers unable to find work. Higher rates suggest issues with labor market health and declining consumer spending power.</p>
-          </div>
-        </div>
-      </div>
-
-{/* Durable Goods Orders */}
-      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-        <h2 className="text-lg font-semibold text-blue-800 mb-3">Durable Goods Orders</h2>
-        <div className="space-y-2">
-          <div className="border-b border-blue-100 pb-2">
-            <p className="text-sm text-blue-800">Latest Value (Billions)</p>
-            {error() ? (
-              <p className="text-red-500 text-sm">Error: {error()}</p>
-            ) : !durablesData() ? (
-              <p className="text-lg font-bold text-navy-900">Loading...</p>
-            ) : (
-              <>
-                <p className="text-lg font-bold text-navy-900">${durablesData().value}B</p>
-                <p className="text-xs text-blue-600">Last Updated: {durablesData().date}</p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Source: <a href="https://fred.stlouisfed.org/series/DGORDER" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                </p>
-              </>
-            )}
-          </div>
-          <div className="text-xs text-gray-600">
-            <p>Durable Goods Orders measures the value of manufacturing orders for goods that last longer than three years, such as vehicles and equipment. Increasing orders suggest potential economic growth, strong business investment, and promising earnings in industrial sectors.</p>
           </div>
         </div>
       </div>
     </div>
-  </main>
-</div>
-</ThemeProvider>
-);
+  </div>
+
+
+  {/* Bottom row for macro indicators */}
+  <div className="grid grid-cols-3 gap-6">
+    {/* Federal Funds Rate */}
+    <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+      <h2 className="text-lg font-semibold text-blue-800 mb-3">Federal Funds Rate</h2>
+      <div className="space-y-2">
+              <div className="border-b border-blue-100 pb-2">
+                <p className="text-sm text-blue-800">Current Rate</p>
+                {error() ? (
+                  <p className="text-red-500 text-sm">Error: {error()}</p>
+                ) : !fedRateData() ? (
+                  <p className="text-lg font-bold text-navy-900">Loading...</p>
+                ) : (
+                  <>
+                    <p className="text-lg font-bold text-navy-900">{fedRateData().rate}%</p>
+                    <p className="text-xs text-blue-600">Last Updated: {fedRateData().date}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Source: <a href="https://fred.stlouisfed.org/series/EFFR" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="text-xs text-gray-600">
+                <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Unemployment Rate */}
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+            <h2 className="text-lg font-semibold text-blue-800 mb-3">Unemployment Rate</h2>
+            <div className="space-y-2">
+              <div className="border-b border-blue-100 pb-2">
+                <p className="text-sm text-blue-800">Current Rate</p>
+                {error() ? (
+                  <p className="text-red-500 text-sm">Error: {error()}</p>
+                ) : !unemploymentData() ? (
+                  <p className="text-lg font-bold text-navy-900">Loading...</p>
+                ) : (
+                  <>
+                    <p className="text-lg font-bold text-navy-900">{unemploymentData().rate}%</p>
+                    <p className="text-xs text-blue-600">Last Updated: {unemploymentData().date}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Source: <a href="https://fred.stlouisfed.org/series/UNRATE" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="text-xs text-gray-600">
+                <p>The Unemployment Rate measures the percentage of jobseekers unable to find work. Higher rates suggest issues with labor market health and declining consumer spending power.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Durable Goods Orders */}
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+            <h2 className="text-lg font-semibold text-blue-800 mb-3">Durable Goods Orders</h2>
+            <div className="space-y-2">
+              <div className="border-b border-blue-100 pb-2">
+                <p className="text-sm text-blue-800">Latest Value (Billions)</p>
+                {error() ? (
+                  <p className="text-red-500 text-sm">Error: {error()}</p>
+                ) : !durablesData() ? (
+                  <p className="text-lg font-bold text-navy-900">Loading...</p>
+                ) : (
+                  <>
+                    <p className="text-lg font-bold text-navy-900">${durablesData().value}B</p>
+                    <p className="text-xs text-blue-600">Last Updated: {durablesData().date}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Source: <a href="https://fred.stlouisfed.org/series/DGORDER" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="text-xs text-gray-600">
+                <p>Durable Goods Orders measures the value of manufacturing orders for goods that last longer than three years, such as vehicles and equipment. Increasing orders suggest potential economic growth, strong business investment, and promising earnings in industrial sectors.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+         </main>
+    </div>
+  </ThemeProvider>  
+  );
+};
+
+
+// Add bubble creation function here
+const createBubble = (e: MouseEvent) => {
+  const bubble = document.createElement('div');
+  const size = Math.random() * 30 + 20;
+  const left = e.clientX - size / 2;
+  const top = e.clientY - size / 2;
+  const travelDistance = Math.random() * 100 - 50;
+
+  bubble.className = 'bubble';
+  bubble.style.width = `${size}px`;
+  bubble.style.height = `${size}px`;
+  bubble.style.left = `${left}px`;
+  bubble.style.top = `${top}px`;
+  bubble.style.setProperty('--travel-x', `${travelDistance}px`);
+  bubble.style.animation = `float ${Math.random() * 2 + 3}s ease-in forwards`;
+
+  document.body.appendChild(bubble);
+
+  bubble.addEventListener('animationend', () => {
+    document.body.removeChild(bubble);
+  });
 };
 
 export default App;
