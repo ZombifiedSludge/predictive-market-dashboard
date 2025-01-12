@@ -1,6 +1,7 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
 import ThemeProvider from './components/ThemeProvider';
 import OilGauge from './widgets/OilGauge';
+import { Tesla } from "~/components/Tesla";
 
 const App = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -152,57 +153,17 @@ return (
       </div>
     </div>
 
-{/* Middle section with Market Movers, Graph, and ETF/Music */}
-<div className="col-span-12">
-  <div className="grid grid-cols-12 gap-6">
-    {/* Market Movers Column */}
-    <div className="col-span-2 space-y-6">
-      {/* Market Movers Box */}
-      <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-        <h2 className="text-lg font-semibold text-blue-800 mb-3">Top Market Movers</h2>
-        <div className="space-y-4">
-          {/* Top Gainers Section */}
-          <div>
-            <h3 className="text-sm font-semibold text-blue-800 mb-2">Top Gainers:</h3>
-            <div className="space-y-1">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">1. Stock A</span>
-                <span className="text-sm text-green-500">+5.2%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">2. Stock B</span>
-                <span className="text-sm text-green-500">+4.8%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">3. Stock C</span>
-                <span className="text-sm text-green-500">+4.1%</span>
-              </div>
-            </div>
-          </div>
-          {/* Top Losers Section */}
-          <div>
-            <h3 className="text-sm font-semibold text-blue-800 mb-2">Top Losers:</h3>
-            <div className="space-y-1">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">1. Stock X</span>
-                <span className="text-sm text-red-500">-3.2%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">2. Stock Y</span>
-                <span className="text-sm text-red-500">-2.8%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">3. Stock Z</span>
-                <span className="text-sm text-red-500">-2.5%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+{/* Middle section with Tesla, Graph, and ETF/Music */}
+<div class="col-span-12">
+  <div class="grid grid-cols-12 gap-6">
+    {/* Left Column with Tesla and Oil Gauge */}
+    <div class="col-span-2 space-y-6">
+      {/* Tesla Component replaces Market Movers */}
+      <Tesla isDarkMode={isDarkMode()} />
       {/* Oil Gauge */}
       <OilGauge />
     </div>
-
+    
         {/* Market Overview Graph */}
         <div className="col-span-7">
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
