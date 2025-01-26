@@ -266,62 +266,65 @@ return (
       />
     </div>
   </div>
-</div>
+
+  {/* Industry-Specific ETF Tracking */}
+  <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+    <h2 className="text-lg font-semibold text-blue-800 mb-3">Industry-Specific ETF Tracking</h2>
+    <div className="space-y-3">
+      <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+        <span className="text-sm text-navy-900">Technology Sector ETF (XLK)</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-sm font-semibold text-gray-600">
+            ${sectorETFs().xlk.value}
+          </span>
+          <span className={`text-xs ${sectorETFs().xlk.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            {sectorETFs().xlk.change > 0 ? '+' : ''}{sectorETFs().xlk.change}%
+          </span>
         </div>
       </div>
-    </div>
-
-{/* Industry-Specific ETF Tracking */}
-<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 mt-6">
-  <h2 className="text-lg font-semibold text-blue-800 mb-3">Industry-Specific ETF Tracking</h2>
-  <div className="flex flex-col space-y-2">
-    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-      <span className="text-sm text-navy-900">Technology Sector ETF (XLK)</span>
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">${sectorETFs().xlk.value}</span>
-        <span className={`text-xs ${sectorETFs().xlk.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-          {sectorETFs().xlk.change > 0 ? '+' : ''}{sectorETFs().xlk.change}%
-        </span>
+      <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+        <span className="text-sm text-navy-900">Financial Sector ETF (XLF)</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-sm font-semibold text-gray-600">
+            ${sectorETFs().xlf.value}
+          </span>
+          <span className={`text-xs ${sectorETFs().xlf.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            {sectorETFs().xlf.change > 0 ? '+' : ''}{sectorETFs().xlf.change}%
+          </span>
+        </div>
       </div>
-    </div>
-
-    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-      <span className="text-sm text-navy-900">Financial Sector ETF (XLF)</span>
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">${sectorETFs().xlf.value}</span>
-        <span className={`text-xs ${sectorETFs().xlf.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-          {sectorETFs().xlf.change > 0 ? '+' : ''}{sectorETFs().xlf.change}%
-        </span>
+      <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+        <span className="text-sm text-navy-900">Energy Sector ETF (XLE)</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-sm font-semibold text-gray-600">
+            ${sectorETFs().xle.value}
+          </span>
+          <span className={`text-xs ${sectorETFs().xle.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            {sectorETFs().xle.change > 0 ? '+' : ''}{sectorETFs().xle.change}%
+          </span>
+        </div>
       </div>
-    </div>
-
-    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-      <span className="text-sm text-navy-900">Energy Sector ETF (XLE)</span>
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">${sectorETFs().xle.value}</span>
-        <span className={`text-xs ${sectorETFs().xle.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-          {sectorETFs().xle.change > 0 ? '+' : ''}{sectorETFs().xle.change}%
-        </span>
+      <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+        <span className="text-sm text-navy-900">Healthcare Sector ETF (XLV)</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-sm font-semibold text-gray-600">
+            ${sectorETFs().xlv.value}
+          </span>
+          <span className={`text-xs ${sectorETFs().xlv.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            {sectorETFs().xlv.change > 0 ? '+' : ''}{sectorETFs().xlv.change}%
+          </span>
+        </div>
       </div>
-    </div>
-
-    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-      <span className="text-sm text-navy-900">Healthcare Sector ETF (XLV)</span>
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">${sectorETFs().xlv.value}</span>
-        <span className={`text-xs ${sectorETFs().xlv.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-          {sectorETFs().xlv.change > 0 ? '+' : ''}{sectorETFs().xlv.change}%
-        </span>
-      </div>
-    </div>
-
-    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-      <span className="text-sm text-navy-900">Consumer Sector ETF (XLY)</span>
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">${sectorETFs().xly.value}</span>
-        <span className={`text-xs ${sectorETFs().xly.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-          {sectorETFs().xly.change > 0 ? '+' : ''}{sectorETFs().xly.change}%
-        </span>
+      <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+        <span className="text-sm text-navy-900">Consumer Sector ETF (XLY)</span>
+        <div className="flex items-center space-x-2">
+          <span className="text-sm font-semibold text-gray-600">
+            ${sectorETFs().xly.value}
+          </span>
+          <span className={`text-xs ${sectorETFs().xly.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            {sectorETFs().xly.change > 0 ? '+' : ''}{sectorETFs().xly.change}%
+          </span>
+        </div>
       </div>
     </div>
   </div>
