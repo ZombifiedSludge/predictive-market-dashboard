@@ -19,7 +19,7 @@ const FINNHUB_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
 const ALPHA_KEY = 'WM4K3AZW1FX4LQ6M';
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-const Alcoa: Component = () => {
+const Alcoa: Component<{ onSwitch: () => void }> = (props) => {
   const [quote, setQuote] = createSignal<Quote | null>(null);
   const [metrics, setMetrics] = createSignal<AlphaMetrics | null>(null);
   const [error, setError] = createSignal<string | null>(null);
@@ -114,34 +114,38 @@ const Alcoa: Component = () => {
   };
 
   return (
-    <div class="col-span-2 bg-gray-800/95 backdrop-blur rounded-lg shadow-xl p-4">
+    <div 
+      class="col-span-2 bg-gradient-to-b from-[#d4d4d4] to-[#c4c4c4] backdrop-blur rounded-lg shadow-xl p-4 cursor-pointer transition-all duration-300 hover:from-[#e4e4e4] hover:to-[#d4d4d4]"
+      onClick={() => props.onSwitch()}
+      style={{ height: '384px' }} // Match Tesla container height exactly
+    >
       {/* Alcoa Logo */}
-      <div class="flex justify-center mb-4">
+      <div class="flex justify-center h-16 mb-4">
         <img src="/alcoa-logo.png" alt="Alcoa" class="h-16 -mt-4 -mb-4" />
       </div>
       
-      {/* Digital Display Panel */}
-      <div class="bg-black rounded-lg p-4 mb-6">
+      {/* Digital Display Panel - Adjusted height */}
+      <div class="bg-black rounded-lg p-4 mb-6 h-48 flex flex-col justify-center"> {/* Fixed height to match Tesla's SVG area */}
         {/* Main Price Display */}
         <Show when={quote()} fallback={
           <div class="text-center text-gray-500">Loading...</div>
         }>
-          <div class="bg-[#1a1a1a] rounded border border-gray-700 p-3 mb-2">
-            <div class="flex justify-between items-center">
+          <div class="bg-[#1a1a1a] rounded border border-gray-700 p-3">
+            <div class="flex justify-between items-center mb-2">
               <div class="text-xs text-gray-500">CURRENT PRICE</div>
               <div class="text-xs text-gray-500 animate-pulse">LIVE</div>
             </div>
-            <div class="font-mono text-4xl text-green-500 font-bold tracking-wider flex justify-center items-center h-12">
+            <div class="font-mono text-5xl text-green-500 font-bold tracking-wider flex justify-center items-center h-16">
               {formatCurrency(quote()!.c)}
             </div>
-            <div class={`font-mono text-lg font-bold tracking-wider text-center ${quote()!.dp >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            <div class={`font-mono text-xl font-bold tracking-wider text-center mt-2 ${quote()!.dp >= 0 ? 'text-green-500' : 'text-red-500'}`}>
               {quote()!.dp >= 0 ? '+' : ''}{formatPercent(quote()!.dp)}
             </div>
           </div>
         </Show>
       </div>
 
-      {/* Metrics Display */}
+      {/* Metrics Display - Same as before */}
       <Show when={metrics()} fallback={
         <div class="text-center text-sm text-gray-500">Loading metrics...</div>
       }>
