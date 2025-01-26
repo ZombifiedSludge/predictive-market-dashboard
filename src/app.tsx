@@ -15,6 +15,13 @@ const App = () => {
     sp500: { value: '--', change: 0 },
     nasdaq: { value: '--', change: 0 }
   });
+  const [sectorETFs, setSectorETFs] = createSignal({
+  xlk: { value: '--', change: 0 },
+  xlf: { value: '--', change: 0 },
+  xle: { value: '--', change: 0 },
+  xlv: { value: '--', change: 0 },
+  xly: { value: '--', change: 0 }
+});
 
   onMount(() => {
     try {
@@ -41,32 +48,59 @@ const App = () => {
         try {
           const API_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
           
-          const [dowData, spData, nasdaqData] = await Promise.all([
-            fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
-            fetch(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${API_KEY}`).then(r => r.json()),
-            fetch(`https://finnhub.io/api/v1/quote?symbol=ONEQ&token=${API_KEY}`).then(r => r.json())
-          ]);
+          const [dowData, spData, nasdaqData, xlkData, xlfData, xleData, xlvData, xlyData] = await Promise.all([
+  fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
+  fetch(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${API_KEY}`).then(r => r.json()),
+  fetch(`https://finnhub.io/api/v1/quote?symbol=ONEQ&token=${API_KEY}`).then(r => r.json()),
+  fetch(`https://finnhub.io/api/v1/quote?symbol=XLK&token=${API_KEY}`).then(r => r.json()),
+  fetch(`https://finnhub.io/api/v1/quote?symbol=XLF&token=${API_KEY}`).then(r => r.json()),
+  fetch(`https://finnhub.io/api/v1/quote?symbol=XLE&token=${API_KEY}`).then(r => r.json()),
+  fetch(`https://finnhub.io/api/v1/quote?symbol=XLV&token=${API_KEY}`).then(r => r.json()),
+  fetch(`https://finnhub.io/api/v1/quote?symbol=XLY&token=${API_KEY}`).then(r => r.json())
+]);
 
-          setMarketIndexes({
-            dowJones: {
-              value: dowData.c.toFixed(2),
-              change: ((dowData.c - dowData.pc) / dowData.pc * 100).toFixed(2)
-            },
-            sp500: {
-              value: spData.c.toFixed(2),
-              change: ((spData.c - spData.pc) / spData.pc * 100).toFixed(2)
-            },
-            nasdaq: {
-              value: nasdaqData.c.toFixed(2),
-              change: ((nasdaqData.c - nasdaqData.pc) / nasdaqData.pc * 100).toFixed(2)
-            }
-          });
-        } catch (err) {
-          console.error('Error fetching market data:', err);
-          setError(err.message);
-        }
-      };
+        setMarketIndexes({
+    dowJones: {
+      value: dowData.c.toFixed(2),
+      change: ((dowData.c - dowData.pc) / dowData.pc * 100).toFixed(2)
+    },
+    sp500: {
+      value: spData.c.toFixed(2),
+      change: ((spData.c - spData.pc) / spData.pc * 100).toFixed(2)
+    },
+    nasdaq: {
+      value: nasdaqData.c.toFixed(2),
+      change: ((nasdaqData.c - nasdaqData.pc) / nasdaqData.pc * 100).toFixed(2)
+    }
+  });
 
+  setSectorETFs({
+    xlk: {
+      value: xlkData.c.toFixed(2),
+      change: ((xlkData.c - xlkData.pc) / xlkData.pc * 100).toFixed(2)
+    },
+    xlf: {
+      value: xlfData.c.toFixed(2),
+      change: ((xlfData.c - xlfData.pc) / xlfData.pc * 100).toFixed(2)
+    },
+    xle: {
+      value: xleData.c.toFixed(2),
+      change: ((xleData.c - xleData.pc) / xleData.pc * 100).toFixed(2)
+    },
+    xlv: {
+      value: xlvData.c.toFixed(2),
+      change: ((xlvData.c - xlvData.pc) / xlvData.pc * 100).toFixed(2)
+    },
+    xly: {
+      value: xlyData.c.toFixed(2),
+      change: ((xlyData.c - xlyData.pc) / xlyData.pc * 100).toFixed(2)
+    }
+  });
+} catch (err) {
+  console.error('Error fetching market data:', err);
+  setError(err.message);
+}
+        
       // Initial fetch
       fetchMarketData();
 
@@ -235,6 +269,68 @@ return (
         </div>
       </div>
     </div>
+
+  {/* Industry-Specific ETF Tracking */}
+<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+  <h2 className="text-lg font-semibold text-blue-800 mb-3">Industry-Specific ETF Tracking</h2>
+  <div className="space-y-3">
+    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+      <span className="text-sm text-navy-900">Technology Sector ETF (XLK)</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-semibold text-gray-600">
+          ${sectorETFs().xlk.value}
+        </span>
+        <span className={`text-xs ${sectorETFs().xlk.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {sectorETFs().xlk.change > 0 ? '+' : ''}{sectorETFs().xlk.change}%
+        </span>
+      </div>
+    </div>
+    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+      <span className="text-sm text-navy-900">Financial Sector ETF (XLF)</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-semibold text-gray-600">
+          ${sectorETFs().xlf.value}
+        </span>
+        <span className={`text-xs ${sectorETFs().xlf.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {sectorETFs().xlf.change > 0 ? '+' : ''}{sectorETFs().xlf.change}%
+        </span>
+      </div>
+    </div>
+    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+      <span className="text-sm text-navy-900">Energy Sector ETF (XLE)</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-semibold text-gray-600">
+          ${sectorETFs().xle.value}
+        </span>
+        <span className={`text-xs ${sectorETFs().xle.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {sectorETFs().xle.change > 0 ? '+' : ''}{sectorETFs().xle.change}%
+        </span>
+      </div>
+    </div>
+    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+      <span className="text-sm text-navy-900">Healthcare Sector ETF (XLV)</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-semibold text-gray-600">
+          ${sectorETFs().xlv.value}
+        </span>
+        <span className={`text-xs ${sectorETFs().xlv.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {sectorETFs().xlv.change > 0 ? '+' : ''}{sectorETFs().xlv.change}%
+        </span>
+      </div>
+    </div>
+    <div className="flex justify-between items-center border-b border-blue-100 pb-2">
+      <span className="text-sm text-navy-900">Consumer Sector ETF (XLY)</span>
+      <div className="flex items-center space-x-2">
+        <span className="text-sm font-semibold text-gray-600">
+          ${sectorETFs().xly.value}
+        </span>
+        <span className={`text-xs ${sectorETFs().xly.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+          {sectorETFs().xly.change > 0 ? '+' : ''}{sectorETFs().xly.change}%
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
     {/* Bottom row for macro indicators */}
     <div className="grid grid-cols-3 gap-6">
