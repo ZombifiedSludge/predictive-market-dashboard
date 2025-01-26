@@ -19,7 +19,7 @@ const FINNHUB_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
 const ALPHA_KEY = 'WM4K3AZW1FX4LQ6M';
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-const Tesla: Component = () => {
+const Tesla: Component<{ onSwitch: () => void }> = (props) => {
   const [quote, setQuote] = createSignal<Quote | null>(null);
   const [metrics, setMetrics] = createSignal<AlphaMetrics | null>(null);
   const [error, setError] = createSignal<string | null>(null);
@@ -120,7 +120,10 @@ const Tesla: Component = () => {
   };
 
   return (
-  <div class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+<div 
+  class="col-span-2 bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 cursor-pointer" 
+  onClick={() => props.onSwitch()}
+>
     {/* Tesla Logo */}
     <div class="flex justify-center mb-4">
       <img src="/tesla-logo.png" alt="Tesla" class="h-16 -mt-4 -mb-4" />
