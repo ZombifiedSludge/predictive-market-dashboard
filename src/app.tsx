@@ -2,6 +2,7 @@ import { createSignal, onMount, onCleanup } from 'solid-js';
 import ThemeProvider from './components/ThemeProvider';
 import OilGauge from './widgets/OilGauge';
 import Tesla from './widgets/Tesla';
+import Alcoa from './widgets/Alcoa';
 
 const App = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -14,73 +15,78 @@ const App = () => {
     dowJones: { value: '--', change: 0 },
     sp500: { value: '--', change: 0 },
     nasdaq: { value: '--', change: 0 }
-  });
+  });  // Close marketIndexes first
+  const [currentWidget, setCurrentWidget] = createSignal<'tesla' | 'alcoa'>('tesla');
 
-  onMount(() => {
-    try {
-      // Set Federal Funds Rate
-      setFedRateData({
-        rate: "4.33",
-        date: "2025-01-10"
-      });
+onMount(() => {
+  try {
+    // Set Federal Funds Rate
+    setFedRateData({
+      rate: "4.33",
+      date: "2025-01-10"
+    });
 
-      // Set Unemployment Rate
-      setUnemploymentData({
-        rate: "4.1",
-        date: "2025-01-10"
-      });
+    // Set Unemployment Rate
+    setUnemploymentData({
+      rate: "4.1",
+      date: "2025-01-10"
+    });
 
-      // Set Durables Data
-      setDurablesData({
-        value: "284.712",
-        date: "2025-01-06"
-      });
+    // Set Durables Data
+    setDurablesData({
+      value: "284.712",
+      date: "2025-01-06"
+    });
 
-      // Market data fetch function
-      const fetchMarketData = async () => {
-        try {
-          const API_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
-          
-          const [dowData, spData, nasdaqData] = await Promise.all([
-            fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
-            fetch(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${API_KEY}`).then(r => r.json()),
-            fetch(`https://finnhub.io/api/v1/quote?symbol=ONEQ&token=${API_KEY}`).then(r => r.json())
-          ]);
+    // Market data fetch function
+    const fetchMarketData = async () => {
+      try {
+        const API_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
+        
+        const [dowData, spData, nasdaqData] = await Promise.all([
+          fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
+          fetch(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${API_KEY}`).then(r => r.json()),
+          fetch(`https://finnhub.io/api/v1/quote?symbol=ONEQ&token=${API_KEY}`).then(r => r.json())
+        ]);
 
-          setMarketIndexes({
-            dowJones: {
-              value: dowData.c.toFixed(2),
-              change: ((dowData.c - dowData.pc) / dowData.pc * 100).toFixed(2)
-            },
-            sp500: {
-              value: spData.c.toFixed(2),
-              change: ((spData.c - spData.pc) / spData.pc * 100).toFixed(2)
-            },
-            nasdaq: {
-              value: nasdaqData.c.toFixed(2),
-              change: ((nasdaqData.c - nasdaqData.pc) / nasdaqData.pc * 100).toFixed(2)
-            }
-          });
-        } catch (err) {
-          console.error('Error fetching market data:', err);
-          setError(err.message);
-        }
-      };
+        setMarketIndexes({
+          dowJones: {
+            value: dowData.c.toFixed(2),
+            change: ((dowData.c - dowData.pc) / dowData.pc * 100).toFixed(2)
+          },
+          sp500: {
+            value: spData.c.toFixed(2),
+            change: ((spData.c - spData.pc) / spData.pc * 100).toFixed(2)
+          },
+          nasdaq: {
+            value: nasdaqData.c.toFixed(2),
+            change: ((nasdaqData.c - nasdaqData.pc) / nasdaqData.pc * 100).toFixed(2)
+          }
+        });
+      } catch (err) {
+        console.error('Error fetching market data:', err);
+        setError(err.message);
+      }
+    };
 
-      // Initial fetch
+    // Initial fetch
+    fetchMarketData();
+
+    // Set up polling every 30 seconds for both market data and widget toggle
+    const marketInterval = setInterval(() => {
       fetchMarketData();
+      // Add widget toggle
+      setCurrentWidget(prev => prev === 'tesla' ? 'alcoa' : 'tesla');
+    }, 30000);
 
-      // Set up polling every 30 seconds
-      const marketInterval = setInterval(fetchMarketData, 30000);
-
-      // Cleanup
-      onCleanup(() => clearInterval(marketInterval));
-      
-    } catch (err) {
-      console.error('Error setting data:', err);
-      setError(err.message);
-    }
-  });
+    // Cleanup
+    onCleanup(() => clearInterval(marketInterval));
+    
+  } catch (err) {
+    console.error('Error setting data:', err);
+    setError(err.message);
+  }
+});
 
 return (
     <ThemeProvider>
@@ -156,11 +162,16 @@ return (
       {/* Middle section with Tesla, Graph, and ETF/Music */}
       <div class="col-span-12">
         <div class="grid grid-cols-12 gap-6">
-          {/* Left Column with Tesla and Oil Gauge */}
-          <div class="col-span-2 space-y-6">
-            <Tesla />
-            <OilGauge />
-          </div>
+          {/* Left Column with Alternating Widgets and Oil Gauge */}
+<div class="col-span-2 space-y-6">
+  <Show 
+    when={currentWidget() === 'tesla'} 
+    fallback={<Alcoa />}
+  >
+    <Tesla />
+  </Show>
+  <OilGauge />
+</div>
           
         {/* Market Overview Graph */}
         <div className="col-span-7">
