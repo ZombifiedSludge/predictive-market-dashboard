@@ -166,9 +166,9 @@ return (
 <div class="col-span-2 space-y-6">
   <Show 
     when={currentWidget() === 'tesla'} 
-    fallback={<Alcoa />}
+    fallback={<Alcoa onSwitch={() => setCurrentWidget('tesla')} />}
   >
-    <Tesla />
+    <Tesla onSwitch={() => setCurrentWidget('alcoa')} />
   </Show>
   <OilGauge />
 </div>
