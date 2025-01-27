@@ -110,3 +110,31 @@ a:hover, button:hover {
         text-shadow: 0 0 8px rgba(100, 149, 237, 0.3);
     }
 }
+
+/* Negative number pulse animation */
+[class*="text-red"] {
+    animation: subtle-pulse 2s infinite;
+}
+
+@keyframes subtle-pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+/* Glass morphism effect */
+.bg-white {
+    backdrop-filter: blur(10px);
+}
+
+/* Light mode glass */
+:root:not(.dark) .bg-white {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode glass */
+.dark .bg-white {
+    background: rgba(0, 32, 96, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
