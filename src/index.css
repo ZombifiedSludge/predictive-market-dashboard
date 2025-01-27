@@ -122,3 +122,39 @@ a:hover, button:hover {
     100% { opacity: 1; }
 }
 
+/* Ocean Current Animation - Dark Mode Only */
+.dark body > div {
+    background: linear-gradient(to top, 
+        #000B18,  /* deep ocean bottom */
+        #002342,  /* midnight ocean middle */
+        #003362   /* upper ocean depths */
+    );
+    position: relative;
+    overflow: hidden;
+    animation: oceanCurrent 30s ease-in-out infinite;
+    background-size: 400% 400%;
+}
+
+@keyframes oceanCurrent {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Keep top container white in both modes */
+.bg-white {
+    background: white !important;
+    position: relative;
+    z-index: 10;
+}
+
+/* For dark mode, ensure white container stays white */
+.dark .bg-white {
+    background: white !important;
+}
