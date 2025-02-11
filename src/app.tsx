@@ -249,15 +249,17 @@ return (
               </div>
             </div>
 
-       {/* Twitter/X Embed */}
+    {/* Twitter/X Embed */}
 <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-  <h2 className="text-lg font-semibold text-blue-800 mb-3">Twitter Feed</h2>
+  <h2 className="text-lg font-semibold text-blue-800 mb-3">Market News</h2>
   <div className="w-full" style={{ height: "152px", overflow: "hidden" }}>
     <a 
       className="twitter-timeline" 
       data-height="152"
       data-chrome="noheader nofooter noborders transparent"
-      href="https://twitter.com/bespokeinvest"
+      data-tweet-limit="5"
+      data-show-replies="false"
+      href="https://twitter.com/bespokeinvest?ref_src=twsrc%5Etfw"
     >
       Loading tweets...
     </a>
