@@ -264,7 +264,13 @@ return (
       data-conversation="none"
       data-media="false"
       data-dnt="true"
+      data-link-color="#000000"
+      data-theme="light"
+      data-aria-polite="assertive"
+      data-components="timeline,follow-button"
       tweet-style="linear"
+      hide-thread="true"
+      hide-media="true"
       href="https://twitter.com/CNBC?ref_src=twsrc%5Etfw&data-type=latest"
     >
       <div className="flex items-center justify-center h-full">
