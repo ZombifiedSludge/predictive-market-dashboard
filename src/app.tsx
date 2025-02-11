@@ -262,7 +262,9 @@ return (
       data-show-retweets="false"
       data-cards="hidden"
       data-conversation="none"
+      data-media="false"
       data-dnt="true"
+      tweet-style="linear"
       href="https://twitter.com/CNBC?ref_src=twsrc%5Etfw&data-type=latest"
     >
       <div className="flex items-center justify-center h-full">
