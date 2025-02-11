@@ -249,7 +249,7 @@ return (
               </div>
             </div>
 
-    {/* Twitter/X Embed */}
+{/* Twitter/X Embed */}
 <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
   <h2 className="text-lg font-semibold text-blue-800 mb-3">Market News</h2>
   <div className="w-full" style={{ height: "152px", overflow: "hidden" }}>
@@ -259,9 +259,17 @@ return (
       data-chrome="noheader nofooter noborders transparent"
       data-tweet-limit="5"
       data-show-replies="false"
-      href="https://twitter.com/bespokeinvest?ref_src=twsrc%5Etfw"
+      data-show-retweets="false"
+      data-cards="hidden"
+      data-conversation="none"
+      data-dnt="true"
+      href="https://twitter.com/CNBC?ref_src=twsrc%5Etfw&data-type=latest"
     >
-      Loading tweets...
+      <div className="flex items-center justify-center h-full">
+        <div className="text-blue-800 opacity-80 animate-pulse">
+          Loading latest market news...
+        </div>
+      </div>
     </a>
   </div>
 </div>
