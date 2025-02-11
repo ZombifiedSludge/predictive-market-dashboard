@@ -249,22 +249,20 @@ return (
               </div>
             </div>
 
-            {/* Spotify Embed */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-3">Playlist</h2>
-              <div className="w-full">
-                <iframe 
-                  src="https://open.spotify.com/embed/playlist/3vGxWDLdfzAsYtpHrefpDG?utm_source=generator" 
-                  width="100%" 
-                  height="152" 
-                  frameBorder="0" 
-                  allowfullscreen="" 
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                  loading="lazy"
-                  style="border-radius:12px"
-                />
-              </div>
-            </div>
+       {/* Twitter/X Embed */}
+<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+  <h2 className="text-lg font-semibold text-blue-800 mb-3">Twitter Feed</h2>
+  <div className="w-full" style={{ height: "152px", overflow: "hidden" }}>
+    <a 
+      className="twitter-timeline" 
+      data-height="152"
+      data-chrome="noheader nofooter noborders transparent"
+      href="https://twitter.com/bespokeinvest"
+    >
+      Loading tweets...
+    </a>
+  </div>
+</div>
 
           {/* Industry-Specific ETF Tracking */}
        <div className="bg-gradient-to-r from-white to-blue-50/30 backdrop-blur rounded-lg shadow-xl p-4 border-l-4 border-blue-600/20">
