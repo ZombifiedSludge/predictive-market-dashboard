@@ -10,6 +10,15 @@ const Article2: Component = () => {
      
      {/* Publication Date */}
      <p class="text-sm text-gray-500 mb-6">Published February 12th, 2025</p>
+
+        {/* Image placeholder */}
+      <div class="w-full h-64 bg-gray-200 mb-6 rounded-lg">
+        <img 
+          src="/Marlboro.png" 
+          alt="Article header image" 
+          class="w-full h-full object-cover rounded-lg"
+        />
+      </div>
      
      {/* Article Content */}
      <div class="text-gray-700 font-georgia space-y-6">
