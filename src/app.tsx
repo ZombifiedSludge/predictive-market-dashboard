@@ -2,6 +2,7 @@ import { createSignal, onMount, onCleanup } from 'solid-js';
 import ThemeProvider from './components/ThemeProvider';
 import OilGauge from './widgets/OilGauge';
 import Tesla from './widgets/Tesla';
+import { A } from '@solidjs/router';
 
 const App = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -123,11 +124,11 @@ return (
       <header className="bg-white shadow-lg">
         <nav className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <img src="/omenifylogo.png" alt="Omenify" className="h-8" />
+            <A href="/"><img src="/omenifylogo.png" alt="Omenify" className="h-8" /></A>
             <div className="flex space-x-8">
-              <a href="/" className="font-serif font-bold text-blue-900 hover:text-blue-700">Dashboard</a>
-              <a href="/blog" className="font-serif font-bold text-blue-900 hover:text-blue-700">Blog</a>
-              <a href="#sources" className="font-serif font-bold text-blue-900 hover:text-blue-700">Sources</a>
+              <A href="/" className="font-serif font-bold text-blue-900 hover:text-blue-700">Dashboard</A>
+              <A href="/blog" className="font-serif font-bold text-blue-900 hover:text-blue-700">Blog</A>
+              <A href="#sources" className="font-serif font-bold text-blue-900 hover:text-blue-700">Sources</A>
             </div>
           </div>
         </nav>
