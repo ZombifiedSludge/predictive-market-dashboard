@@ -1,5 +1,6 @@
 import { Component, createSignal } from 'solid-js';
 import Article1 from './Articles/Article1';
+import Article2 from './Articles/Article2';  
 
 const Blog: Component = () => {
   // Signal to track which article is currently selected
@@ -12,7 +13,7 @@ const Blog: Component = () => {
         <div class="space-y-6">
           {/* Display current article */}
           {currentArticle() === 'article1' && <Article1 />}
-          {/* Add more article conditions here as you add more articles */}
+          {currentArticle() === 'article2' && <Article2 />}  {/* Add this line */}
         </div>
       </div>
 
@@ -28,7 +29,12 @@ const Blog: Component = () => {
               >
                 3 Signs You're Making Stock Picks the Wrong Way
               </p>
-              {/* Add more article titles here as you create them */}
+              <p 
+                class="text-gray-600 hover:text-blue-600 cursor-pointer"
+                onClick={() => setCurrentArticle('article2')}
+              >
+                Dividends or Danger? Insight into 3 High-Yield Stocks
+              </p>
             </div>
           </div>
         </div>
