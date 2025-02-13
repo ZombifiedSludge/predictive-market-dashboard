@@ -254,7 +254,12 @@ onMount(() => {
       tweet-style="linear"
       hide-thread="true"
       hide-media="true"
-      href="https://twitter.com/CNBC?ref_src=twsrc%5Etfw&data-type=latest"
+      href="https://twitter.com/CNBC?ref_src=twsrc%5Etfw"
+      ref={(el) => {
+        if (window.twttr && window.twttr.widgets) {
+          window.twttr.widgets.load(el);
+        }
+      }}
     >
       <div className="flex items-center justify-center h-full">
         <div className="text-blue-800 opacity-80 animate-pulse">
