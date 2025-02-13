@@ -4,7 +4,7 @@ const Blog: Component = () => {
   return (
     <div class="h-screen w-full flex">
       {/* Main content area - left side */}
-      <div class="w-[70%] h-full overflow-y-auto p-6">
+      <div class="w-[80%] h-full overflow-y-auto p-6">
         {/* This is where articles will be displayed */}
         <div class="space-y-6">
           {/* Placeholder for articles */}
@@ -16,7 +16,7 @@ const Blog: Component = () => {
       </div>
 
       {/* Table of contents - right side */}
-      <div class="w-[30%] p-6">
+      <div class="w-[20%] p-6">
         <div class="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 sticky top-6" style="max-height: 33vh;">
           <h2 class="text-xl font-semibold text-navy-900 mb-4">Table of Contents</h2>
           {/* Table of contents component will go here */}
