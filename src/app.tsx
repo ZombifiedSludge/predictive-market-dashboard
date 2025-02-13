@@ -1,6 +1,12 @@
 import { A } from '@solidjs/router';
 import ThemeProvider from './components/ThemeProvider';
 
+declare global {
+  interface Window {
+    twttr: any;
+  }
+}
+
 const App = (props: { children?: any }) => {
   return (
     <ThemeProvider>
