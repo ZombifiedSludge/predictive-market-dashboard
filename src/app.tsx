@@ -125,9 +125,8 @@ return (
           <div className="flex justify-between items-center">
             <img src="/omenifylogo.png" alt="Omenify" className="h-8" />
             <div className="flex space-x-8">
-              <a href="#dashboard" className="font-serif font-bold text-blue-900 hover:text-blue-700">Dashboard</a>
-              <a href="#bellwether" className="font-serif font-bold text-blue-900 hover:text-blue-700">Bellwethers</a>
-              <a href="#betting" className="font-serif font-bold text-blue-900 hover:text-blue-700">Why Betting Markets</a>
+              <a href="/" className="font-serif font-bold text-blue-900 hover:text-blue-700">Dashboard</a>
+              <a href="/blog" className="font-serif font-bold text-blue-900 hover:text-blue-700">Blog</a>
               <a href="#sources" className="font-serif font-bold text-blue-900 hover:text-blue-700">Sources</a>
             </div>
           </div>
