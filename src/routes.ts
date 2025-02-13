@@ -15,7 +15,7 @@ export const routes: RouteDefinition[] = [
   },
   {
     path: '/blog',
-    component: lazy(() => import('./pages/Blog')),
+    component: lazy(() => import('./widgets/Blog')),  // Changed this line to point to widgets
   },
   {
     path: '**',
