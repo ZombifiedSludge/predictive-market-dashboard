@@ -6,7 +6,7 @@ import AboutData from './pages/about.data';
 export const routes: RouteDefinition[] = [
   {
     path: '/',
-    component: Home,
+    component: lazy(() => import('./widgets/Dashboard')),  // Changed to use Dashboard
   },
   {
     path: '/about',
@@ -15,7 +15,7 @@ export const routes: RouteDefinition[] = [
   },
   {
     path: '/blog',
-    component: lazy(() => import('./widgets/Blog')),  // Changed this line to point to widgets
+    component: lazy(() => import('./widgets/Blog')),
   },
   {
     path: '**',
