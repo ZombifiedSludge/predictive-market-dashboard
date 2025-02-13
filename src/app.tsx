@@ -1,7 +1,5 @@
-import { Router } from '@solidjs/router';
-import { A } from '@solidjs/router';
+import { Router, A, Route } from '@solidjs/router';
 import ThemeProvider from './components/ThemeProvider';
-import { Routes, Route } from '@solidjs/router';
 import Dashboard from './widgets/Dashboard';
 import Blog from './widgets/Blog';
 
