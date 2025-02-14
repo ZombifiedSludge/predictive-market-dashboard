@@ -10,15 +10,6 @@ const Article3: Component = () => {
      
      {/* Publication Date */}
      <p class="text-sm text-gray-500 mb-4">Published November 15th, 2024</p>
-
-   {/* Header Image - more panoramic ratio */}
-<div class="w-full h-48 mb-6">
-  <img 
-    src="fredjobpostings.png" 
-    alt="FRED Job Postings Graph" 
-    class="w-full h-full object-contain rounded-lg"
-  />
-</div>
      
      {/* Article Content */}
      <div class="text-gray-700 font-georgia space-y-6">
