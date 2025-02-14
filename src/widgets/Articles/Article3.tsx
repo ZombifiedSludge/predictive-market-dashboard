@@ -11,14 +11,14 @@ const Article3: Component = () => {
      {/* Publication Date */}
      <p class="text-sm text-gray-500 mb-4">Published November 15th, 2024</p>
 
-     {/* Header Image */}
-     <div class="w-full h-64 mb-6">
-       <img 
-         src="fredjobpostings.png" 
-         alt="FRED Job Postings Graph" 
-         class="w-full h-full object-cover rounded-lg"
-       />
-     </div>
+   {/* Header Image - more panoramic ratio */}
+<div class="w-full h-48 mb-6">
+  <img 
+    src="fredjobpostings.png" 
+    alt="FRED Job Postings Graph" 
+    class="w-full h-full object-contain rounded-lg"
+  />
+</div>
      
      {/* Article Content */}
      <div class="text-gray-700 font-georgia space-y-6">
@@ -33,14 +33,14 @@ const Article3: Component = () => {
        {/* Section 174 Explanation */}
        <h2 class="text-xl font-semibold text-navy-900">What is Section 174 and why does it matter?</h2>
        
-       {/* Embedded Image */}
-       <div class="float-right ml-6 mb-6 w-1/3">
-         <img 
-           src="section174.png" 
-           alt="Section 174 Diagram" 
-           class="rounded-lg shadow-md"
-         />
-       </div>
+     {/* Embedded Image - smaller and wrapped */}
+<div class="float-right ml-6 mb-6 w-1/4">
+  <img 
+    src="section174.png" 
+    alt="Section 174 Diagram" 
+    class="rounded-lg shadow-md"
+  />
+</div>
        
        <p>
          Section 174 of the Internal Revenue Code is a portion of American tax law that revolves around research and development expenses. Section 174 defines what qualifies as research and development and classifies expenses such as laboratory and experimental salaries, models, overhead, and materials as qualifying R&D costs. Historically, according to ASC 730, the treatment of research and development costs (capitalization or expense) depended on the nature of the expenditures. Costs were typically expensed as incurred, but some with an alternative future use (facilities, materials, etc.) were capitalizable. According to PricewaterhouseCoopers memos, taxpayers formally had a choice to either deduct research expenses immediately, amortize them over a determinable useful life, or defer the costs over five years or longer [3].
