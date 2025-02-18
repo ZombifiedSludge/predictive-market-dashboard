@@ -12,11 +12,11 @@ const Article4: Component = () => {
      <p class="text-sm text-gray-500 mb-4">Published February 18th, 2025</p>
 
      {/* Header Image */}
-     <div class="w-full h-56 mb-6">
+     <div class="w-full h-48 mb-6">
        <img 
          src="metahq.png" 
          alt="Meta Headquarters" 
-         class="w-full h-full object-contain rounded-lg"
+         class="w-full h-full object-cover rounded-lg"
        />
      </div>
      
