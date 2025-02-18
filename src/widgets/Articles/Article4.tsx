@@ -11,14 +11,6 @@ const Article4: Component = () => {
      {/* Publication Date */}
      <p class="text-sm text-gray-500 mb-4">Published February 18th, 2025</p>
 
-     {/* Header Image */}
-     <div class="w-full h-48 mb-6">
-       <img 
-         src="metahq.png" 
-         alt="Meta Headquarters" 
-         class="w-full h-full object-cover rounded-lg"
-       />
-     </div>
      
      {/* Article Content */}
      <div class="text-gray-700 font-georgia space-y-6">
