@@ -16,7 +16,7 @@ const Article4: Component = () => {
        <img 
          src="metahq.png" 
          alt="Meta Headquarters" 
-         class="w-full h-full object-cover rounded-lg"
+         class="w-full h-full object-contain rounded-lg"
        />
      </div>
      
