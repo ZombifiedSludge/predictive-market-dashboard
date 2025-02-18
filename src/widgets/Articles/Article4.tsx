@@ -84,10 +84,32 @@ const Article4: Component = () => {
          It is always challenging to recommend a stock that has already experienced a 642.94% increase over the past two and a half years, along with a record-breaking 17 consecutive days of growth. It calls to mind the well-worn adage, "If it seems too good to be true, it probably is." If I were to tell you to purchase the stock based solely on its recent performance, I believe my advice would be ill-advisable and superficial. Furthermore, I do believe a market correction is in order, considering how unprecedented this surge is. However, the company's underlying fundamentals point to this being a worthy stock for most investors with a long time horizon. The consistent revenue growth, stable cash position, and a significant increase in operating margin highlight how Meta is performing better than ever before. The rise in capital expenditures, along with planned headcount reductions and the potential acquisition of FuriosaAI, demonstrate that Meta is optimizing resources while staying at the forefront of growth and innovation. The current P/E ratio of 29.93 is lower than Meta's historical average of 33.63, suggesting a blend of healthy optimism regarding the company's growth potential, while possibly indicating further underestimation of its value. Furthermore, the sheer size of Meta's daily average user base and the length of user engagement with its products make it difficult to bet against the high-tech conglomerate. There is some uncertainty surrounding generative AI, changes to content moderation, and the reliability of its Reality Segment. However, the dominance of Meta's core apps provides a level of security that few other companies can match, and none of these concerns have seemed to matter to investors yet. In short, while I expect a bit less promising trajectory over the coming months, I do believe that Meta Platforms is a buy with lasting momentum for years to come.
        </p>
 
-       <p class="font-semibold italic">Final Verdict: Buy</p>
-     </div>
-   </div>
- );
+          <p class="font-semibold italic">Final Verdict: Buy</p>
+
+      {/* References */}
+      <div class="mt-12 pt-6 border-t border-gray-200">
+        <h3 class="text-lg font-semibold text-navy-900 mb-4">References</h3>
+        <div class="space-y-2 text-sm text-gray-600">
+          <p>
+            [1] Meta Platforms, Inc. "Form 10-K for the Fiscal Year Ended December 31, 2024." U.S. Securities and Exchange Commission, 2025,  
+            <a href="https://www.sec.gov/ix?doc=/Archives/edgar/data/0001326801/000132680125000017/meta-20241231.htm#fact-identifier-130" 
+               class="text-blue-600 hover:text-blue-800 hover:underline">
+              https://www.sec.gov/ix?doc=/Archives/edgar/data/0001326801/000132680125000017/meta-20241231.htm#fact-identifier-130
+            </a>
+          </p>
+          <p>
+            [2] FullRatio. "Meta Platforms, Inc. (META) P/E Ratio." FullRatio, accessed February 18, 2025,  
+            <a href="https://fullratio.com/stocks/nasdaq-meta/pe-ratio" 
+               class="text-blue-600 hover:text-blue-800 hover:underline">
+              https://fullratio.com/stocks/nasdaq-meta/pe-ratio
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 };
+
 
 export default Article4;
