@@ -1,6 +1,14 @@
 const crypto = require('crypto');
 
-const PRIVATE_KEY = `-----BEGIN RSA PRIVATE KEY-----
+exports.handler = async function(event) {
+  try {
+    // Get current timestamp
+    const timestamp = Date.now().toString();
+    const method = 'GET';
+    const path = '/trade-api/v2/markets?ticker_prefix=KXINXY-25DEC31';
+    
+    // Load private key
+    const privateKeyPEM = `-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAulgAOOLKWQou0+TFy6iP8Q+sYWLFBKwbn1eLe9qUxtyyABxj
 eq+ZTqBqD8bmaCLfjSvqEYgI2wcsMAcZ8XsfCx14J1qHCjzPTbWDDiNMbeBZEarE
 sCbiZB9kjGYrDN4ifHBY7jU+NXvUrZ7UGLpSdyL4hDSWtUVd2BYsf9N4VkfofX0r
@@ -28,31 +36,46 @@ xlRwr3KdohKYs8gMXB/CXyCG5OA7CWV0P40Cg/6jBLxnAZliHeIqCFThSDZX2++/
 ENWzPcnnWu2NykNcZVzCDE7u1YL8GIQpp+hCt8rIMuTBO2bZJnhf
 -----END RSA PRIVATE KEY-----`;
 
-const ACCESS_KEY = '731c0410-6dbe-47a2-ac7f-bab9a4be1e0b';
+    const privateKey = crypto.createPrivateKey({
+      key: privateKeyPEM,
+      format: 'pem'
+    });
 
-exports.handler = async function(event) {
-try {
-    const timestamp = Date.now().toString();
-    const method = 'GET';
-    const path = '/trade-api/v2/markets?ticker_prefix=KXINXY';
+    // Create message to sign
+    const messageToSign = `${timestamp}${method}${path}`;
+    const message = Buffer.from(messageToSign, 'utf-8');
+
+    // Sign the message
+    const signature = crypto.sign(
+      'sha256',
+      message,
+      {
+        key: privateKey,
+        padding: crypto.constants.RSA_PKCS1_PSS_PADDING,
+        saltLength: crypto.constants.RSA_PSS_SALTLEN_DIGEST
+      }
+    );
+
+    const signatureBase64 = signature.toString('base64');
     
-    // Generate signature
-    const message = `${timestamp}${method}${path}`;
-    const signature = crypto.createSign('SHA256')
-      .update(message)
-      .sign(PRIVATE_KEY, 'base64');
+    console.log("Request to:", `https://demo-api.kalshi.co${path}`);
+    console.log("Headers:", {
+      'KALSHI-ACCESS-KEY': '731c0410-6dbe-47a2-ac7f-bab9a4be1e0b',
+      'KALSHI-ACCESS-SIGNATURE': signatureBase64,
+      'KALSHI-ACCESS-TIMESTAMP': timestamp
+    });
 
     // Make request to Kalshi
-    const response = await fetch('https://demo-api.kalshi.co' + path, {
+    const response = await fetch(`https://demo-api.kalshi.co${path}`, {
       headers: {
-        'KALSHI-ACCESS-KEY': ACCESS_KEY,
-        'KALSHI-ACCESS-SIGNATURE': signature,
+        'KALSHI-ACCESS-KEY': '731c0410-6dbe-47a2-ac7f-bab9a4be1e0b',
+        'KALSHI-ACCESS-SIGNATURE': signatureBase64,
         'KALSHI-ACCESS-TIMESTAMP': timestamp
       }
     });
 
     const data = await response.json();
-    console.log('Kalshi API Response:', data); // Add this line
+    console.log("Kalshi API response:", data);
 
     return {
       statusCode: 200,
@@ -62,3 +85,11 @@ try {
       },
       body: JSON.stringify(data)
     };
+  } catch (error) {
+    console.error("Error in Kalshi proxy:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message })
+    };
+  }
+};
