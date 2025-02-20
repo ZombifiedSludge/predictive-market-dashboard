@@ -1,7 +1,7 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
 import OilGauge from './OilGauge';
 import Tesla from './Tesla';
-import SP500Prediction from './components/SP500Prediction';
+import SP500Prediction from '../components/SP500Prediction';
 
 const Dashboard = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
