@@ -31,7 +31,7 @@ ENWzPcnnWu2NykNcZVzCDE7u1YL8GIQpp+hCt8rIMuTBO2bZJnhf
 const ACCESS_KEY = '731c0410-6dbe-47a2-ac7f-bab9a4be1e0b';
 
 exports.handler = async function(event) {
-  try {
+try {
     const timestamp = Date.now().toString();
     const method = 'GET';
     const path = '/trade-api/v2/events/KXINXY-25DEC31/markets';
@@ -52,6 +52,7 @@ exports.handler = async function(event) {
     });
 
     const data = await response.json();
+    console.log('Kalshi API Response:', data); // Add this line
 
     return {
       statusCode: 200,
@@ -61,10 +62,3 @@ exports.handler = async function(event) {
       },
       body: JSON.stringify(data)
     };
-  } catch (error) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: error.message })
-    };
-  }
-};
