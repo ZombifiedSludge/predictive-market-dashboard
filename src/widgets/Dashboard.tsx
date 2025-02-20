@@ -118,46 +118,47 @@ onMount(() => {
   }
 });
 
-  return (
+return (
   <main className="container mx-auto px-6 py-8">
-  {/* Main content grid */}
-  <div className="grid grid-cols-12 gap-6 mb-6">
-    {/* Top section spans full width */}
-    <div className="col-span-12">
-      <div className="grid grid-cols-4 gap-6">
-        {/* Left side - Main content */}
-        <div className="col-span-3">
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 mb-6">
-            <h2 className="text-xl font-semibold text-navy-900 mb-4">S&P 500 End of Year Prediction</h2>
-            {/* Your existing S&P prediction content */}
-          </div>
+    {/* Main content grid */}
+    <div className="grid grid-cols-12 gap-6 mb-6">
+      {/* Top section spans full width */}
+      <div className="col-span-12">
+        <div className="grid grid-cols-4 gap-6">
+          {/* Left side - Main content */}
+          <div className="col-span-3">
+            <SP500Prediction />
 
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
-            <h2 className="text-xl font-semibold text-navy-900 mb-4">NASDAQ End of Year Prediction</h2>
-            {/* Your existing NASDAQ prediction content */}
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
+              <h2 className="text-xl font-semibold text-navy-900 mb-4">NASDAQ End of Year Prediction</h2>
+              {/* Your existing NASDAQ prediction content */}
+            </div>
+          </div>
+          
+          {/* Right side - Top Projections */}
+          <div className="space-y-6">
+            {/* S&P 500 Projections already handled by SP500Prediction component */}
+            
+            {/* NASDAQ Projections */}
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+              <h2 className="text-lg font-semibold text-blue-800 mb-3">Top NASDAQ Projections</h2>
+              <div className="space-y-2">
+                {[1, 2, 3, 4].map((_, i) => (
+                  <div key={i} className="border-b border-blue-100 pb-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-navy-900">Analyst {i + 1}</span>
+                      <span className="text-sm text-gray-600">Projection</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-        
-   {/* Right side - Top Projections */}
-<div class="space-y-6">
-  {/* S&P 500 Projections */}
-  <SP500Prediction />
-
-  {/* NASDAQ Projections */}
-  <div class="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-    <h2 class="text-lg font-semibold text-blue-800 mb-3">Top NASDAQ Projections</h2>
-    <div class="space-y-2">
-      {[1, 2, 3, 4].map((_, i) => (
-        <div key={i} class="border-b border-blue-100 pb-2">
-          <div class="flex justify-between items-center">
-            <span class="text-sm text-navy-900">Analyst {i + 1}</span>
-            <span class="text-sm text-gray-600">Projection</span>
-          </div>
-        </div>
-      ))}
+      </div>
     </div>
-  </div>
-</div>
+  </main>
+);
 
       {/* Middle section with Tesla, Graph, and ETF/Music */}
       <div class="col-span-12">
