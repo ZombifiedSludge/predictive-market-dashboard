@@ -34,7 +34,7 @@ exports.handler = async function(event) {
   try {
     const timestamp = Date.now().toString();
     const method = 'GET';
-    const path = '/trade-api/v2/markets?series=SP500Y25';
+    const path = '/trade-api/v2/events/KXINXY-25DEC31/markets';
     
     // Generate signature
     const message = `${timestamp}${method}${path}`;
