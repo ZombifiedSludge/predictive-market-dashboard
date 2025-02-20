@@ -39,6 +39,7 @@ export function useKalshiData() {
     try {
       const response = await fetch('/.netlify/functions/kalshi-proxy');
       const jsonData = await response.json();
+      console.log('Data from proxy:', jsonData);
 
       if (jsonData && jsonData.markets) {
         const processedData = {
