@@ -1,6 +1,8 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
 import OilGauge from './OilGauge';
 import Tesla from './Tesla';
+import SP500Prediction from './components/SP500Prediction';
+
 
 const Dashboard = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -136,40 +138,26 @@ onMount(() => {
           </div>
         </div>
         
-        {/* Right side - Top Projections */}
-        <div className="space-y-6">
-          {/* S&P 500 Projections */}
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-            <h2 className="text-lg font-semibold text-blue-800 mb-3">Top S&P 500 Projections</h2>
-            <div className="space-y-2">
-              {[1, 2, 3, 4].map((_, i) => (
-                <div key={i} className="border-b border-blue-100 pb-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-navy-900">Analyst {i + 1}</span>
-                    <span className="text-sm text-gray-600">Projection</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+   {/* Right side - Top Projections */}
+<div class="space-y-6">
+  {/* S&P 500 Projections */}
+  <SP500Prediction />
 
-          {/* NASDAQ Projections */}
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-            <h2 className="text-lg font-semibold text-blue-800 mb-3">Top NASDAQ Projections</h2>
-            <div className="space-y-2">
-              {[1, 2, 3, 4].map((_, i) => (
-                <div key={i} className="border-b border-blue-100 pb-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-navy-900">Analyst {i + 1}</span>
-                    <span className="text-sm text-gray-600">Projection</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+  {/* NASDAQ Projections */}
+  <div class="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+    <h2 class="text-lg font-semibold text-blue-800 mb-3">Top NASDAQ Projections</h2>
+    <div class="space-y-2">
+      {[1, 2, 3, 4].map((_, i) => (
+        <div key={i} class="border-b border-blue-100 pb-2">
+          <div class="flex justify-between items-center">
+            <span class="text-sm text-navy-900">Analyst {i + 1}</span>
+            <span class="text-sm text-gray-600">Projection</span>
           </div>
         </div>
-      </div>
+      ))}
     </div>
+  </div>
+</div>
 
       {/* Middle section with Tesla, Graph, and ETF/Music */}
       <div class="col-span-12">
