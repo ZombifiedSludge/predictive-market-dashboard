@@ -17,7 +17,6 @@ function shouldFetchNewData() {
   const lastFetchEST = new Date(lastFetchDate.getTime() + (estOffset * 60 * 60 * 1000));
   const nowEST = new Date(now.getTime() + (estOffset * 60 * 60 * 1000));
 
-  // If it's a different day or it's after 4 PM EST and we haven't fetched today after 4 PM
   return (
     lastFetchEST.getDate() !== nowEST.getDate() ||
     (nowEST.getHours() >= MARKET_CLOSE_HOUR && lastFetchEST.getHours() < MARKET_CLOSE_HOUR)
