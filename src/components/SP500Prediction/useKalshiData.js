@@ -17,53 +17,61 @@ export function useKalshiData() {
     return null;
   };
 
-  const calculateWeightedAverage = (data) => {
-    if (!data || !data.length) return 0;
-    
-    let totalWeight = 0;
-    let sum = 0;
-
-    data.forEach(item => {
-      const range = parseRange(item.range);
-      if (range) {
-        const midpoint = (range.min + range.max) / 2;
-        sum += midpoint * item.probability;
-        totalWeight += item.probability;
-      }
-    });
-
-    return totalWeight > 0 ? sum / totalWeight : 0;
-  };
-
   const fetchData = async () => {
     try {
       const response = await fetch('/.netlify/functions/kalshi-proxy');
       const jsonData = await response.json();
-      console.log('Data from proxy:', jsonData);
+      console.log('Raw API Response:', jsonData); // Log full response for debugging
 
+      // Check the structure of the data we received
       if (jsonData && jsonData.markets) {
+        // Process the API response - correct structure!
         const processedData = {
           timestamp: Date.now(),
           ranges: jsonData.markets
-            .filter(market => market.title.includes('-')) // Only get range markets
-            .map(market => ({
-              range: market.title.split(':').pop().trim(), // Get just the range part
-              probability: (market.yes_price || 0) * 100
-            }))
-            .sort((a, b) => parseRange(b.range).min - parseRange(a.range).min)
+            .filter(market => {
+              // Look for markets with titles containing range patterns
+              const title = market.title || '';
+              return title.match(/\d+-\d+/) !== null;
+            })
+            .map(market => {
+              // Extract the range part from the title
+              const title = market.title || '';
+              const rangeMatch = title.match(/(\d+)-(\d+)/);
+              const range = rangeMatch ? rangeMatch[0] : title;
+              
+              // Use yes_price as probability (multiply by 100 for percentage)
+              const probability = (market.yes_price || 0) * 100;
+              
+              return { range, probability };
+            })
+            .sort((a, b) => {
+              // Try to sort by range numerically
+              const rangeA = parseRange(a.range);
+              const rangeB = parseRange(b.range);
+              if (rangeA && rangeB) {
+                return rangeA.min - rangeB.min;
+              }
+              return 0;
+            })
         };
 
-        setData(processedData);
-      } else {
-        throw new Error('Invalid data structure received from API');
+        if (processedData.ranges.length > 0) {
+          setData(processedData);
+          setLoading(false);
+          return;
+        }
       }
-      setLoading(false);
+      
+      // If we reach here, we couldn't find the expected data structure
+      console.error('Unexpected API response structure:', jsonData);
+      throw new Error('Invalid data structure received from API');
     } catch (err) {
       console.error('Error fetching Kalshi data:', err);
       setError(err.message);
       setLoading(false);
 
-      // Fallback data that matches current market expectations
+      // Fallback data
       setData({
         timestamp: Date.now(),
         ranges: [
