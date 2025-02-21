@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-02-21T00:00:00.000Z",
+  "expected_value": 6450,
+  "ranges": [
+    { "range": "6400-6600", "probability": 35 },
+    { "range": "6200-6400", "probability": 25 },
+    { "range": "6600-6800", "probability": 20 },
+    { "range": "6000-6200", "probability": 15 },
+    { "range": "6800-7000", "probability": 5 }
+  ]
+}
