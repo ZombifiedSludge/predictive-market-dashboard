@@ -5,7 +5,8 @@ exports.handler = async function(event) {
     // Get current timestamp
     const timestamp = Date.now().toString();
     const method = 'GET';
-    const path = '/trade-api/v2/markets?ticker_prefix=KXINXY-25DEC31';
+    // Use the exact event ID we found
+    const path = '/trade-api/v2/events/KXINXY-25DEC31/markets';
     
     // Load private key
     const privateKeyPEM = `-----BEGIN RSA PRIVATE KEY-----
@@ -36,16 +37,7 @@ xlRwr3KdohKYs8gMXB/CXyCG5OA7CWV0P40Cg/6jBLxnAZliHeIqCFThSDZX2++/
 ENWzPcnnWu2NykNcZVzCDE7u1YL8GIQpp+hCt8rIMuTBO2bZJnhf
 -----END RSA PRIVATE KEY-----`;
 
-    const privateKey = crypto.createPrivateKey({
-      key: privateKeyPEM,
-      format: 'pem'
-    });
-
-    // Create message to sign
-    const messageToSign = `${timestamp}${method}${path}`;
-    const message = Buffer.from(messageToSign, 'utf-8');
-
-    // Sign the message
+   // Sign the message
     const signature = crypto.sign(
       'sha256',
       message,
@@ -58,13 +50,6 @@ ENWzPcnnWu2NykNcZVzCDE7u1YL8GIQpp+hCt8rIMuTBO2bZJnhf
 
     const signatureBase64 = signature.toString('base64');
     
-    console.log("Request to:", `https://demo-api.kalshi.co${path}`);
-    console.log("Headers:", {
-      'KALSHI-ACCESS-KEY': '731c0410-6dbe-47a2-ac7f-bab9a4be1e0b',
-      'KALSHI-ACCESS-SIGNATURE': signatureBase64,
-      'KALSHI-ACCESS-TIMESTAMP': timestamp
-    });
-
     // Make request to Kalshi
     const response = await fetch(`https://demo-api.kalshi.co${path}`, {
       headers: {
@@ -75,7 +60,7 @@ ENWzPcnnWu2NykNcZVzCDE7u1YL8GIQpp+hCt8rIMuTBO2bZJnhf
     });
 
     const data = await response.json();
-    console.log("Kalshi API response:", data);
+    console.log("Kalshi API response received");
 
     return {
       statusCode: 200,
