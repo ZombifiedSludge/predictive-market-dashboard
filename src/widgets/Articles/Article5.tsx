@@ -48,16 +48,18 @@ const Article5: Component = () => {
 
         <p>
           To illustrate this example, I will calculate the Altman Z-Score for General Motors in 2007, a year before the 2008 financial crisis and its eventual bankruptcy.
+        </p>
           
-          {/* Excel Calculations Image - wrapped within text */}
-          <div class="float-right ml-6 mb-6 w-1/3">
-            <img 
-              src="altman.png" 
-              alt="Excel Calculations for GM's Altman Z-Score" 
-              class="rounded-lg shadow-md"
-            />
-          </div>
+        {/* Excel Calculations Image - as a separate element, not within a paragraph */}
+        <div class="float-right -mt-10 ml-6 mb-6 w-1/3">
+          <img 
+            src="altman.png" 
+            alt="Excel Calculations for GM's Altman Z-Score" 
+            class="rounded-lg shadow-md"
+          />
+        </div>
           
+        <p>
           As shown in the Excel calculations, GM's Altman Z-Score for 2007 was a dismal 0.853, well below the 1.8 threshold required to avoid being classified as at extreme risk of bankruptcy. This result primarily stemmed from GM's massive deficit in retained earnings, negative working capital, and negative earnings before interest and taxes. Interestingly, aside from asset turnover, the market capitalization to total liabilities ratio was the only ratio with a positive result, demonstrating how market sentiment can skew this metric and why it carries the least weight in the calculation. Perhaps most striking is that GM ultimately declared bankruptcy in June 2009, providing yet another example of how remarkably effective the Altman Z-Score is at predicting bankruptcies before they happen.
         </p>
 
