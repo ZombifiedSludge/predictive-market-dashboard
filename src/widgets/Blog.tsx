@@ -1,12 +1,14 @@
 import { Component, createSignal, lazy, Suspense } from 'solid-js';
 
+// Lazy load all articles
 const Article1 = lazy(() => import('./Articles/Article1'));
 const Article2 = lazy(() => import('./Articles/Article2'));
 const Article3 = lazy(() => import('./Articles/Article3'));
 const Article4 = lazy(() => import('./Articles/Article4'));
+const Article5 = lazy(() => import('./Articles/Article5'));
 
 const Blog: Component = () => {
-  const [currentArticle, setCurrentArticle] = createSignal('article4');
+  const [currentArticle, setCurrentArticle] = createSignal('article5');
 
   return (
     <div class="h-screen w-full flex">
@@ -14,6 +16,7 @@ const Blog: Component = () => {
       <div class="w-[80%] h-full overflow-y-auto p-6">
         <Suspense fallback={<div>Loading...</div>}>
           <div class="space-y-6">
+            {currentArticle() === 'article5' && <Article5 />}
             {currentArticle() === 'article4' && <Article4 />}
             {currentArticle() === 'article3' && <Article3 />}
             {currentArticle() === 'article1' && <Article1 />}
@@ -28,6 +31,14 @@ const Blog: Component = () => {
           <h2 class="text-lg font-semibold text-blue-600 mb-4">Table of Contents</h2>
           <div class="overflow-y-auto" style="max-height: calc(33vh - 4rem)">
             <div class="divide-y divide-gray-200">
+              <div class="py-3">
+                <p 
+                  class="text-sm font-bold text-gray-800 hover:text-blue-600 cursor-pointer font-georgia"
+                  onClick={() => setCurrentArticle('article5')}
+                >
+                  Beyond the Basics: How the Altman Z-Score and Piotroski F-Score Can Transform Your Investment Decisions
+                </p>
+              </div>
               <div class="py-3">
                 <p 
                   class="text-sm font-bold text-gray-800 hover:text-blue-600 cursor-pointer font-georgia"
