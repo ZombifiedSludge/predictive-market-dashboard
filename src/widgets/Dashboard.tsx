@@ -27,19 +27,19 @@ onMount(() => {
     // Set Federal Funds Rate
     setFedRateData({
       rate: "4.33",
-      date: "2025-01-10"
+      date: "2025-02-25"
     });
 
     // Set Unemployment Rate
     setUnemploymentData({
-      rate: "4.1",
-      date: "2025-01-10"
+      rate: "4.0",
+      date: "2025-02-25"
     });
 
     // Set Durables Data
     setDurablesData({
-      value: "284.712",
-      date: "2025-01-06"
+      value: "276.103",
+      date: "2025-02-04"
     });
 
     // Market data fetch function
@@ -120,18 +120,6 @@ onMount(() => {
   <main className="container mx-auto px-6 py-8">
   {/* Main content grid */}
   <div className="grid grid-cols-12 gap-6 mb-6">
-    {/* Logo Area - Add your Omenify logo here with negative margins */}
-    <div className="col-span-12 -mb-4">
-      <div className="flex justify-center">
-        {/* Replace this with your actual Omenify logo component or image */}
-        <img 
-          src="/path/to/omenify-logo.png" 
-          alt="Omenify Logo" 
-          className="w-64 -mt-8" 
-        />
-      </div>
-    </div>
-
       {/* Middle section with Tesla, Graph, and ETF/Music */}
       <div class="col-span-12">
         <div class="grid grid-cols-12 gap-6">
@@ -313,6 +301,9 @@ onMount(() => {
                 <>
                   <p className="text-lg font-bold text-navy-900">{fedRateData().rate}%</p>
                   <p className="text-xs text-blue-600">Last Updated: {fedRateData().date}</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Source: <a href="https://fred.stlouisfed.org/series/EFFR" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                  </p>
                 </>
               )}
             </div>
@@ -336,6 +327,9 @@ onMount(() => {
                 <>
                   <p className="text-lg font-bold text-navy-900">{unemploymentData().rate}%</p>
                   <p className="text-xs text-blue-600">Last Updated: {unemploymentData().date}</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Source: <a href="https://fred.stlouisfed.org/series/UNRATE" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                  </p>
                 </>
               )}
             </div>
@@ -359,6 +353,9 @@ onMount(() => {
                 <>
                   <p className="text-lg font-bold text-navy-900">${durablesData().value}B</p>
                   <p className="text-xs text-blue-600">Last Updated: {durablesData().date}</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Source: <a href="https://fred.stlouisfed.org/series/DGORDER" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                  </p>
                 </>
               )}
             </div>
