@@ -1,6 +1,9 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
 import OilGauge from './OilGauge';
 import Tesla from './Tesla';
+import SPPrediction from './SPPredictionComponent';
+import NasdaqPrediction from './NasdaqPredictionComponent';
+import { initializeDataRefreshScheduler } from './apiConfig';
 
 const Dashboard = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -106,9 +109,20 @@ onMount(() => {
 
     // Set up polling every 30 seconds
     const marketInterval = setInterval(fetchMarketData, 30000);
+    
+    // Initialize the scheduler to refresh data at 4 PM EST
+    const clearScheduler = initializeDataRefreshScheduler(() => {
+      console.log("Refreshing market prediction data at 4 PM EST");
+      // This will trigger a refresh for components on the next rendering cycle
+      localStorage.removeItem('kalshi_sp500_prediction');
+      localStorage.removeItem('kalshi_nasdaq_prediction');
+    });
 
     // Cleanup
-    onCleanup(() => clearInterval(marketInterval));
+    onCleanup(() => {
+      clearInterval(marketInterval);
+      clearScheduler(); // Clean up our scheduler
+    });
     
   } catch (err) {
     console.error('Error setting data:', err);
@@ -127,12 +141,12 @@ onMount(() => {
         <div className="col-span-3">
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 mb-6">
             <h2 className="text-xl font-semibold text-navy-900 mb-4">S&P 500 End of Year Prediction</h2>
-            {/* Your existing S&P prediction content */}
+            <SPPrediction />
           </div>
 
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
             <h2 className="text-xl font-semibold text-navy-900 mb-4">NASDAQ End of Year Prediction</h2>
-            {/* Your existing NASDAQ prediction content */}
+            <NasdaqPrediction />
           </div>
         </div>
         
