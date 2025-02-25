@@ -1,7 +1,6 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
 import OilGauge from './OilGauge';
 import Tesla from './Tesla';
-import MarketPredictionComponent from './MarketPredictionComponent';
 
 const Dashboard = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -121,54 +120,15 @@ onMount(() => {
   <main className="container mx-auto px-6 py-8">
   {/* Main content grid */}
   <div className="grid grid-cols-12 gap-6 mb-6">
-    {/* Top section spans full width */}
-    <div className="col-span-12">
-      <div className="grid grid-cols-4 gap-6">
-        {/* Left side - Main content */}
-        <div className="col-span-3">
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6 mb-6">
-            <h2 className="text-xl font-semibold text-navy-900 mb-4">S&P 500 End of Year Prediction</h2>
-            <MarketPredictionComponent symbol="SPY" />
-          </div>
-
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-6">
-            <h2 className="text-xl font-semibold text-navy-900 mb-4">NASDAQ End of Year Prediction</h2>
-            <MarketPredictionComponent symbol="QQQ" />
-          </div>
-        </div>
-        
-        {/* Right side - Top Projections */}
-        <div className="space-y-6">
-          {/* S&P 500 Projections */}
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-            <h2 className="text-lg font-semibold text-blue-800 mb-3">Top S&P 500 Projections</h2>
-            <div className="space-y-2">
-              {[1, 2, 3, 4].map((_, i) => (
-                <div key={i} className="border-b border-blue-100 pb-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-navy-900">Analyst {i + 1}</span>
-                    <span className="text-sm text-gray-600">Projection</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* NASDAQ Projections */}
-          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-            <h2 className="text-lg font-semibold text-blue-800 mb-3">Top NASDAQ Projections</h2>
-            <div className="space-y-2">
-              {[1, 2, 3, 4].map((_, i) => (
-                <div key={i} className="border-b border-blue-100 pb-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-navy-900">Analyst {i + 1}</span>
-                    <span className="text-sm text-gray-600">Projection</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+    {/* Logo Area - Add your Omenify logo here with negative margins */}
+    <div className="col-span-12 -mb-4">
+      <div className="flex justify-center">
+        {/* Replace this with your actual Omenify logo component or image */}
+        <img 
+          src="/path/to/omenify-logo.png" 
+          alt="Omenify Logo" 
+          className="w-64 -mt-8" 
+        />
       </div>
     </div>
 
@@ -353,9 +313,6 @@ onMount(() => {
                 <>
                   <p className="text-lg font-bold text-navy-900">{fedRateData().rate}%</p>
                   <p className="text-xs text-blue-600">Last Updated: {fedRateData().date}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Source: <a href="https://fred.stlouisfed.org/series/EFFR" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                  </p>
                 </>
               )}
             </div>
@@ -379,9 +336,6 @@ onMount(() => {
                 <>
                   <p className="text-lg font-bold text-navy-900">{unemploymentData().rate}%</p>
                   <p className="text-xs text-blue-600">Last Updated: {unemploymentData().date}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Source: <a href="https://fred.stlouisfed.org/series/UNRATE" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                  </p>
                 </>
               )}
             </div>
@@ -405,9 +359,6 @@ onMount(() => {
                 <>
                   <p className="text-lg font-bold text-navy-900">${durablesData().value}B</p>
                   <p className="text-xs text-blue-600">Last Updated: {durablesData().date}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Source: <a href="https://fred.stlouisfed.org/series/DGORDER" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                  </p>
                 </>
               )}
             </div>
