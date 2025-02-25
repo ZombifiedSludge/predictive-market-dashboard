@@ -61,7 +61,7 @@ const MarketPredictionComponent = (props) => {
       }
       
       // Alpha Vantage API key - get your free key at https://www.alphavantage.co/support/#api-key
-      const API_KEY = 'YOUR_ALPHA_VANTAGE_API_KEY';
+      const API_KEY = 'WM4K3AZW1FX4LQ6M';
       
       // Get time series data
       const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${props.symbol}&apikey=${API_KEY}`);
