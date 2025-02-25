@@ -1,6 +1,5 @@
-import { createSignal, createEffect, onMount } from 'solid-js';
-import { API_KEYS, ENDPOINTS, getKalshiHeaders } from './apiConfig';
-import { shouldRefreshCache, getCachedData, saveToCache, formatCacheTimestamp } from './cacheUtils';
+import { createSignal, onMount } from 'solid-js';
+import { formatCacheTimestamp } from './cacheUtils';
 
 const SPPrediction = () => {
   const [predictionData, setPredictionData] = createSignal(null);
@@ -8,97 +7,41 @@ const SPPrediction = () => {
   const [loading, setLoading] = createSignal(true);
   const [error, setError] = createSignal(null);
   const [lastUpdated, setLastUpdated] = createSignal(null);
-  
-  // Cache key for S&P data
-  const CACHE_KEY = 'kalshi_sp500_prediction';
+
+  // Path to the cached JSON file from Python
+  const CACHE_FILE_PATH = '/kalshi_cache/sp500_prediction.json';
 
   onMount(async () => {
-    await fetchPredictionData();
+    await fetchCachedData();
   });
 
-  const fetchPredictionData = async () => {
+  const fetchCachedData = async () => {
     try {
       setLoading(true);
       
-      // Check if we should use cached data
-      if (!shouldRefreshCache(CACHE_KEY)) {
-        const cachedResult = getCachedData(CACHE_KEY);
-        if (cachedResult) {
-          setPredictionData(cachedResult.data);
-          setLastUpdated(cachedResult.timestamp);
-          setLoading(false);
-          return;
-        }
-      }
-      
-      // If we get here, we need fresh data
-      const response = await fetch(ENDPOINTS.SP500_PREDICTION, {
-        headers: getKalshiHeaders()
-      });
+      // Fetch the JSON file created by the Python script
+      const response = await fetch(CACHE_FILE_PATH);
       
       if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.status}`);
+        throw new Error(`Failed to fetch cached data: ${response.status}`);
       }
       
       const data = await response.json();
       
-      // Process the data to get the distribution
-      const processedData = processKalshiData(data);
-      
-      // Save to cache and update state
-      saveToCache(CACHE_KEY, processedData);
-      setPredictionData(processedData);
-      setLastUpdated(new Date().toISOString());
+      // Update the component state
+      setPredictionData(data);
+      setLastUpdated(data.timestamp);
     } catch (err) {
-      console.error('Error fetching Kalshi data:', err);
-      setError(err.message);
-      
-      // Try to use cached data even if it's old when API fails
-      const cachedResult = getCachedData(CACHE_KEY);
-      if (cachedResult) {
-        setPredictionData(cachedResult.data);
-        setLastUpdated(cachedResult.timestamp);
-      }
+      console.error('Error fetching cached data:', err);
+      setError(err.message || 'Error loading prediction data');
     } finally {
       setLoading(false);
     }
   };
-
-  // Function to manually refresh data
+  
+  // Manual refresh for testing - typically this would be handled by the Python script
   const refreshData = async () => {
-    await fetchPredictionData();
-  };
-
-  // Function to process Kalshi data into a distribution format
-  const processKalshiData = (data) => {
-    // This would need to be adjusted based on the actual Kalshi API response structure
-    // For now using sample data structure
-    if (!data || !data.contracts) {
-      return {
-        midpoint: '5200',
-        distribution: []
-      };
-    }
-
-    // Sort contracts by their probability
-    const sortedContracts = [...data.contracts].sort(
-      (a, b) => b.latest_price - a.latest_price
-    );
-    
-    // Find the midpoint (highest probability contract)
-    const midpointContract = sortedContracts[0];
-    
-    // Create the distribution
-    const distribution = sortedContracts.map(contract => ({
-      range: contract.title || contract.ticker,
-      probability: (contract.latest_price * 100).toFixed(1),
-      value: contract.latest_price
-    }));
-    
-    return {
-      midpoint: midpointContract?.title || '5200',
-      distribution: distribution
-    };
+    await fetchCachedData();
   };
 
   const toggleDistribution = () => {
@@ -113,12 +56,11 @@ const SPPrediction = () => {
         </div>
       ) : error() ? (
         <div class="text-red-500 text-center p-4">
-          Error loading prediction data: {error()}
-          {lastUpdated() && (
-            <div class="text-xs text-gray-500 mt-2">
-              Showing cached data from {formatCacheTimestamp(lastUpdated())}
-            </div>
-          )}
+          {error()}
+          <p class="text-xs text-gray-600 mt-2">
+            Note: This component now requires a Python script to fetch data from Kalshi.
+            Please run the kalshi_data_fetcher.py script to update the prediction data.
+          </p>
         </div>
       ) : (
         <div class="flex flex-col">
@@ -164,7 +106,7 @@ const SPPrediction = () => {
                         style={{ width: `${Math.max(5, item.probability)}%` }}
                       ></div>
                     </div>
-                    <span class="text-sm">{item.probability}%</span>
+                    <span class="text-sm">{item.probability.toFixed(1)}%</span>
                   </div>
                 ))}
               </div>
