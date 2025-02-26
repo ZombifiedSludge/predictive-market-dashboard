@@ -203,7 +203,7 @@ onMount(() => {
       tweet-style="linear"
       hide-thread="true"
       hide-media="true"
-      href="https://twitter.com/CNBC?ref_src=twsrc%5Etfw"
+      href="https://twitter.com/CNBC,MarketWatch,TheTranscript_,GoldmanSachs,Schuldensuehner?ref_src=twsrc%5Etfw"
       ref={(el) => {
         if (window.twttr && window.twttr.widgets) {
           window.twttr.widgets.load(el);
