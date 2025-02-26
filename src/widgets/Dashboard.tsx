@@ -181,12 +181,11 @@ onMount(() => {
               </div>
             </div>
 
-{/* Twitter/X Embed */}
-<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-  <h2 className="text-lg font-semibold text-blue-800 mb-3">Market News</h2>
-  <div className="w-full" style={{ height: "152px", overflow: "hidden" }}>
+<div class="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+  <h2 class="text-lg font-semibold text-blue-800 mb-3">Market News</h2>
+  <div class="w-full" style={{ height: "152px", overflow: "hidden" }}>
     <a 
-      className="twitter-timeline" 
+      class="twitter-timeline" 
       data-height="152"
       data-chrome="noheader nofooter noborders transparent"
       data-tweet-limit="5"
@@ -203,15 +202,15 @@ onMount(() => {
       tweet-style="linear"
       hide-thread="true"
       hide-media="true"
-      href="https://twitter.com/CNBC,MarketWatch,TheTranscript_,GoldmanSachs,Schuldensuehner?ref_src=twsrc%5Etfw"
+      href="https://twitter.com/search?q=from%3ACNBC%20OR%20from%3AMarketWatch%20OR%20from%3ATheTranscript_%20OR%20from%3AGoldmanSachs%20OR%20from%3ASchuldensuehner&src=typed_query"
       ref={(el) => {
         if (window.twttr && window.twttr.widgets) {
           window.twttr.widgets.load(el);
         }
       }}
     >
-      <div className="flex items-center justify-center h-full">
-        <div className="text-blue-800 opacity-80 animate-pulse">
+      <div class="flex items-center justify-center h-full">
+        <div class="text-blue-800 opacity-80 animate-pulse">
           Loading latest market news...
         </div>
       </div>
