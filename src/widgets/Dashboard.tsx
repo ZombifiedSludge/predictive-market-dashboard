@@ -1,6 +1,7 @@
 import { createSignal, onMount, onCleanup } from 'solid-js';
 import OilGauge from './OilGauge';
 import Tesla from './Tesla';
+import { MarketNewsWidget } from "./MarketNewsWidget";
 
 const Dashboard = () => {
   const [fedRateData, setFedRateData] = createSignal(null);
@@ -182,42 +183,7 @@ onMount(() => {
             </div>
 
 {/* Twitter/X Embed */}
-<div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-  <h2 className="text-lg font-semibold text-blue-800 mb-3">Market News</h2>
-  <div className="w-full" style={{ height: "152px", overflow: "hidden" }}>
-    <a 
-      className="twitter-timeline" 
-      data-height="152"
-      data-chrome="noheader nofooter noborders transparent"
-      data-tweet-limit="5"
-      data-show-replies="false"
-      data-show-retweets="false"
-      data-cards="hidden"
-      data-conversation="none"
-      data-media="false"
-      data-dnt="true"
-      data-link-color="#000000"
-      data-theme="light"
-      data-aria-polite="assertive"
-      data-components="timeline,follow-button"
-      tweet-style="linear"
-      hide-thread="true"
-      hide-media="true"
-      href="https://twitter.com/CNBC?ref_src=twsrc%5Etfw"
-      ref={(el) => {
-        if (window.twttr && window.twttr.widgets) {
-          window.twttr.widgets.load(el);
-        }
-      }}
-    >
-      <div className="flex items-center justify-center h-full">
-        <div className="text-blue-800 opacity-80 animate-pulse">
-          Loading latest market news...
-        </div>
-      </div>
-    </a>
-  </div>
-</div>
+<MarketNewsWidget />
 
           {/* Industry-Specific ETF Tracking */}
        <div className="bg-gradient-to-r from-white to-blue-50/30 backdrop-blur rounded-lg shadow-xl p-4 border-l-4 border-blue-600/20">
