@@ -118,63 +118,67 @@ onMount(() => {
 });
 
   return (
-  <main className="container mx-auto px-6 py-8">
-  {/* Main content grid */}
-  <div className="grid grid-cols-12 gap-6 mb-6">
+  <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    {/* Main content grid */}
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 mb-6">
       {/* Middle section with Tesla, Graph, and ETF/Music */}
       <div class="col-span-12">
-        <div class="grid grid-cols-12 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-6">
           {/* Left Column with Tesla and Oil Gauge */}
-          <div class="col-span-2 space-y-6">
-            <Tesla />
-            <OilGauge />
+          <div class="col-span-full sm:col-span-1 lg:col-span-2 flex flex-row sm:flex-col gap-4 sm:gap-6">
+            <div class="w-1/2 sm:w-full">
+              <Tesla />
+            </div>
+            <div class="w-1/2 sm:w-full">
+              <OilGauge />
+            </div>
           </div>
           
           {/* Market Overview Graph */}
-          <div className="col-span-7">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Overview</h2>
-              <div className="w-full h-[calc(100%-2rem)] bg-gray-50 rounded flex items-center justify-center">
+          <div className="col-span-full sm:col-span-1 lg:col-span-7 mt-4 sm:mt-0">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
+              <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Market Overview</h2>
+              <div className="w-full h-[200px] sm:h-[calc(100%-2rem)] bg-gray-50 rounded flex items-center justify-center">
                 <span className="text-gray-500">Graph Placeholder</span>
               </div>
             </div>
           </div>
 
           {/* Right column - ETF and Music */}
-          <div className="col-span-3 space-y-6">
+          <div className="col-span-full lg:col-span-3 space-y-4 sm:space-y-6 mt-4 sm:mt-0">
             {/* Live Index ETF Tracking */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-3">Live Index ETF Tracking</h2>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">Dow Jones Industrial Average ETF (DIA)</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-semibold text-gray-600">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
+              <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Live Index ETF Tracking</h2>
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Dow Jones Industrial Average ETF (DIA)</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
                       ${marketIndexes().dowJones.value}
                     </span>
-                    <span className={`text-xs ${marketIndexes().dowJones.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    <span className={`text-xs whitespace-nowrap ${marketIndexes().dowJones.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                       {marketIndexes().dowJones.change > 0 ? '+' : ''}{marketIndexes().dowJones.change}%
                     </span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">S&P 500 ETF (SPY)</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-semibold text-gray-600">
+                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">S&P 500 ETF (SPY)</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
                       ${marketIndexes().sp500.value}
                     </span>
-                    <span className={`text-xs ${marketIndexes().sp500.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    <span className={`text-xs whitespace-nowrap ${marketIndexes().sp500.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                       {marketIndexes().sp500.change > 0 ? '+' : ''}{marketIndexes().sp500.change}%
                     </span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-sm text-navy-900">NASDAQ Composite ETF (ONEQ)</span>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm font-semibold text-gray-600">
+                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">NASDAQ Composite ETF (ONEQ)</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
                       ${marketIndexes().nasdaq.value}
                     </span>
-                    <span className={`text-xs ${marketIndexes().nasdaq.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    <span className={`text-xs whitespace-nowrap ${marketIndexes().nasdaq.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                       {marketIndexes().nasdaq.change > 0 ? '+' : ''}{marketIndexes().nasdaq.change}%
                     </span>
                   </div>
@@ -182,158 +186,160 @@ onMount(() => {
               </div>
             </div>
 
-{/* Twitter/X Embed */}
-<MarketNewsWidget />
-
-          {/* Industry-Specific ETF Tracking */}
-       <div className="bg-gradient-to-r from-white to-blue-50/30 backdrop-blur rounded-lg shadow-xl p-4 border-l-4 border-blue-600/20">
-         <h2 className="text-lg font-semibold text-blue-800 mb-3">Industry-Specific ETF Tracking 📈</h2>
-         <div className="space-y-3">
-           <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-             <span className="text-sm text-navy-900">Tech Select SPDR (XLK)</span>
-             <div className="flex items-center space-x-2">
-               <span className="text-sm font-semibold text-gray-600">
-                 ${sectorETFs().xlk.value}
-               </span>
-               <span className={`text-xs ${sectorETFs().xlk.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                 {sectorETFs().xlk.change > 0 ? '+' : ''}{sectorETFs().xlk.change}%
-               </span>
-             </div>
-           </div>
-           <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-             <span className="text-sm text-navy-900">Financial Select SPDR (XLF)</span>
-             <div className="flex items-center space-x-2">
-               <span className="text-sm font-semibold text-gray-600">
-                 ${sectorETFs().xlf.value}
-               </span>
-               <span className={`text-xs ${sectorETFs().xlf.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                 {sectorETFs().xlf.change > 0 ? '+' : ''}{sectorETFs().xlf.change}%
-               </span>
-             </div>
-           </div>
-           <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-             <span className="text-sm text-navy-900">Energy Select SPDR (XLE)</span>
-             <div className="flex items-center space-x-2">
-               <span className="text-sm font-semibold text-gray-600">
-                 ${sectorETFs().xle.value}
-               </span>
-               <span className={`text-xs ${sectorETFs().xle.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                 {sectorETFs().xle.change > 0 ? '+' : ''}{sectorETFs().xle.change}%
-               </span>
-             </div>
-           </div>
-           <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-             <span className="text-sm text-navy-900">Healthcare Select SPDR (XLV)</span>
-             <div className="flex items-center space-x-2">
-               <span className="text-sm font-semibold text-gray-600">
-                 ${sectorETFs().xlv.value}
-               </span>
-               <span className={`text-xs ${sectorETFs().xlv.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                 {sectorETFs().xlv.change > 0 ? '+' : ''}{sectorETFs().xlv.change}%
-               </span>
-             </div>
-           </div>
-           <div className="flex justify-between items-center border-b border-blue-100 pb-2">
-             <span className="text-sm text-navy-900">Consumer Select SPDR (XLY)</span>
-             <div className="flex items-center space-x-2">
-               <span className="text-sm font-semibold text-gray-600">
-                 ${sectorETFs().xly.value}
-               </span>
-               <span className={`text-xs ${sectorETFs().xly.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                 {sectorETFs().xly.change > 0 ? '+' : ''}{sectorETFs().xly.change}%
-               </span>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
- </div>
-
-    {/* Bottom row for macro indicators */}
-    <div className="col-span-12">
-      <div className="grid grid-cols-3 gap-6">
-        {/* Federal Funds Rate */}
-        <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-          <h2 className="text-lg font-semibold text-blue-800 mb-3">Federal Funds Rate</h2>
-          <div className="space-y-2">
-            <div className="border-b border-blue-100 pb-2">
-              <p className="text-sm text-blue-800">Current Rate</p>
-              {error() ? (
-                <p className="text-red-500 text-sm">Error: {error()}</p>
-              ) : !fedRateData() ? (
-                <p className="text-lg font-bold text-navy-900">Loading...</p>
-              ) : (
-                <>
-                  <p className="text-lg font-bold text-navy-900">{fedRateData().rate}%</p>
-                  <p className="text-xs text-blue-600">Last Updated: {fedRateData().date}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Source: <a href="https://fred.stlouisfed.org/series/EFFR" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                  </p>
-                </>
-              )}
+            {/* Twitter/X Embed */}
+            <div className="w-full overflow-hidden">
+              <MarketNewsWidget />
             </div>
-            <div className="text-xs text-gray-600">
-              <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt.</p>
+
+            {/* Industry-Specific ETF Tracking */}
+            <div className="bg-gradient-to-r from-white to-blue-50/30 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4 border-l-4 border-blue-600/20">
+              <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Industry-Specific ETF Tracking 📈</h2>
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Tech Select SPDR (XLK)</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                      ${sectorETFs().xlk.value}
+                    </span>
+                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xlk.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {sectorETFs().xlk.change > 0 ? '+' : ''}{sectorETFs().xlk.change}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Financial Select SPDR (XLF)</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                      ${sectorETFs().xlf.value}
+                    </span>
+                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xlf.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {sectorETFs().xlf.change > 0 ? '+' : ''}{sectorETFs().xlf.change}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Energy Select SPDR (XLE)</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                      ${sectorETFs().xle.value}
+                    </span>
+                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xle.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {sectorETFs().xle.change > 0 ? '+' : ''}{sectorETFs().xle.change}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Healthcare Select SPDR (XLV)</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                      ${sectorETFs().xlv.value}
+                    </span>
+                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xlv.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {sectorETFs().xlv.change > 0 ? '+' : ''}{sectorETFs().xlv.change}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Consumer Select SPDR (XLY)</span>
+                  <div className="flex items-center space-x-2 ml-auto">
+                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                      ${sectorETFs().xly.value}
+                    </span>
+                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xly.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                      {sectorETFs().xly.change > 0 ? '+' : ''}{sectorETFs().xly.change}%
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Unemployment Rate */}
-        <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-          <h2 className="text-lg font-semibold text-blue-800 mb-3">Unemployment Rate</h2>
-          <div className="space-y-2">
-            <div className="border-b border-blue-100 pb-2">
-              <p className="text-sm text-blue-800">Current Rate</p>
-              {error() ? (
-                <p className="text-red-500 text-sm">Error: {error()}</p>
-              ) : !unemploymentData() ? (
-                <p className="text-lg font-bold text-navy-900">Loading...</p>
-              ) : (
-                <>
-                  <p className="text-lg font-bold text-navy-900">{unemploymentData().rate}%</p>
-                  <p className="text-xs text-blue-600">Last Updated: {unemploymentData().date}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Source: <a href="https://fred.stlouisfed.org/series/UNRATE" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                  </p>
-                </>
-              )}
-            </div>
-            <div className="text-xs text-gray-600">
-              <p>The Unemployment Rate measures the percentage of jobseekers unable to find work. Higher rates suggest issues with labor market health and declining consumer spending power.</p>
+      {/* Bottom row for macro indicators */}
+      <div className="col-span-12 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+          {/* Federal Funds Rate */}
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
+            <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Federal Funds Rate</h2>
+            <div className="space-y-2">
+              <div className="border-b border-blue-100 pb-2">
+                <p className="text-xs sm:text-sm text-blue-800">Current Rate</p>
+                {error() ? (
+                  <p className="text-red-500 text-xs sm:text-sm">Error: {error()}</p>
+                ) : !fedRateData() ? (
+                  <p className="text-base sm:text-lg font-bold text-navy-900">Loading...</p>
+                ) : (
+                  <>
+                    <p className="text-base sm:text-lg font-bold text-navy-900">{fedRateData().rate}%</p>
+                    <p className="text-xs text-blue-600">Last Updated: {fedRateData().date}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Source: <a href="https://fred.stlouisfed.org/series/EFFR" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="text-xs text-gray-600">
+                <p>The Federal Funds Rate is a crucial benchmark interest rate impacting the health of the macroeconomy. Lowering rates often indicate reduced financing costs for businesses, homebuyers, loan-seeking students, and consumers with credit card debt.</p>
+              </div>
             </div>
           </div>
-        </div>
 
-     {/* Durable Goods Orders */}
-        <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-          <h2 className="text-lg font-semibold text-blue-800 mb-3">Durable Goods Orders</h2>
-          <div className="space-y-2">
-            <div className="border-b border-blue-100 pb-2">
-              <p className="text-sm text-blue-800">Latest Value (Billions)</p>
-              {error() ? (
-                <p className="text-red-500 text-sm">Error: {error()}</p>
-              ) : !durablesData() ? (
-                <p className="text-lg font-bold text-navy-900">Loading...</p>
-              ) : (
-                <>
-                  <p className="text-lg font-bold text-navy-900">${durablesData().value}B</p>
-                  <p className="text-xs text-blue-600">Last Updated: {durablesData().date}</p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Source: <a href="https://fred.stlouisfed.org/series/DGORDER" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
-                  </p>
-                </>
-              )}
+          {/* Unemployment Rate */}
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
+            <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Unemployment Rate</h2>
+            <div className="space-y-2">
+              <div className="border-b border-blue-100 pb-2">
+                <p className="text-xs sm:text-sm text-blue-800">Current Rate</p>
+                {error() ? (
+                  <p className="text-red-500 text-xs sm:text-sm">Error: {error()}</p>
+                ) : !unemploymentData() ? (
+                  <p className="text-base sm:text-lg font-bold text-navy-900">Loading...</p>
+                ) : (
+                  <>
+                    <p className="text-base sm:text-lg font-bold text-navy-900">{unemploymentData().rate}%</p>
+                    <p className="text-xs text-blue-600">Last Updated: {unemploymentData().date}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Source: <a href="https://fred.stlouisfed.org/series/UNRATE" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="text-xs text-gray-600">
+                <p>The Unemployment Rate measures the percentage of jobseekers unable to find work. Higher rates suggest issues with labor market health and declining consumer spending power.</p>
+              </div>
             </div>
-            <div className="text-xs text-gray-600">
-              <p>Durable Goods Orders measures the value of manufacturing orders for goods that last longer than three years, such as vehicles and equipment. Increasing orders suggest potential economic growth, strong business investment, and promising earnings in industrial sectors.</p>
+          </div>
+
+          {/* Durable Goods Orders */}
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
+            <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Durable Goods Orders</h2>
+            <div className="space-y-2">
+              <div className="border-b border-blue-100 pb-2">
+                <p className="text-xs sm:text-sm text-blue-800">Latest Value (Billions)</p>
+                {error() ? (
+                  <p className="text-red-500 text-xs sm:text-sm">Error: {error()}</p>
+                ) : !durablesData() ? (
+                  <p className="text-base sm:text-lg font-bold text-navy-900">Loading...</p>
+                ) : (
+                  <>
+                    <p className="text-base sm:text-lg font-bold text-navy-900">${durablesData().value}B</p>
+                    <p className="text-xs text-blue-600">Last Updated: {durablesData().date}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Source: <a href="https://fred.stlouisfed.org/series/DGORDER" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-600">Federal Reserve Bank of St. Louis</a>
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="text-xs text-gray-600">
+                <p>Durable Goods Orders measures the value of manufacturing orders for goods that last longer than three years, such as vehicles and equipment. Increasing orders suggest potential economic growth, strong business investment, and promising earnings in industrial sectors.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
 );
 
 };
