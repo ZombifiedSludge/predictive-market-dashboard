@@ -118,138 +118,140 @@ onMount(() => {
 });
 
   return (
-  <main className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
-    {/* Main content grid */}
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 mb-6">
-      {/* Middle section with Tesla, Graph, and ETF/Music */}
-      <div class="col-span-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-6">
-          {/* Left Column with Tesla and Oil Gauge */}
-          <div class="col-span-full sm:col-span-1 lg:col-span-2 flex flex-row sm:flex-col gap-4 sm:gap-6">
-            <div class="w-1/2 sm:w-full">
-              <Tesla />
-            </div>
-            <div class="w-1/2 sm:w-full">
-              <OilGauge />
+  <main className="container mx-auto px-4 sm:px-6 py-6 max-w-screen-xl">
+    {/* Main content as a flex container instead of grid */}
+    <div className="flex flex-col w-full gap-4">
+      {/* Top row with Tesla, Oil Gauge, and Market Overview */}
+      <div className="flex flex-col sm:flex-row w-full gap-4">
+        {/* Left side - Tesla and Oil Gauge in a flex row for mobile, column for larger screens */}
+        <div className="flex flex-row sm:flex-col gap-4 w-full sm:w-auto">
+          <div className="w-1/2 sm:w-full">
+            <Tesla />
+          </div>
+          <div className="w-1/2 sm:w-full">
+            <OilGauge />
+          </div>
+        </div>
+        
+        {/* Market Overview Graph - takes remaining space */}
+        <div className="w-full flex-grow">
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4 h-full">
+            <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Market Overview</h2>
+            <div className="w-full h-[200px] sm:h-[calc(100%-2rem)] bg-gray-50 rounded flex items-center justify-center">
+              <span className="text-gray-500">Graph Placeholder</span>
             </div>
           </div>
-          
-          {/* Market Overview Graph */}
-          <div className="col-span-full sm:col-span-1 lg:col-span-7 mt-4 sm:mt-0">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
-              <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Market Overview</h2>
-              <div className="w-full h-[200px] sm:h-[calc(100%-2rem)] bg-gray-50 rounded flex items-center justify-center">
-                <span className="text-gray-500">Graph Placeholder</span>
+        </div>
+      </div>
+
+      {/* Middle row with ETF tracking sections */}
+      <div className="flex flex-col lg:flex-row gap-4 w-full">
+        {/* Live Index ETF Tracking */}
+        <div className="w-full lg:w-1/2">
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
+            <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Live Index ETF Tracking</h2>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Dow Jones Industrial Average ETF (DIA)</span>
+                <div className="flex items-center space-x-2 ml-auto">
+                  <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                    ${marketIndexes().dowJones.value}
+                  </span>
+                  <span className={`text-xs whitespace-nowrap ${marketIndexes().dowJones.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    {marketIndexes().dowJones.change > 0 ? '+' : ''}{marketIndexes().dowJones.change}%
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">S&P 500 ETF (SPY)</span>
+                <div className="flex items-center space-x-2 ml-auto">
+                  <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                    ${marketIndexes().sp500.value}
+                  </span>
+                  <span className={`text-xs whitespace-nowrap ${marketIndexes().sp500.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    {marketIndexes().sp500.change > 0 ? '+' : ''}{marketIndexes().sp500.change}%
+                  </span>
+                </div>
+              </div>
+              <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+                <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">NASDAQ Composite ETF (ONEQ)</span>
+                <div className="flex items-center space-x-2 ml-auto">
+                  <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                    ${marketIndexes().nasdaq.value}
+                  </span>
+                  <span className={`text-xs whitespace-nowrap ${marketIndexes().nasdaq.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    {marketIndexes().nasdaq.change > 0 ? '+' : ''}{marketIndexes().nasdaq.change}%
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Right column - ETF and Music */}
-          <div className="col-span-full lg:col-span-3 space-y-4 sm:space-y-6 mt-4 sm:mt-0">
-            {/* Live Index ETF Tracking */}
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
-              <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Live Index ETF Tracking</h2>
-              <div className="space-y-2 sm:space-y-3">
-                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Dow Jones Industrial Average ETF (DIA)</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
-                      ${marketIndexes().dowJones.value}
-                    </span>
-                    <span className={`text-xs whitespace-nowrap ${marketIndexes().dowJones.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {marketIndexes().dowJones.change > 0 ? '+' : ''}{marketIndexes().dowJones.change}%
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">S&P 500 ETF (SPY)</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
-                      ${marketIndexes().sp500.value}
-                    </span>
-                    <span className={`text-xs whitespace-nowrap ${marketIndexes().sp500.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {marketIndexes().sp500.change > 0 ? '+' : ''}{marketIndexes().sp500.change}%
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">NASDAQ Composite ETF (ONEQ)</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
-                      ${marketIndexes().nasdaq.value}
-                    </span>
-                    <span className={`text-xs whitespace-nowrap ${marketIndexes().nasdaq.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {marketIndexes().nasdaq.change > 0 ? '+' : ''}{marketIndexes().nasdaq.change}%
-                    </span>
-                  </div>
-                </div>
+        {/* News Widget */}
+        <div className="w-full lg:w-1/2">
+          <MarketNewsWidget />
+        </div>
+      </div>
+
+      {/* Industry-Specific ETF Tracking */}
+      <div className="w-full">
+        <div className="bg-gradient-to-r from-white to-blue-50/30 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4 border-l-4 border-blue-600/20">
+          <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Industry-Specific ETF Tracking 📈</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4">
+            <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+              <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Tech Select SPDR (XLK)</span>
+              <div className="flex items-center space-x-2 ml-auto">
+                <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                  ${sectorETFs().xlk.value}
+                </span>
+                <span className={`text-xs whitespace-nowrap ${sectorETFs().xlk.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {sectorETFs().xlk.change > 0 ? '+' : ''}{sectorETFs().xlk.change}%
+                </span>
               </div>
             </div>
-
-            {/* Twitter/X Embed */}
-            <div className="w-full overflow-hidden">
-              <MarketNewsWidget />
+            <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+              <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Financial Select SPDR (XLF)</span>
+              <div className="flex items-center space-x-2 ml-auto">
+                <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                  ${sectorETFs().xlf.value}
+                </span>
+                <span className={`text-xs whitespace-nowrap ${sectorETFs().xlf.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {sectorETFs().xlf.change > 0 ? '+' : ''}{sectorETFs().xlf.change}%
+                </span>
+              </div>
             </div>
-
-            {/* Industry-Specific ETF Tracking */}
-            <div className="bg-gradient-to-r from-white to-blue-50/30 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4 border-l-4 border-blue-600/20">
-              <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Industry-Specific ETF Tracking 📈</h2>
-              <div className="space-y-2 sm:space-y-3">
-                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Tech Select SPDR (XLK)</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
-                      ${sectorETFs().xlk.value}
-                    </span>
-                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xlk.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {sectorETFs().xlk.change > 0 ? '+' : ''}{sectorETFs().xlk.change}%
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Financial Select SPDR (XLF)</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
-                      ${sectorETFs().xlf.value}
-                    </span>
-                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xlf.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {sectorETFs().xlf.change > 0 ? '+' : ''}{sectorETFs().xlf.change}%
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Energy Select SPDR (XLE)</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
-                      ${sectorETFs().xle.value}
-                    </span>
-                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xle.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {sectorETFs().xle.change > 0 ? '+' : ''}{sectorETFs().xle.change}%
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Healthcare Select SPDR (XLV)</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
-                      ${sectorETFs().xlv.value}
-                    </span>
-                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xlv.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {sectorETFs().xlv.change > 0 ? '+' : ''}{sectorETFs().xlv.change}%
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
-                  <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Consumer Select SPDR (XLY)</span>
-                  <div className="flex items-center space-x-2 ml-auto">
-                    <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
-                      ${sectorETFs().xly.value}
-                    </span>
-                    <span className={`text-xs whitespace-nowrap ${sectorETFs().xly.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                      {sectorETFs().xly.change > 0 ? '+' : ''}{sectorETFs().xly.change}%
-                    </span>
-                  </div>
-                </div>
+            <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+              <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Energy Select SPDR (XLE)</span>
+              <div className="flex items-center space-x-2 ml-auto">
+                <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                  ${sectorETFs().xle.value}
+                </span>
+                <span className={`text-xs whitespace-nowrap ${sectorETFs().xle.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {sectorETFs().xle.change > 0 ? '+' : ''}{sectorETFs().xle.change}%
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+              <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Healthcare Select SPDR (XLV)</span>
+              <div className="flex items-center space-x-2 ml-auto">
+                <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                  ${sectorETFs().xlv.value}
+                </span>
+                <span className={`text-xs whitespace-nowrap ${sectorETFs().xlv.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {sectorETFs().xlv.change > 0 ? '+' : ''}{sectorETFs().xlv.change}%
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-between items-center border-b border-blue-100 pb-2">
+              <span className="text-xs sm:text-sm text-navy-900 truncate mr-2">Consumer Select SPDR (XLY)</span>
+              <div className="flex items-center space-x-2 ml-auto">
+                <span className="text-xs sm:text-sm font-semibold text-gray-600 whitespace-nowrap">
+                  ${sectorETFs().xly.value}
+                </span>
+                <span className={`text-xs whitespace-nowrap ${sectorETFs().xly.change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  {sectorETFs().xly.change > 0 ? '+' : ''}{sectorETFs().xly.change}%
+                </span>
               </div>
             </div>
           </div>
@@ -257,8 +259,8 @@ onMount(() => {
       </div>
 
       {/* Bottom row for macro indicators */}
-      <div className="col-span-12 mt-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+      <div className="w-full mt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Federal Funds Rate */}
           <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-3 sm:p-4">
             <h2 className="text-base sm:text-lg font-semibold text-blue-800 mb-2 sm:mb-3">Federal Funds Rate</h2>
