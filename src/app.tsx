@@ -12,13 +12,24 @@ const App = (props: { children?: any }) => {
     <ThemeProvider>
       <div className="min-h-screen" onClick={createBubble}>
         <header className="bg-white shadow-lg">
-          <nav className="container mx-auto px-6 py-4">
+          <nav className="container mx-auto px-6 py-3">
             <div className="flex justify-between items-center">
-              <A href="/"><img src="/omenifylogo.png" alt="Omenify" className="h-8" /></A>
-              <div className="flex space-x-8">
-                <A href="/" className="font-serif font-bold text-blue-900 hover:text-blue-700">Dashboard</A>
-                <A href="/blog" className="font-serif font-bold text-blue-900 hover:text-blue-700">Blog</A>
-                <A href="#sources" className="font-serif font-bold text-blue-900 hover:text-blue-700">Sources</A>
+              <A href="/" className="relative -ml-3 -my-2">
+                <img src="/omenifylogo.png" alt="Omenify" className="h-12" />
+              </A>
+              <div className="flex space-x-10">
+                <A 
+                  href="/" 
+                  className="font-serif font-bold text-blue-900 hover:text-blue-700 transition-colors duration-200"
+                >
+                  Dashboard
+                </A>
+                <A 
+                  href="/blog" 
+                  className="font-serif font-bold text-blue-900 hover:text-blue-700 transition-colors duration-200"
+                >
+                  Blog
+                </A>
               </div>
             </div>
           </nav>
@@ -35,7 +46,7 @@ const createBubble = (e: MouseEvent) => {
   const left = e.clientX - size / 2;
   const top = e.clientY - size / 2;
   const travelDistance = Math.random() * 100 - 50;
-
+  
   bubble.className = 'bubble';
   bubble.style.width = `${size}px`;
   bubble.style.height = `${size}px`;
@@ -43,7 +54,7 @@ const createBubble = (e: MouseEvent) => {
   bubble.style.top = `${top}px`;
   bubble.style.setProperty('--travel-x', `${travelDistance}px`);
   bubble.style.animation = `float ${Math.random() * 2 + 3}s ease-in forwards`;
-
+  
   document.body.appendChild(bubble);
   bubble.addEventListener('animationend', () => {
     document.body.removeChild(bubble);
