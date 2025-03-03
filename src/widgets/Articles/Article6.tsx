@@ -11,12 +11,12 @@ const Article6: Component = () => {
       {/* Publication Date */}
       <p class="text-sm text-gray-500 mb-4">Published December 15th, 2024</p>
 
-      {/* Header Image */}
-      <div class="w-full -mx-6 -mt-6 mb-6">
+      {/* Full-width Header Image - positioned below title and date */}
+      <div class="w-full -mx-6 mb-6">
         <img 
           src="revenuerecognition.png" 
           alt="Revenue Recognition Diagram" 
-          class="w-full object-cover h-48 md:h-64"
+          class="w-full object-contain h-48 md:h-64"
         />
       </div>
       
