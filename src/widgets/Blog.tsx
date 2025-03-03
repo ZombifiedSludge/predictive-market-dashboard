@@ -54,7 +54,7 @@ const Blog: Component = () => {
                   class="text-sm font-bold text-gray-800 hover:text-blue-600 cursor-pointer font-georgia"
                   onClick={() => setCurrentArticle('article6')}
                 >
-                  Decoding ASC 606: A Guide to Subscription-Based Revenue Recognition
+                  Decoding ASC 606: A Guide to Revenue Recognition
                 </p>
               </div>
               <div class="py-3">
