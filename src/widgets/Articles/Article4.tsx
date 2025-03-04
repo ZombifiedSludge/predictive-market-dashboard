@@ -11,12 +11,12 @@ const Article4: Component = () => {
       {/* Publication Date */}
       <p class="text-sm text-gray-500 mb-4">Published February 18th, 2025</p>
 
-      {/* Full-width Header Image - extending beyond container edges */}
-      <div class="-mx-6 mb-6">
+      {/* Full-width Header Image - cropped to show just the logo portion */}
+      <div class="-mx-6 mb-6 overflow-hidden" style="height: 150px;">
         <img 
           src="metahq.png" 
           alt="Meta Headquarters" 
-          class="w-full object-cover"
+          class="w-full object-cover object-center"
         />
       </div>
       
