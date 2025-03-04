@@ -46,7 +46,7 @@ onMount(() => {
     // Market data fetch function
     const fetchMarketData = async () => {
       try {
-        const API_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
+        const API_KEY = 'cv3a3b1r01qk43u1g0r0cv3a3b1r01qk43u1g0rg';
         
         const [dowData, spData, nasdaqData, xlkData, xlfData, xleData, xlvData, xlyData] = await Promise.all([
           fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
