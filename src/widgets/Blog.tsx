@@ -7,6 +7,7 @@ const Article3 = lazy(() => import('./Articles/Article3'));
 const Article4 = lazy(() => import('./Articles/Article4'));
 const Article5 = lazy(() => import('./Articles/Article5'));
 const Article6 = lazy(() => import('./Articles/Article6'));
+const Article7 = lazy(() => import('./Articles/Article7'));
 
 const Blog: Component = () => {
   const [currentArticle, setCurrentArticle] = createSignal('article4');
@@ -21,6 +22,7 @@ const Blog: Component = () => {
             {currentArticle() === 'article3' && <Article3 />}
             {currentArticle() === 'article6' && <Article6 />}
             {currentArticle() === 'article5' && <Article5 />}
+            {currentArticle() === 'article7' && <Article7 />}
             {currentArticle() === 'article1' && <Article1 />}
             {currentArticle() === 'article2' && <Article2 />}
           </div>
@@ -54,7 +56,7 @@ const Blog: Component = () => {
                   class="text-sm font-bold text-gray-800 hover:text-blue-600 cursor-pointer font-georgia"
                   onClick={() => setCurrentArticle('article6')}
                 >
-                  Decoding ASC 606: A Guide to Revenue Recognition
+                  Decoding ASC 606: A Guide to Subscription-Based Revenue Recognition
                 </p>
               </div>
               <div class="py-3">
@@ -63,6 +65,14 @@ const Blog: Component = () => {
                   onClick={() => setCurrentArticle('article5')}
                 >
                   Beyond the Basics: How the Altman Z-Score and Piotroski F-Score Can Transform Your Investment Decisions
+                </p>
+              </div>
+              <div class="py-3">
+                <p 
+                  class="text-sm font-bold text-gray-800 hover:text-blue-600 cursor-pointer font-georgia"
+                  onClick={() => setCurrentArticle('article7')}
+                >
+                  Flying Through Conflict: American Airlines Pricing Trends Amid the Russia-Ukraine War
                 </p>
               </div>
               <div class="py-3">
