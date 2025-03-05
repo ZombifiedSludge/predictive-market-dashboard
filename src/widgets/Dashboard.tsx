@@ -88,13 +88,15 @@ const Dashboard = () => {
         {/* Top row: Tesla, Market Graph, and ETF tracking */}
         <div className="col-span-12 grid grid-cols-12 gap-4">
           
-          {/* Left column - Tesla and Oil */}
-          <div className="col-span-12 sm:col-span-2 grid grid-cols-2 sm:grid-cols-1 gap-4">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <Tesla />
-            </div>
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <OilGauge />
+            {/* Left column - Tesla and Oil */}
+          <div className="col-span-12 sm:col-span-2 flex flex-col sm:space-y-4">
+            <div className="grid grid-cols-2 sm:grid-cols-1 gap-4">
+              <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+                <Tesla />
+              </div>
+              <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+                <OilGauge />
+              </div>
             </div>
           </div>
           
@@ -102,11 +104,11 @@ const Dashboard = () => {
           <div className="col-span-12 sm:col-span-7">
             <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-full">
               <h2 className="text-lg font-semibold text-blue-800 mb-2">Market Overview</h2>
-              <div className="relative aspect-[4/3] w-full">
+              <div className="relative w-full h-full">
                 <img 
                   src="/SPYgraph2.png" 
                   alt="S&P 500 Market Overview" 
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
