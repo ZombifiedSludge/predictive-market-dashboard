@@ -15,7 +15,6 @@ type AlphaMetrics = {
   timestamp: number;
 };
 
-const FINNHUB_KEY = 'cu0ahohr01ql96gq5n0gcu0ahohr01ql96gq5n10';
 const ALPHA_KEY = 'WM4K3AZW1FX4LQ6M';
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
@@ -78,12 +77,11 @@ const Tesla: Component = () => {
     }
   };
 
-  // Function to fetch Finnhub price data
+  // Function to fetch Finnhub price data via Netlify function
   const fetchQuote = async () => {
     try {
-      const response = await fetch(
-        `https://finnhub.io/api/v1/quote?symbol=TSLA&token=${FINNHUB_KEY}`
-      );
+      // Use the Netlify function instead of direct API call
+      const response = await fetch('/.netlify/functions/market-data?symbol=TSLA');
       const data = await response.json();
       if (data.c) {
         setQuote(data);
