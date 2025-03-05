@@ -104,15 +104,17 @@ onMount(() => {
           
           {/* Market Overview Graph */}
           <div className="col-span-12 lg:col-span-7">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-full">
               <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Overview</h2>
-              <div className="w-full h-[200px] lg:h-[calc(100%-2rem)] bg-gray-50 rounded flex items-center justify-center overflow-hidden">
-                {/* SPYgraph2.png image replacement */}
-                <img 
-                  src="/SPYgraph2.png" 
-                  alt="S&P 500 Market Overview" 
-                  className="w-full h-full object-cover object-center"
-                />
+              <div className="w-full h-[300px] bg-gray-50 rounded flex items-center justify-center p-3">
+                {/* SPYgraph2.png image with padding and proper sizing */}
+                <div className="w-full h-full overflow-hidden rounded">
+                  <img 
+                    src="/SPYgraph2.png" 
+                    alt="S&P 500 Market Overview" 
+                    className="w-full h-full object-contain object-center"
+                  />
+                </div>
               </div>
             </div>
           </div>
