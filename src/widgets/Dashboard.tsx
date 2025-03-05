@@ -41,25 +41,57 @@ onMount(() => {
       date: "2025-02-04"
     });
 
-    // Market data fetch function - to be implemented later
+    // Market data fetch function
     const fetchMarketData = async () => {
       try {
-        // This section will be implemented later with backend API calls
-        
-        // Placeholder for market indexes
+        // Use Netlify functions to avoid CORS issues
+        const [dowData, spData, nasdaqData, xlkData, xlfData, xleData, xlvData, xlyData] = await Promise.all([
+          fetch(`/.netlify/functions/market-data?symbol=DIA`).then(r => r.json()),
+          fetch(`/.netlify/functions/market-data?symbol=SPY`).then(r => r.json()),
+          fetch(`/.netlify/functions/market-data?symbol=ONEQ`).then(r => r.json()),
+          fetch(`/.netlify/functions/market-data?symbol=XLK`).then(r => r.json()),
+          fetch(`/.netlify/functions/market-data?symbol=XLF`).then(r => r.json()),
+          fetch(`/.netlify/functions/market-data?symbol=XLE`).then(r => r.json()),
+          fetch(`/.netlify/functions/market-data?symbol=XLV`).then(r => r.json()),
+          fetch(`/.netlify/functions/market-data?symbol=XLY`).then(r => r.json())
+        ]);
+
         setMarketIndexes({
-          dowJones: { value: '--', change: 0 },
-          sp500: { value: '--', change: 0 },
-          nasdaq: { value: '--', change: 0 }
+          dowJones: {
+            value: dowData.c.toFixed(2),
+            change: ((dowData.c - dowData.pc) / dowData.pc * 100).toFixed(2)
+          },
+          sp500: {
+            value: spData.c.toFixed(2),
+            change: ((spData.c - spData.pc) / spData.pc * 100).toFixed(2)
+          },
+          nasdaq: {
+            value: nasdaqData.c.toFixed(2),
+            change: ((nasdaqData.c - nasdaqData.pc) / nasdaqData.pc * 100).toFixed(2)
+          }
         });
 
-        // Placeholder for sector ETFs
         setSectorETFs({
-          xlk: { value: '--', change: 0 },
-          xlf: { value: '--', change: 0 },
-          xle: { value: '--', change: 0 },
-          xlv: { value: '--', change: 0 },
-          xly: { value: '--', change: 0 }
+          xlk: {
+            value: xlkData.c.toFixed(2),
+            change: ((xlkData.c - xlkData.pc) / xlkData.pc * 100).toFixed(2)
+          },
+          xlf: {
+            value: xlfData.c.toFixed(2),
+            change: ((xlfData.c - xlfData.pc) / xlfData.pc * 100).toFixed(2)
+          },
+          xle: {
+            value: xleData.c.toFixed(2),
+            change: ((xleData.c - xleData.pc) / xleData.pc * 100).toFixed(2)
+          },
+          xlv: {
+            value: xlvData.c.toFixed(2),
+            change: ((xlvData.c - xlvData.pc) / xlvData.pc * 100).toFixed(2)
+          },
+          xly: {
+            value: xlyData.c.toFixed(2),
+            change: ((xlyData.c - xlyData.pc) / xlyData.pc * 100).toFixed(2)
+          }
         });
       } catch (err) {
         console.error('Error fetching market data:', err);
