@@ -96,18 +96,13 @@ const Dashboard = () => {
           
           {/* Middle column - Market Overview */}
           <div className="col-span-12 sm:col-span-7">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-full flex flex-col">
               <h2 className="text-lg font-semibold text-blue-800 mb-2">Market Overview</h2>
-              <div style={{ height: "352px", overflow: "hidden" }}>
+              <div className="flex-1 flex items-center justify-center">
                 <img 
                   src="/SPYgraph2.png" 
                   alt="S&P 500 Market Overview" 
-                  style={{ 
-                    width: "100%", 
-                    height: "100%", 
-                    objectFit: "contain",
-                    maxHeight: "100%"
-                  }}
+                  className="max-w-full max-h-full"
                 />
               </div>
             </div>
