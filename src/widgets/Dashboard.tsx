@@ -90,17 +90,17 @@ const Dashboard = () => {
           
           {/* Left column - Tesla and Oil */}
           <div className="col-span-12 sm:col-span-2 grid grid-cols-2 sm:grid-cols-1 gap-4">
-            <div className="bg-white rounded-lg shadow-md p-4">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
               <Tesla />
             </div>
-            <div className="bg-white rounded-lg shadow-md p-4">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
               <OilGauge />
             </div>
           </div>
           
           {/* Middle column - Market Overview */}
           <div className="col-span-12 sm:col-span-7">
-            <div className="bg-white rounded-lg shadow-md p-4 h-full">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-full">
               <h2 className="text-lg font-semibold text-blue-800 mb-2">Market Overview</h2>
               <div className="relative aspect-[4/3] w-full">
                 <img 
@@ -115,7 +115,7 @@ const Dashboard = () => {
           {/* Right column - ETF tracking */}
           <div className="col-span-12 sm:col-span-3 flex flex-col gap-4">
             {/* Live Index ETF Tracking */}
-            <div className="bg-white rounded-lg shadow-md p-4">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
               <h2 className="text-lg font-semibold text-blue-800 mb-3">Live Index ETF Tracking</h2>
               <div className="space-y-3">
                 <div className="flex justify-between items-center border-b border-blue-100 pb-2">
@@ -155,12 +155,12 @@ const Dashboard = () => {
             </div>
 
             {/* Market News Widget */}
-            <div className="bg-white rounded-lg shadow-md">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl">
               <MarketNewsWidget />
             </div>
 
             {/* Industry-Specific ETF Tracking */}
-            <div className="bg-white rounded-lg shadow-md p-4">
+            <div className="bg-gradient-to-r from-white to-blue-50/30 backdrop-blur rounded-lg shadow-xl p-4 border-l-4 border-blue-600/20">
               <h2 className="text-lg font-semibold text-blue-800 mb-3">Industry-Specific ETF Tracking 📈</h2>
               <div className="space-y-3">
                 <div className="flex justify-between items-center border-b border-blue-100 pb-2">
@@ -226,7 +226,7 @@ const Dashboard = () => {
         {/* Bottom row - Macroeconomic indicators */}
         <div className="col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
           {/* Federal Funds Rate */}
-          <div className="bg-white rounded-lg shadow-md p-4">
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
             <h2 className="text-lg font-semibold text-blue-800 mb-3">Federal Funds Rate</h2>
             <div className="space-y-2">
               <div className="border-b border-blue-100 pb-2">
@@ -252,7 +252,7 @@ const Dashboard = () => {
           </div>
 
           {/* Unemployment Rate */}
-          <div className="bg-white rounded-lg shadow-md p-4">
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
             <h2 className="text-lg font-semibold text-blue-800 mb-3">Unemployment Rate</h2>
             <div className="space-y-2">
               <div className="border-b border-blue-100 pb-2">
@@ -278,7 +278,7 @@ const Dashboard = () => {
           </div>
 
           {/* Durable Goods Orders */}
-          <div className="bg-white rounded-lg shadow-md p-4">
+          <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
             <h2 className="text-lg font-semibold text-blue-800 mb-3">Durable Goods Orders</h2>
             <div className="space-y-2">
               <div className="border-b border-blue-100 pb-2">
