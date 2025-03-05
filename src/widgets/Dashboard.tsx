@@ -104,14 +104,14 @@ onMount(() => {
           
           {/* Market Overview Graph */}
           <div className="col-span-12 lg:col-span-7">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-full flex flex-col">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-full">
               <h2 className="text-lg font-semibold text-blue-800 mb-2">Market Overview</h2>
-              <div className="flex-1 w-full px-1 pb-1">
+              <div className="h-[calc(100%-2rem)] w-full">
                 {/* SPYgraph2.png image filling the entire container with minimal padding */}
                 <img 
                   src="/SPYgraph2.png" 
                   alt="S&P 500 Market Overview" 
-                  className="w-full h-full object-fill"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
