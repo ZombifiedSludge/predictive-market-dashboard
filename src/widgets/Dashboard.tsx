@@ -103,11 +103,13 @@ onMount(() => {
           <div className="col-span-12 lg:col-span-7">
             <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
               <h2 className="text-lg font-semibold text-blue-800 mb-2">Market Overview</h2>
-              <img 
-                src="/SPYgraph2.png" 
-                alt="S&P 500 Market Overview" 
-                className="w-full" 
-              />
+              <div className="overflow-hidden" style={{ maxHeight: "calc(100vh - 270px)" }}>
+                <img 
+                  src="/SPYgraph2.png" 
+                  alt="S&P 500 Market Overview" 
+                  className="w-full"
+                />
+              </div>
             </div>
           </div>
 
