@@ -90,24 +90,24 @@ const Dashboard = () => {
           
             {/* Left column - Tesla and Oil */}
           <div className="col-span-12 sm:col-span-2 grid grid-cols-2 sm:grid-cols-1 gap-4">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <Tesla />
-            </div>
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <OilGauge />
-            </div>
+            <Tesla />
+            <OilGauge />
           </div>
           
           {/* Middle column - Market Overview */}
           <div className="col-span-12 sm:col-span-7">
-            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4 h-full">
+            <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
               <h2 className="text-lg font-semibold text-blue-800 mb-2">Market Overview</h2>
-              <div className="w-full" style={{ height: "calc(100% - 32px)" }}>
+              <div style={{ height: "352px", overflow: "hidden" }}>
                 <img 
                   src="/SPYgraph2.png" 
                   alt="S&P 500 Market Overview" 
-                  className="w-full h-full" 
-                  style={{ objectFit: "fill" }}
+                  style={{ 
+                    width: "100%", 
+                    height: "100%", 
+                    objectFit: "contain",
+                    maxHeight: "100%"
+                  }}
                 />
               </div>
             </div>
