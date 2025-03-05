@@ -25,6 +25,7 @@ const Dashboard = () => {
 
 onMount(() => {
   try {
+    // Hard-coded macroeconomic indicators
     // Set Federal Funds Rate
     setFedRateData({
       rate: "4.33",
@@ -46,55 +47,22 @@ onMount(() => {
     // Market data fetch function
     const fetchMarketData = async () => {
       try {
-        const API_KEY = 'cv3a3b1r01qk43u1g0r0cv3a3b1r01qk43u1g0rg';
+        // This section will be implemented later with backend API calls
         
-        const [dowData, spData, nasdaqData, xlkData, xlfData, xleData, xlvData, xlyData] = await Promise.all([
-          fetch(`https://finnhub.io/api/v1/quote?symbol=DIA&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=SPY&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=ONEQ&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=XLK&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=XLF&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=XLE&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=XLV&token=${API_KEY}`).then(r => r.json()),
-          fetch(`https://finnhub.io/api/v1/quote?symbol=XLY&token=${API_KEY}`).then(r => r.json())
-        ]);
-
+        // Placeholder for market indexes
         setMarketIndexes({
-          dowJones: {
-            value: dowData.c.toFixed(2),
-            change: ((dowData.c - dowData.pc) / dowData.pc * 100).toFixed(2)
-          },
-          sp500: {
-            value: spData.c.toFixed(2),
-            change: ((spData.c - spData.pc) / spData.pc * 100).toFixed(2)
-          },
-          nasdaq: {
-            value: nasdaqData.c.toFixed(2),
-            change: ((nasdaqData.c - nasdaqData.pc) / nasdaqData.pc * 100).toFixed(2)
-          }
+          dowJones: { value: '--', change: 0 },
+          sp500: { value: '--', change: 0 },
+          nasdaq: { value: '--', change: 0 }
         });
 
+        // Placeholder for sector ETFs
         setSectorETFs({
-          xlk: {
-            value: xlkData.c.toFixed(2),
-            change: ((xlkData.c - xlkData.pc) / xlkData.pc * 100).toFixed(2)
-          },
-          xlf: {
-            value: xlfData.c.toFixed(2),
-            change: ((xlfData.c - xlfData.pc) / xlfData.pc * 100).toFixed(2)
-          },
-          xle: {
-            value: xleData.c.toFixed(2),
-            change: ((xleData.c - xleData.pc) / xleData.pc * 100).toFixed(2)
-          },
-          xlv: {
-            value: xlvData.c.toFixed(2),
-            change: ((xlvData.c - xlvData.pc) / xlvData.pc * 100).toFixed(2)
-          },
-          xly: {
-            value: xlyData.c.toFixed(2),
-            change: ((xlyData.c - xlyData.pc) / xlyData.pc * 100).toFixed(2)
-          }
+          xlk: { value: '--', change: 0 },
+          xlf: { value: '--', change: 0 },
+          xle: { value: '--', change: 0 },
+          xlv: { value: '--', change: 0 },
+          xly: { value: '--', change: 0 }
         });
       } catch (err) {
         console.error('Error fetching market data:', err);
@@ -138,8 +106,13 @@ onMount(() => {
           <div className="col-span-12 lg:col-span-7">
             <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
               <h2 className="text-lg font-semibold text-blue-800 mb-3">Market Overview</h2>
-              <div className="w-full h-[200px] lg:h-[calc(100%-2rem)] bg-gray-50 rounded flex items-center justify-center">
-                <span className="text-gray-500">Graph Placeholder</span>
+              <div className="w-full h-[200px] lg:h-[calc(100%-2rem)] bg-gray-50 rounded flex items-center justify-center overflow-hidden">
+                {/* SPYgraph2.png image replacement */}
+                <img 
+                  src="/SPYgraph2.png" 
+                  alt="S&P 500 Market Overview" 
+                  className="w-full h-full object-cover object-center"
+                />
               </div>
             </div>
           </div>
