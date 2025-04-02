@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [marketData, setMarketData] = createSignal(null);
   const [error, setError] = createSignal(null);
   const [isDropdownOpen, setIsDropdownOpen] = createSignal(false);
+  const [selectedGraph, setSelectedGraph] = createSignal('spy'); // Default to S&P 500
   const [unemploymentData, setUnemploymentData] = createSignal(null);
   const [durablesData, setDurablesData] = createSignal(null);
   const [marketIndexes, setMarketIndexes] = createSignal({
@@ -22,6 +23,15 @@ const Dashboard = () => {
     xlv: { value: '--', change: 0 },
     xly: { value: '--', change: 0 }
   });
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen());
+  };
+
+  const selectGraph = (graph) => {
+    setSelectedGraph(graph);
+    setIsDropdownOpen(false);
+  };
 
 onMount(() => {
   try {
@@ -131,15 +141,65 @@ onMount(() => {
             </div>
           </div>
           
-          {/* Market Overview Graph */}
+          {/* Market Overview Graph with Dropdown */}
           <div className="col-span-12 lg:col-span-7">
             <div className="bg-white/95 backdrop-blur rounded-lg shadow-xl p-4">
-              <h2 className="text-lg font-semibold text-blue-800 mb-2">Market Overview</h2>
-              <img 
-                src="/SPYgraph2.png" 
-                alt="S&P 500 Market Overview" 
-                className="w-full" 
-              />
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-lg font-semibold text-blue-800">Market Overview</h2>
+                
+                {/* Dropdown Menu */}
+                <div className="relative">
+                  <button 
+                    onClick={toggleDropdown}
+                    className="flex items-center space-x-1 text-sm font-medium text-blue-700 hover:text-blue-900 focus:outline-none"
+                  >
+                    <span>{selectedGraph() === 'spy' ? 'S&P 500' : 'NASDAQ Composite'}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {isDropdownOpen() && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                      <div className="py-1">
+                        <button
+                          onClick={() => selectGraph('spy')}
+                          className={`block w-full text-left px-4 py-2 text-sm ${
+                            selectedGraph() === 'spy' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100'
+                          }`}
+                        >
+                          S&P 500
+                        </button>
+                        <button
+                          onClick={() => selectGraph('oneq')}
+                          className={`block w-full text-left px-4 py-2 text-sm ${
+                            selectedGraph() === 'oneq' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100'
+                          }`}
+                        >
+                          NASDAQ Composite
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              {/* Graph Content */}
+              <div className="w-full">
+                {selectedGraph() === 'spy' ? (
+                  <img 
+                    src="/SPYgraph2.png" 
+                    alt="S&P 500 Market Overview" 
+                    className="w-full" 
+                  />
+                ) : (
+                  <img 
+                    src="/ONEQGraph.png" 
+                    alt="NASDAQ Composite Market Overview" 
+                    className="w-full" 
+                  />
+                )}
+              </div>
             </div>
           </div>
 
