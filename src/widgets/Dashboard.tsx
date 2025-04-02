@@ -28,17 +28,17 @@ onMount(() => {
     // Hard-coded macroeconomic indicators
     setFedRateData({
       rate: "4.33",
-      date: "2025-02-25"
+      date: "2025-04-02"
     });
 
     setUnemploymentData({
-      rate: "4.0",
-      date: "2025-02-25"
+      rate: "4.1",
+      date: "2025-03-07"
     });
 
     setDurablesData({
-      value: "276.103",
-      date: "2025-02-04"
+      value: "289.499",
+      date: "2025-04-02"
     });
 
     // Market data fetch function
