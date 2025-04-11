@@ -8,9 +8,10 @@ const Article4 = lazy(() => import('./Articles/Article4'));
 const Article5 = lazy(() => import('./Articles/Article5'));
 const Article6 = lazy(() => import('./Articles/Article6'));
 const Article7 = lazy(() => import('./Articles/Article7'));
+const Article8 = lazy(() => import('./Articles/Article8'));
 
 const Blog: Component = () => {
-  const [currentArticle, setCurrentArticle] = createSignal('article4');
+  const [currentArticle, setCurrentArticle] = createSignal('article8');
 
   return (
     <div class="h-screen w-full flex">
@@ -18,6 +19,7 @@ const Blog: Component = () => {
       <div class="w-[80%] h-full overflow-y-auto p-6">
         <Suspense fallback={<div>Loading...</div>}>
           <div class="space-y-6">
+            {currentArticle() === 'article8' && <Article8 />}
             {currentArticle() === 'article4' && <Article4 />}
             {currentArticle() === 'article3' && <Article3 />}
             {currentArticle() === 'article6' && <Article6 />}
@@ -35,6 +37,14 @@ const Blog: Component = () => {
           <h2 class="text-lg font-semibold text-blue-600 mb-4">Table of Contents</h2>
           <div class="overflow-y-auto" style="max-height: calc(33vh - 4rem)">
             <div class="divide-y divide-gray-200">
+              <div class="py-3">
+                <p 
+                  class="text-sm font-bold text-gray-800 hover:text-blue-600 cursor-pointer font-georgia"
+                  onClick={() => setCurrentArticle('article8')}
+                >
+                  Earnings, Expansion, and Economic Headwinds: Analyzing Lululemon's Income Statement
+                </p>
+              </div>
               <div class="py-3">
                 <p 
                   class="text-sm font-bold text-gray-800 hover:text-blue-600 cursor-pointer font-georgia"
