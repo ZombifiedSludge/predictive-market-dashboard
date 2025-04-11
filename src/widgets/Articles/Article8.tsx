@@ -11,15 +11,16 @@ const Article8: Component = () => {
       {/* Publication Date */}
       <p class="text-sm text-gray-500 mb-4">Published April 8th, 2025</p>
 
-      {/* Full-width Header Image - banner style */}
-      <div class="-mx-6 -mt-2 mb-6">
+      {/* Banner Image with soft edges */}
+      <div class="mb-6">
         <img 
           src="LululemonHQ.png" 
           alt="Lululemon Headquarters" 
-          class="w-full object-cover"
+          class="w-full object-cover rounded-lg"
           style="max-height: 240px;"
         />
       </div>
+
       
       {/* Article Content */}
       <div class="text-gray-700 font-georgia space-y-6">
